@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>tlog — acompanhamento das disciplinas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0}
+:root{
+  --bg:#FBF9F4; --surface:#FFFFFF; --ink:#26241F; --muted:#6B6558; --line:#E6E0D4;
+  --accent:#8A5A2E; --accent-soft:#F3E3CF; --accent-line:#DCB98A;
+  --f-head:'Lora',Georgia,serif; --f-mono:'JetBrains Mono',ui-monospace,'Courier New',monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1C1A15; --surface:#26231C; --ink:#F1ECE1; --muted:#BBB09B; --line:#3A3527;
+  --accent:#E3B37E; --accent-soft:#3A2C1B; --accent-line:#5C4527;
+}}
+:root[data-theme="dark"]{
+  --bg:#1C1A15; --surface:#26231C; --ink:#F1ECE1; --muted:#BBB09B; --line:#3A3527;
+  --accent:#E3B37E; --accent-soft:#3A2C1B; --accent-line:#5C4527;
+}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-head); line-height:1.55}
+.page{max-width:980px; margin:0 auto; padding:56px 20px 100px}
+.eyebrow{display:inline-block; font-family:var(--f-mono); font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); padding:7px 16px; border-radius:999px; margin-bottom:18px}
+h1{font-size:clamp(32px,6vw,50px); font-weight:700; letter-spacing:-.01em; margin:0 0 16px; text-wrap:balance}
+.lead{color:var(--muted); font-size:18px; max-width:62ch; font-style:italic; margin:0 0 48px}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px}
+.card{display:block; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:24px; text-decoration:none; color:var(--ink); transition:border-color .15s, transform .15s}
+.card:hover{border-color:var(--accent-line); transform:translateY(-2px)}
+.card .code{font-family:var(--f-mono); font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--accent)}
+.card h2{font-size:21px; margin:8px 0 6px; font-weight:700}
+.card p{font-size:14.5px; color:var(--muted); margin:0}
+.card.disabled{opacity:.5; cursor:default; pointer-events:none}
+.card.disabled .code{color:var(--muted)}
+.foot{margin-top:64px; padding-top:24px; border-top:1px solid var(--line); color:var(--muted); font-size:14px}
+</style>
+</head>
+<body>
+<div class="page">
+  <p class="eyebrow">Engenharia — UFSC Joinville</p>
+  <h1>Acompanhamento das disciplinas</h1>
+  <p class="lead">Revisões conceituais e resoluções de exercícios, aula por aula, organizadas por disciplina. Escolha uma abaixo para começar.</p>
+
+  <div class="grid">
+    <a class="card" href="courses/logistica-3/">
+      <span class="code">EMB 5934</span>
+      <h2>Logística III</h2>
+      <p>Armazenagem, custos de armazenagem, canais de distribuição e distribuição física — revisão da P1 com exercícios e prova antiga resolvidos.</p>
+    </a>
+  </div>
+
+  <p class="foot">Novas disciplinas entram aqui conforme forem trabalhadas.</p>
+</div>
+</body>
+</html>

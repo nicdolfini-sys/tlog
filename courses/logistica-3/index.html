@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Logística III — revisão da P1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root{color-scheme:light;box-sizing:border-box}
+*{box-sizing:border-box}
+body{margin:0;padding:0}
+img{max-width:100%}
+:root{
+  --bg:#FBF9F4; --surface:#FFFFFF; --ink:#26241F; --muted:#6B6558; --line:#E6E0D4;
+  --accent:#8A5A2E; --accent-soft:#F3E3CF; --accent-line:#DCB98A;
+  --blue:#DDE7F1; --blue-ink:#2B4C73;
+  --mint:#DEEFE4; --mint-ink:#2F7355;
+  --yellow:#FBF1CF; --yellow-ink:#87671A;
+  --lav:#F1EFE8; --lav-line:#DCD5C4;
+  --res:#8A5A2E; --ok:#2F7355; --bad:#B0413F;
+  --f-head:'Lora',Georgia,serif; --f-mono:'JetBrains Mono',ui-monospace,'Courier New',monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1C1A15; --surface:#26231C; --ink:#F1ECE1; --muted:#BBB09B; --line:#3A3527;
+  --accent:#E3B37E; --accent-soft:#3A2C1B; --accent-line:#5C4527;
+  --blue:#243447; --blue-ink:#B9D3F0;
+  --mint:#1E3830; --mint-ink:#8FD9BC;
+  --yellow:#3A3320; --yellow-ink:#E7CE8C;
+  --lav:#2A2720; --lav-line:#463F30;
+  --res:#E3B37E; --ok:#8FD9BC; --bad:#E79A97;
+  color-scheme: dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#1C1A15; --surface:#26231C; --ink:#F1ECE1; --muted:#BBB09B; --line:#3A3527;
+  --accent:#E3B37E; --accent-soft:#3A2C1B; --accent-line:#5C4527;
+  --blue:#243447; --blue-ink:#B9D3F0;
+  --mint:#1E3830; --mint-ink:#8FD9BC;
+  --yellow:#3A3320; --yellow-ink:#E7CE8C;
+  --lav:#2A2720; --lav-line:#463F30;
+  --res:#E3B37E; --ok:#8FD9BC; --bad:#E79A97;
+  color-scheme: dark;
+}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-head); font-size:17px; line-height:1.55}
+.page{max-width:980px; margin:0 auto; padding-inline:20px; padding-block:40px 100px}
+h1,h2,h3,h4{font-family:var(--f-head); text-wrap:balance; line-height:1.15; margin:0}
+p{margin:0 0 .7em; max-width:70ch}
+b{font-weight:600}
+
+.backlink{display:inline-flex; align-items:center; gap:6px; font-family:var(--f-mono); font-size:13px; color:var(--muted); text-decoration:none; margin-bottom:18px}
+.backlink:hover{color:var(--accent)}
+
+.hero{padding-block:12px 40px; border-bottom:1px solid var(--line); margin-bottom:40px}
+.eyebrow{display:inline-block; font-family:var(--f-mono); font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); padding:7px 16px; border-radius:999px; margin-bottom:18px}
+h1.title{font-size:clamp(34px,6vw,54px); font-weight:700; letter-spacing:-.01em; margin-bottom:16px}
+.lead{color:var(--muted); font-size:19px; max-width:64ch; font-style:italic}
+.byline{margin-top:22px; font-size:15px; color:var(--muted); font-family:var(--f-mono)}
+
+.nav{display:flex; flex-wrap:wrap; gap:8px; margin-top:28px}
+.nav a{font-family:var(--f-mono); font-size:13px; padding:8px 14px; border-radius:8px; text-decoration:none; background:var(--surface); border:1px solid var(--line); color:var(--ink)}
+.nav a.hd{background:var(--accent); border-color:var(--accent); color:var(--bg)}
+
+section.aula{margin-block:56px}
+.aula-h{display:flex; gap:18px; align-items:baseline; border-top:2px solid var(--ink); padding-top:14px; margin-bottom:26px}
+.aula-h .num{font-family:var(--f-mono); font-weight:700; font-size:44px; color:var(--accent); line-height:1}
+.aula-h h2{font-size:clamp(26px,4vw,34px); font-weight:700}
+.aula-h p{color:var(--muted); margin:4px 0 0; font-size:16px}
+
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-bottom:18px}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px}
+.card.wide{grid-column:1/-1}
+.card h4{font-size:17px; margin-bottom:8px; color:var(--accent)}
+.card p{font-size:15px; margin-bottom:.5em; color:var(--ink)}
+.card p:last-child{margin-bottom:0}
+.card.blue{background:var(--blue)} .card.blue h4{color:var(--blue-ink)}
+.card.mint{background:var(--mint)} .card.mint h4{color:var(--mint-ink)}
+.card.yellow{background:var(--yellow)} .card.yellow h4{color:var(--yellow-ink)}
+.card.lav{background:var(--lav)}
+
+.f{font-family:var(--f-mono); font-size:15px}
+p.f{background:var(--lav); border:1px solid var(--lav-line); padding:10px 14px; border-radius:8px; display:block; margin:10px 0}
+.formula-box{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:14px}
+.formula-box .lbl{font-family:var(--f-mono); font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:8px}
+.formula-box .eq{font-family:var(--f-mono); font-size:19px; font-weight:600; color:var(--ink); margin-bottom:8px; overflow-x:auto}
+.formula-box .key{font-size:14px; color:var(--muted); line-height:1.5}
+
+table{width:100%; border-collapse:collapse; font-size:15px; margin-bottom:18px}
+th{text-align:left; background:var(--lav); padding:10px 12px; font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted)}
+td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+.tbl-wrap{overflow-x:auto; margin-bottom:18px}
+
+.ex{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:24px 26px 28px; margin-bottom:28px}
+.ex-h{display:flex; align-items:baseline; gap:14px; margin-bottom:16px; flex-wrap:wrap}
+.tag{font-family:var(--f-mono); font-weight:700; background:var(--accent); color:var(--bg); padding:3px 12px; border-radius:6px; font-size:15px}
+.ex-h h3{font-size:21px}
+.given{background:var(--lav); border-radius:10px; padding:14px 18px; margin-bottom:18px; font-size:15px; color:var(--muted)}
+
+.steps{list-style:none; margin:0; padding:0; display:grid; gap:20px}
+.step{padding-top:18px; border-top:1px dashed var(--line)}
+.step:first-child{border-top:0; padding-top:0}
+.step h5{font-size:16px; margin-bottom:8px; display:flex; gap:10px; align-items:baseline}
+.n{font-family:var(--f-mono); font-size:13px; color:var(--bg); background:var(--ink); border-radius:50%; width:24px; height:24px; display:inline-grid; place-items:center; flex:none}
+.step .eq{font-family:var(--f-mono); font-size:15.5px; background:var(--lav); border:1px solid var(--lav-line); border-radius:6px; padding:10px 12px; margin:8px 0; line-height:1.8; overflow-x:auto}
+.res{color:var(--res); font-weight:700}
+
+.result{display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-top:20px; padding:14px 18px; border:2px solid var(--accent); border-radius:10px; background:var(--accent-soft)}
+.result span{font-family:var(--f-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent)}
+.result b{font-family:var(--f-mono); font-size:20px; color:var(--accent)}
+.result.ok{border-color:var(--ok); background:transparent}
+.result.ok span,.result.ok b{color:var(--ok)}
+.result.bad{border-color:var(--bad)}
+.result.bad span,.result.bad b{color:var(--bad)}
+
+.qa{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:16px}
+.qa .q{font-weight:600; font-size:16px; margin-bottom:10px; color:var(--accent)}
+.qa .a{font-size:15px; color:var(--ink)}
+.qa .a p{margin-bottom:.6em}
+.qa .a ul{margin:.3em 0 .6em; padding-left:20px}
+.qa .a li{margin-bottom:.3em}
+
+.provahead{background:var(--ink); color:var(--bg); border-radius:16px; padding:26px 28px; margin-bottom:26px}
+.provahead p{color:var(--bg); opacity:.75; margin:0; font-size:14px; font-family:var(--f-mono)}
+.provahead h3{font-size:24px; margin-top:4px}
+
+.tip{font-size:14px; color:var(--muted); border-left:3px solid var(--line); padding-left:12px; margin-top:12px}
+.foot{margin-top:60px; padding-top:24px; border-top:1px solid var(--line); color:var(--muted); font-size:14px}
+.foot a{color:var(--accent)}
+
+@media (max-width:760px){
+  .aula-h{flex-direction:column; gap:6px}
+  .ex{padding:18px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<a class="backlink" href="../../">&larr; todas as disciplinas</a>
+
+<header class="hero">
+  <p class="eyebrow">UFSC Joinville · EMB 5934 · Profa. Elisete Santos da Silva Zagheni</p>
+  <h1 class="title">Logística III — revisão da P1</h1>
+  <p class="lead">Teoria de armazenagem, custos de armazenagem, canais de distribuição e distribuição física explicada do zero, com todos os exercícios das aulas, os exercícios complementares e a prova antiga (2024/2, 2ª chamada) resolvidos passo a passo.</p>
+  <p class="byline">Setembro de 2026</p>
+  <nav class="nav">
+    <a class="hd" href="#armazenagem">1 · Armazenagem</a>
+    <a class="hd" href="#custos">2 · Custos de armazenagem</a>
+    <a class="hd" href="#canais">3 · Canais de distribuição</a>
+    <a class="hd" href="#distribuicao">4 · Distribuição física</a>
+    <a href="#ex-armazenagem">Exercícios · Armazenagem</a>
+    <a href="#ex-custos">Exercícios · Custos</a>
+    <a href="#ex-distribuicao">Exercícios · Distribuição física</a>
+    <a href="#picking-questoes">Questões de picking</a>
+    <a href="#prova">Prova 2024/2 resolvida</a>
+  </nav>
+</header>
+
+<section class="aula" id="armazenagem">
+  <div class="aula-h"><span class="num">1</span><div><h2>Armazenagem</h2><p>O que é um armazém, para que serve e como se mede a capacidade dele.</p></div></div>
+
+  <div class="cards">
+    <div class="card wide">
+      <h4>A ideia central</h4>
+      <p><b>Armazenagem</b> é a atividade que compreende o planejamento, coordenação, controle e desenvolvimento das operações destinadas a abrigar, manter adequadamente estocado e em condições de uso, bem como expedir no momento oportuno os materiais necessários à empresa.</p>
+      <p>A localização e a função de um armazém dependem de três fatores: <b>fontes de matérias-primas</b>, <b>mercado consumidor</b> e <b>vias de acesso</b> — é o produto a ser distribuído que determina a necessidade, a localização e a função do armazém.</p>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card"><h4>Objetivos da armazenagem</h4><p>Maximizar o uso dos espaços; facilitar o acesso aos itens; proteger e abrigar os materiais; facilitar a movimentação interna; maximizar a utilização de mão de obra e equipamentos.</p></div>
+    <div class="card mint"><h4>Vantagens</h4><p>Diminui custos com transporte; aproxima a empresa de clientes e fornecedores; agiliza o processo de entrega; compensa defasagens de produção.</p></div>
+    <div class="card yellow"><h4>Desvantagens</h4><p>Imobilização de capital; envelhecimento das mercadorias; aumento dos custos com movimentação; necessidade de mais controles e gerenciamento.</p></div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">As quatro funções da armazenagem</h4>
+  <p>Todo armazém desempenha uma (ou mais) de quatro funções, que definem como as cargas entram, se combinam e saem.</p>
+  <table>
+    <tr><th>Função</th><th>O que faz</th></tr>
+    <tr><td><b>Consolidação</b></td><td>Recebe cargas pequenas de <b>várias plantas/fornecedores</b> e as agrega num único carregamento maior para um mesmo cliente — gera economia de escala no frete. É a lógica oposta ao desmembramento.</td></tr>
+    <tr><td><b>Desmembramento</b> (break-bulk)</td><td>Recebe uma carga grande de <b>uma única planta</b> e a fraciona em quantidades menores para vários clientes. Inclui variações como o <b>transbordo/transferência</b> (reagrupa cargas para entrega, normalmente sem estoque) e o <b>transit point</b> (produtos já chegam com destino definido, sem esperar novo pedido).</td></tr>
+    <tr><td><b>Centro de Distribuição</b> (CD) / <b>cross-docking</b></td><td>Gerencia estoques na distribuição física: recebe de diferentes fornecedores, fraciona e transfere para diferentes clientes. O <i>cross-docking</i> é a forma mais enxuta dessa função — a carga é apenas reorganizada nas docas, sem passar pelo estoque.</td></tr>
+    <tr><td><b>Agrupamento em trânsito</b> (merge in transit)</td><td>Um cross-docking híbrido especializado num produto de alto valor agregado: o pedido do cliente é "explodido" em componentes, cada um vindo de um fornecedor diferente, que se encontram e se consolidam já a caminho do cliente. É uma extensão do cross-docking combinada ao just in time (JIT), eliminando estoques intermediários.</td></tr>
+  </table>
+  <p class="tip">Pergunta clássica de prova: "defina cada função de armazenagem". O fio condutor é sempre o mesmo — consolidação junta, desmembramento separa; CD e agrupamento em trânsito são as versões "modernas" dessas duas lógicas, otimizadas por tecnologia da informação.</p>
+
+  <div class="cards" style="margin-top:18px">
+    <div class="card wide">
+      <h4>Atividades básicas de um CD</h4>
+      <p>Recebimento/conferência → movimentação → armazenagem (ou <i>cross-docking</i> direto, sem armazenagem) → picking (separação) → auditoria/embalagem/retornos → carregamento/conferência, com inventário e controle acontecendo em paralelo o tempo todo. Os produtos seguem um ciclo contínuo do recebimento à expedição, podendo pular a armazenagem quando o processo é <i>cross-docking</i>.</p>
+    </div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Empilhamento e fator de estiva</h4>
+  <div class="cards">
+    <div class="card blue"><h4>Empilhamento</h4><p>Proporciona melhor uso do espaço vertical, o que é decisivo para a capacidade de armazenagem. Empilhar a 4 m de altura consome a <b>metade</b> do espaço de piso do que empilhar a 2 m. O limite é sempre o equipamento de elevação disponível (altura máxima) e a fragilidade da carga (risco de esmagamento e de queda das pilhas).</p></div>
+    <div class="card blue"><h4>Fator de estiva</h4><p>É a relação peso/volume de uma mercadoria (m³/t): quanto espaço, em m³, é preciso para estocar 1 tonelada daquele item. Cada mercadoria tem o seu — por isso, quando o armazém guarda vários produtos diferentes, é preciso um fator de estiva <b>médio</b>.</p></div>
+  </div>
+
+  <div class="formula-box">
+    <div class="lbl">Fator de estiva médio ponderado</div>
+    <div class="eq">FEM = Σ(fator de estiva<sub>i</sub> × peso armazenado<sub>i</sub>) / Σ peso armazenado</div>
+    <div class="key">Pondera o fator de estiva de cada item pelo % que ele representa do peso total armazenado — é mais realista do que uma simples média aritmética quando os itens têm pesos muito diferentes.</div>
+  </div>
+
+  <div class="formula-box">
+    <div class="lbl">Capacidade estática de um armazém</div>
+    <div class="eq">CE = (PU × AE) / FEM</div>
+    <div class="key">PU = praça útil (m², área realmente disponível para estocagem, já descontados corredores, pilastras, escritórios etc.) · AE = altura de empilhamento segura (m) · FEM = fator de estiva médio (m³/t) · CE sai em toneladas.</div>
+  </div>
+  <p class="tip">Exemplo direto da aula: PU = 3.356 m², empilhamento a 5 m, FEM = 2,63 m³/t → CE = (3.356 × 5) / 2,63 ≈ <b>6.380 toneladas</b>. Se a previsão de recebimento supera essa capacidade, é sinal de que está na hora de terceirizar ou ampliar o armazém.</p>
+
+  <h4 style="margin:26px 0 10px">Praça útil × capacidade estática (base para os problemas legais)</h4>
+  <div class="formula-box">
+    <div class="lbl">Capacidade estática pela resistência do piso</div>
+    <div class="eq">CE = Área total do piso (m²) × Resistência estrutural (t/m²)</div>
+    <div class="key">Esse é só o <b>parâmetro inicial</b> — na prática, a área de armazenagem, a movimentação, a relação volume/peso, a altura máxima de empilhamento e a separação entre lotes também limitam a capacidade real.</div>
+  </div>
+  <p>A <b>praça útil</b> nunca é a área total do piso: dela se descontam corredores, pilastras/colunas, escritórios, banheiros, refeitórios e as folgas de segurança exigidas por norma. A NR-11 do Ministério do Trabalho, por exemplo, exige que o material empilhado fique afastado das paredes em pelo menos <b>0,50 m</b>. Veja o passo a passo completo nos <a href="#a1ex1">exercícios de armazenagem</a>.</p>
+
+  <h4 style="margin:26px 0 10px">Separação de pedidos (picking)</h4>
+  <div class="cards">
+    <div class="card wide">
+      <h4>O que é</h4>
+      <p>Picking é a coleta de mercadorias em suas posições de armazenamento sempre que uma ordem é solicitada — reunir o mix correto de produtos, nas quantidades corretas, para satisfazer o pedido do cliente. Não é um detalhe operacional: estima-se que o custo da coleta de pedidos chegue a <b>60% da despesa operacional total</b> de um armazém, por isso reduzir custo e aumentar velocidade de picking ao mesmo tempo é a questão crítica do setor.</p>
+    </div>
+  </div>
+
+  <h5 style="margin:22px 0 10px; font-size:16px">Métodos de picking</h5>
+  <div class="cards">
+    <div class="card"><h4>Discreto</h4><p>O modelo mais básico: 1 operador coleta 1 pedido, 1 produto por vez, até completar o pedido inteiro. Simples de gerenciar, mas o operador percorre o armazém inteiro para cada pedido — pouco eficiente em alto volume.</p></div>
+    <div class="card"><h4>Por lote</h4><p>Um único operador coleta <b>vários pedidos ao mesmo tempo</b>, passando uma única vez pelas áreas de consolidação. Reduz deslocamento, mas exige tecnologia (WMS) para conciliar os pedidos com os mesmos produtos sem trocá-los.</p></div>
+    <div class="card"><h4>Por zona</h4><p>O armazém é dividido em zonas fixas e cada operador só separa dentro da sua zona, repassando o pedido adiante — como uma linha de produção. Reduz o deslocamento de cada pessoa, mas exige mais de um operador por pedido.</p></div>
+    <div class="card"><h4>Por onda</h4><p>Como o discreto (1 operador, 1 produto por vez), mas organizado em <b>múltiplos períodos de agendamento</b> ao longo do turno — cada "onda" é liberada num horário para casar com uma janela de expedição. Pode ser combinado com zona e lote.</p></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Método</th><th>Operadores por pedido</th><th>Itens por pedido</th><th>Turnos / períodos</th></tr>
+      <tr><td>Discreto</td><td>um</td><td>um</td><td>um</td></tr>
+      <tr><td>Zona</td><td>vários</td><td>um</td><td>um</td></tr>
+      <tr><td>Lote</td><td>um</td><td>vários</td><td>um</td></tr>
+      <tr><td>Onda</td><td>um</td><td>um</td><td>vários</td></tr>
+      <tr><td>Zona + lote / zona + onda / zona + onda + lote</td><td>vários / vários / vários</td><td>vários / um / vários</td><td>um / vários / vários</td></tr>
+    </table>
+  </div>
+  <p class="tip">Essa tabela é a chave da questão mais cobrada de picking em prova: dado um número de operadores, itens e turnos por pedido, identificar de qual método se trata (veja a <a href="#p1q4">questão 4</a> da prova antiga).</p>
+
+  <h5 style="margin:22px 0 10px; font-size:16px">Roteamento dentro do corredor</h5>
+  <div class="cards">
+    <div class="card lav"><h4>Transversal (ou S)</h4><p>O coletor entra no corredor por uma ponta e sai pela outra, percorrendo-o por completo antes de seguir ao próximo.</p></div>
+    <div class="card lav"><h4>Retorno</h4><p>Entra e sai do corredor pela mesma extremidade, caminhando só até o último item a coletar e voltando pelo mesmo caminho.</p></div>
+    <div class="card lav"><h4>Ponto médio</h4><p>Divide o depósito em duas seções; o coletor só pode avançar até o meio do corredor antes de retornar, nunca ultrapassando o limite da seção.</p></div>
+    <div class="card lav"><h4>Maior distância</h4><p>Semelhante ao ponto médio, mas em vez de parar no meio do corredor, o coletor avança até o item mais distante a coletar.</p></div>
+    <div class="card lav"><h4>Composta</h4><p>Combina o melhor do retorno com o transversal, minimizando a distância entre os pontos de coleta mais distantes em dois corredores adjacentes.</p></div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Configuração ótima do armazém e docas de caminhão</h4>
+  <div class="formula-box">
+    <div class="lbl">Largura e comprimento ótimos — doca numa esquina (ponto X)</div>
+    <div class="eq">W* = √[(C+8k)/(2C+8k)] × √S &nbsp;&nbsp;·&nbsp;&nbsp; L* = S / W*</div>
+    <div class="key">C = custo total por pé para movimentar um item para dentro e para fora da estocagem × nº estimado de itens/ano ($/pé) · k = custo anual do perímetro por pé ($/pé) · S = área de piso necessária (pés²)</div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">Doca centrada no armazém (ponto Y) — o caso mais barato</div>
+    <div class="eq">W* = L* = √S &nbsp;&nbsp;·&nbsp;&nbsp; TC<sub>Y</sub> = [(1/2)C + 4k] × √S</div>
+    <div class="key">Com a doca no centro, o armazém tende a ficar quadrado, e esse é sempre o layout de menor custo entre os dois casos-limite.</div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">Custo relevante total com a doca numa esquina (ponto X)</div>
+    <div class="eq">TC<sub>X</sub> = 2 × √{[(1/2)C + 2k] × [(1/4)C + 2k]} × √S</div>
+    <div class="key">TC<sub>X</sub> − TC<sub>Y</sub> é o "prêmio" que se paga para colocar a doca numa esquina em vez de no centro (às vezes necessário por layout, acesso viário etc.).</div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">Número de portas de doca para caminhão</div>
+    <div class="eq">N = D · H / (C · S)</div>
+    <div class="key">N = total de portas de doca · D = processamento médio diário (peso) · H = tempo para carregar/descarregar um caminhão · C = capacidade do caminhão · S = disponibilidade diária de tempo para carga/descarga (duração do turno)</div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">Escolha de equipamento — valor presente líquido (NPV)</div>
+    <div class="eq">NPV = I + C · [(1+i)<sup>n</sup> − 1] / [i(1+i)<sup>n</sup>] − S<sub>n</sub> / (1+i)<sup>n</sup></div>
+    <div class="key">I = investimento inicial · C = custo operacional anual · i = taxa de desconto/atratividade · n = vida útil (anos) · S<sub>n</sub> = valor residual em n anos. Aqui o NPV representa o <b>custo</b> equivalente do equipamento — quanto menor, melhor.</div>
+  </div>
+  <p class="tip">Cuidado: quando equipamentos diferentes fazem quantidades diferentes do mesmo trabalho (ex.: 3 empilhadeiras do tipo 1 equivalem a 5 do tipo 2), o NPV de cada tipo precisa ser multiplicado pela quantidade equivalente <b>antes</b> de comparar — comparar unidade por unidade dá a resposta errada.</p>
+</section>
+
+<section class="aula" id="custos">
+  <div class="aula-h"><span class="num">2</span><div><h2>Custos de armazenagem</h2><p>Quanto custa, de fato, manter mercadoria parada dentro de casa.</p></div></div>
+
+  <div class="cards">
+    <div class="card wide">
+      <h4>A ideia central</h4>
+      <p>O gerenciamento logístico administra recursos ao longo de todo o fluxo, do fornecedor ao cliente final. O <b>custo de manter o estoque</b> não é um número único — ele é a soma de seis taxas, cada uma capturando um tipo diferente de custo de ter mercadoria parada.</p>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Taxa</th><th>Fórmula</th></tr>
+      <tr><td><b>I<sub>a</sub></b> — retorno de capital</td><td>I<sub>a</sub> = 100 × (L / V<sub>e</sub>) &nbsp;·&nbsp; L = lucro · V<sub>e</sub> = valor do estoque</td></tr>
+      <tr><td><b>I<sub>b</sub></b> — armazenamento físico</td><td>I<sub>b</sub> = 100 × (S × A) / (C × P) &nbsp;·&nbsp; S = área ocupada pelo estoque · A = custo anual do m² de armazenamento · C = consumo anual · P = preço unitário</td></tr>
+      <tr><td><b>I<sub>c</sub></b> — seguro</td><td>I<sub>c</sub> = 100 × C<sub>s</sub> / (V<sub>e</sub> + E) &nbsp;·&nbsp; C<sub>s</sub> = custo anual do seguro · E = valor do prédio</td></tr>
+      <tr><td><b>I<sub>d</sub></b> — movimentação, manuseio e distribuição</td><td>I<sub>d</sub> = 100 × D / V<sub>e</sub> &nbsp;·&nbsp; D = depreciação anual do equipamento</td></tr>
+      <tr><td><b>I<sub>e</sub></b> — obsolescência</td><td>I<sub>e</sub> = 100 × O / V<sub>e</sub> &nbsp;·&nbsp; O = perdas anuais por obsolescência</td></tr>
+      <tr><td><b>I<sub>f</sub></b> — outras taxas (água, luz etc.)</td><td>I<sub>f</sub> = 100 × De / V<sub>e</sub> &nbsp;·&nbsp; De = despesas gerais anuais</td></tr>
+    </table>
+  </div>
+  <p class="f">Taxa de armazenagem total: <b>I = I<sub>a</sub> + I<sub>b</sub> + I<sub>c</sub> + I<sub>d</sub> + I<sub>e</sub> + I<sub>f</sub></b> (todas em %)</p>
+
+  <div class="formula-box">
+    <div class="lbl">Custo de armazenagem</div>
+    <div class="eq">CA = (Q/2) × T × P × I</div>
+    <div class="key">Q = quantidade de material em estoque no período considerado · P = preço unitário do material · T = tempo considerado de armazenagem · I = taxa de armazenagem total (em valor unitário, não %) — dividir Q por 2 assume um consumo linear do estoque ao longo do período.</div>
+  </div>
+  <p class="tip">Esse resultado é a base para decidir entre <b>manter a operação própria</b> ou <b>terceirizar</b>: compara-se o CA calculado com a cotação de um operador logístico para o mesmo volume (veja o <a href="#c1ex2">exercício 2</a>).</p>
+</section>
+
+<section class="aula" id="canais">
+  <div class="aula-h"><span class="num">3</span><div><h2>Canais de distribuição</h2><p>Quem participa do caminho entre o fabricante e o consumidor final — e por que ninguém faz tudo sozinho.</p></div></div>
+
+  <div class="cards">
+    <div class="card wide">
+      <h4>Definição</h4>
+      <p><b>Canal de distribuição</b> é o conjunto de organizações independentes envolvidas no processo de tornar um produto ou serviço disponível para uso ou consumo, no lugar adequado, no tempo certo e no nível de serviço desejado. Não confundir com <b>distribuição física</b>: esta é o conjunto de processos operacionais (estocagem, transporte, controle) que movem fisicamente o produto do fabricante ao consumidor — o canal de distribuição é a rede de organizações que participam dessa distribuição física.</p>
+    </div>
+  </div>
+
+  <h4 style="margin:22px 0 10px">Por que ninguém distribui sozinho</h4>
+  <p>Fabricante e varejista têm competências centrais diferentes (<i>core competence</i>): o fabricante é bom em produzir, o varejista é bom em vender no varejo. Se cada um tentasse dominar toda a cadeia — produção <b>e</b> distribuição — precisaria de investimentos muito maiores do que sua competência central justifica, gerando deseconomias e perda de mercado. O canal de distribuição existe porque organizações especializadas fazem essa ponte com custo mais eficiente, liberando fabricante e varejista para focar no que sabem fazer melhor.</p>
+
+  <h4 style="margin:26px 0 10px">Quatro canais típicos de distribuição física</h4>
+  <table>
+    <tr><th>Canal</th><th>Exemplo</th></tr>
+    <tr><td>Fabricante abastece diretamente o varejo</td><td>Indústrias de cosméticos (Natura)</td></tr>
+    <tr><td>Fabricante → CD do fabricante → varejistas</td><td>Petrobrás</td></tr>
+    <tr><td>Fabricante → CD do atacadista/varejista → varejistas</td><td>Supermercado Extra</td></tr>
+    <tr><td>Vários fabricantes → operador logístico → varejistas</td><td>Produtos de vestuário</td></tr>
+  </table>
+
+  <h4 style="margin:26px 0 10px">Objetivos e funções</h4>
+  <div class="cards">
+    <div class="card"><h4>Objetivos</h4><p>Garantir rápida disponibilidade do produto ao mercado prioritário; intensificar ao máximo o potencial de vendas; promover cooperação numa política ganha-ganha; manter o nível de serviço requisitado; reduzir custos ao longo da cadeia; garantir um fluxo de informações rápido e preciso.</p></div>
+    <div class="card"><h4>Funções</h4><p><b>Indução da demanda</b> (propaganda, promoções, facilidades financeiras) · <b>satisfação da demanda</b> (provimento de produtos/serviços) · <b>serviços de pós-venda</b> (recall, instalação, reclamações) · <b>serviços de informação</b> (rastreamento, dados específicos ao cliente).</p></div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Três tipos de canais</h4>
+  <div class="cards">
+    <div class="card blue"><h4>Verticais</h4><p>Estrutura em cadeia — Manufatura → Atacadista → Varejo → Consumidor — onde a responsabilidade pelo produto passa de etapa em etapa. Fabricante e atacadista não têm contato direto com o consumidor final; o varejista é o único responsável pela satisfação plena do cliente.</p></div>
+    <div class="card mint"><h4>Híbridos</h4><p>Duas ou mais indústrias compartilham um mesmo distribuidor, que executa parte das funções logísticas (ex.: distribuição parcial para um cliente e integral para outro). Ganha-se contato direto com grandes clientes e serviços mais baratos, mas cria risco de conflito entre agentes por duplicidade de ação.</p></div>
+    <div class="card yellow"><h4>Múltiplos</h4><p>A mesma indústria adota vários canais simultâneos (ex.: atacadista e varejista) para atender segmentos de mercado com perfis distintos. Amplia a disponibilidade do produto, mas corre o risco de um canal mais competitivo (ex.: atacado vendendo em escala) canibalizar as vendas do outro.</p></div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Propriedades do canal</h4>
+  <div class="cards">
+    <div class="card"><h4>Comprimento</h4><p>Número de intermediários entre o fabricante e o consumidor final. Nível zero = venda direta (Avon); nível 1 = um intermediário (Extra); nível 2 = dois intermediários (mercadinho de bairro, via atacadista).</p></div>
+    <div class="card"><h4>Amplitude</h4><p><b>Exclusiva</b>: um único distribuidor, para produtos especiais (Rolex) · <b>Seletiva</b>: alguns distribuidores segmentados, para produtos de maior valor agregado (automóveis) · <b>Intensiva</b>: muitos distribuidores sem restrição, para produtos de baixo valor agregado (sabonetes).</p></div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Seis etapas para definir um canal de distribuição</h4>
+  <ol class="steps">
+    <li class="step"><h5><span class="n">1</span>Segmentos de clientes</h5><p>Identificar segmentos homogêneos de clientes e definir um canal para cada um (foco no cliente).</p></li>
+    <li class="step"><h5><span class="n">2</span>Funções logísticas</h5><p>Identificar e priorizar as funções logísticas de cada canal (informação, customização, garantia de qualidade, serviços logísticos, variedade, pós-venda, disponibilidade).</p></li>
+    <li class="step"><h5><span class="n">3</span>Benchmarking preliminar</h5><p>Confrontar o projeto do canal com as melhores práticas dos concorrentes.</p></li>
+    <li class="step"><h5><span class="n">4</span>Revisão do projeto</h5><p>Ajustar o projeto com base nos resultados do benchmarking, mantendo o nível de serviço.</p></li>
+    <li class="step"><h5><span class="n">5</span>Custo × benefício</h5><p>Medir custos e benefícios de cada alternativa e escolher a estrutura de mínimo custo e máxima satisfação do cliente.</p></li>
+    <li class="step"><h5><span class="n">6</span>Integração</h5><p>Integrar a nova estrutura de canais às atividades logísticas já em curso na empresa.</p></li>
+  </ol>
+
+  <h4 style="margin:26px 0 10px">Varejo e atacado — os dois elos finais</h4>
+  <p>O <b>varejo</b> vende diretamente ao consumidor final: lojas de especialidade, de departamentos, supermercados, lojas de conveniência, farmácias, lojas de desconto e ultradesconto, varejistas <i>off-price</i> (liquidação), superlojas/hipermercados, venda por catálogo, venda sem loja (direta, marketing direto, máquinas automáticas) e redes corporativas/franquias.</p>
+  <p>O <b>atacado</b> vende para quem revende ou usa profissionalmente: atacadistas comerciais de serviço completo (mantêm estoque, força de vendas, crédito) ou de serviço limitado (pegue-e-leve, volantes, intermediários, abastecedores, cooperativas de produtores, mala direta); corretores e agentes (não assumem posse da mercadoria, cobram comissão); filiais/escritórios do próprio fabricante; e atacadistas especializados (cooperativas agrícolas, terminais de petróleo, leiloeiros).</p>
+</section>
+
+<section class="aula" id="distribuicao">
+  <div class="aula-h"><span class="num">4</span><div><h2>Distribuição física</h2><p>Como o produto sai do depósito e chega até o cliente — um caminhão de cada vez ou vários de uma vez.</p></div></div>
+
+  <div class="cards">
+    <div class="card wide">
+      <h4>A ideia central</h4>
+      <p><b>Distribuição física</b> é o processo final (<i>outbound</i>) da cadeia logística: os processos operacionais e de controle que transferem os produtos desde o ponto de fabricação até o consumidor final — estocagem, transporte, embalagem e destino final. É sinônimo de <i>logística de distribuição</i> ou <i>logística de saída</i>, o espelho da logística de suprimentos (<i>inbound</i>).</p>
+    </div>
+  </div>
+
+  <p>Componentes do sistema de distribuição física: instalações fixas (CDs, armazéns), estoques de produtos, veículos, informações diversas, hardware e software, custos e pessoal. Nos últimos anos, a distribuição física ganhou destaque por dois motivos: o custo crescente do dinheiro, que força as empresas a reduzir estoques e agilizar o transporte, e a diversificação da produção, que está alterando o esquema produtivo mundial.</p>
+
+  <div class="formula-box">
+    <div class="lbl">Tempo de ciclo de um veículo</div>
+    <div class="eq">TC = T<sub>Car</sub> + T<sub>Est(A→B)</sub> + T<sub>Des</sub> + T<sub>Est(B→A)</sub></div>
+    <div class="key">T<sub>Car</sub> = tempo de carregamento · T<sub>Est(A→B)</sub> = tempo de estrada na ida · T<sub>Des</sub> = tempo de descarregamento · T<sub>Est(B→A)</sub> = tempo de estrada na volta</div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Dois sistemas de distribuição</h4>
+  <div class="cards">
+    <div class="card blue">
+      <h4>"Um para um" (transferência)</h4>
+      <p>O veículo sai totalmente carregado (lotação completa) de um ponto — depósito da fábrica ou CD do varejista — direto para outro ponto de destino. Não há paradas intermediárias: é uma transferência pura.</p>
+    </div>
+    <div class="card blue">
+      <h4>"Um para muitos" (roteirização)</h4>
+      <p>O veículo é carregado no CD com mercadorias para vários clientes e percorre um roteiro predeterminado dentro de uma zona (o "bolsão") de entrega: percorre a distância <i>d</i> até o bolsão, faz <i>n</i> visitas dentro dele, e volta ao depósito.</p>
+    </div>
+  </div>
+
+  <h5 style="margin:22px 0 10px; font-size:16px">Custos do sistema "um para um"</h5>
+  <div class="formula-box">
+    <div class="lbl">Custo de transporte</div>
+    <div class="eq">CF<sub>d</sub> = [CF<sub>m</sub> / T<sub>op</sub>] × (T<sub>a-b</sub> × 2) &nbsp;·&nbsp; CV = C<sub>km</sub> × (D × 2) &nbsp;·&nbsp; CT = (CF<sub>d</sub> + CV) × (1 + margem)</div>
+    <div class="key">CF<sub>m</sub> = custo fixo mensal do veículo · T<sub>op</sub> = dias de operação do veículo no mês · T<sub>a-b</sub> = dias de viagem de ida e volta · C<sub>km</sub> = custo variável por km · D = distância (km, só a ida)</div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">Custo unitário e custo anual de transporte</div>
+    <div class="eq">CUn = CT / (capacidade do veículo / peso da peça) &nbsp;·&nbsp; CAT = CUn × Q</div>
+    <div class="key">Q = quantidade de peças transportadas por ano</div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">Custo de estoque (em trânsito + nas duas pontas)</div>
+    <div class="eq">CE<sub>t</sub> = (Q × V × T<sub>a-b</sub> × j) / 365 &nbsp;·&nbsp; CE = [L / peso peça] × (1 + f<sub>s</sub>) × V × j &nbsp;·&nbsp; CA<sub>e</sub> = CE + CE<sub>t</sub> &nbsp;·&nbsp; CTA = CAT + CA<sub>e</sub></div>
+    <div class="key">V = valor unitário do produto · j = taxa de juros anual · L = lote de compra · f<sub>s</sub> = fator de segurança · CTA = custo total anual, o número que decide qual veículo é mais barato</div>
+  </div>
+
+  <h5 style="margin:22px 0 10px; font-size:16px">Tempo de ciclo do sistema "um para muitos"</h5>
+  <div class="formula-box">
+    <div class="lbl">Tempo médio de ciclo</div>
+    <div class="eq">TC = t<sub>1</sub> + t<sub>2</sub> + t<sub>3</sub> &nbsp;·&nbsp; t<sub>1</sub> = 60 × 2 × d<sub>1</sub>/V<sub>1</sub> &nbsp;·&nbsp; t<sub>2</sub> = 60 × d<sub>2</sub>/V<sub>2</sub> &nbsp;·&nbsp; t<sub>3</sub> = n × T</div>
+    <div class="key">t<sub>1</sub> = CD até o bolsão (ida e volta) · t<sub>2</sub> = percurso dentro do bolsão · t<sub>3</sub> = tempo total de entrega · d<sub>1</sub> = distância até o bolsão · V<sub>1</sub> = velocidade até o bolsão · d<sub>2</sub> = soma dos percursos dentro do bolsão · V<sub>2</sub> = velocidade dentro do bolsão · n = número de clientes · T = tempo médio de uma entrega</div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">Tempo de ciclo máximo provável (98% de confiança)</div>
+    <div class="eq">CV = σ<sub>TC</sub>/TC &nbsp;&nbsp;→&nbsp;&nbsp; TC<sub>Máx</sub> = TC + 2,06 × σ<sub>TC</sub></div>
+    <div class="key">Como o tempo de ciclo é a soma de componentes aleatórios, admite-se que ele siga uma distribuição normal — 2,06 desvios-padrão cobre 98% dos casos. O mesmo raciocínio vale para a carga: Q<sub>Máx</sub> = Q + 2,06 × σ<sub>Q</sub>, com Var(Q) = n × σ<sub>q</sub>².</div>
+  </div>
+
+  <div class="cards" style="margin-top:16px">
+    <div class="card lav wide"><h4>Fatores de decisão na escolha do veículo</h4><p>Distância do bolsão até o depósito/CD · densidade espacial (pontos por km² no bolsão) · tempo médio de parada por cliente · quantidade média de mercadoria entregue por visita · velocidade média do percurso.</p></div>
+  </div>
+</section>
+
+<section class="aula" id="ex-armazenagem">
+  <div class="aula-h"><span class="num">Ex</span><div><h2>Exercícios resolvidos — Armazenagem</h2><p>Praça útil, docas de caminhão, configuração ótima do armazém e escolha de equipamento.</p></div></div>
+
+  <div class="ex" id="a1ex1">
+    <header class="ex-h"><span class="tag">Exercício 1</span><h3>Capacidade estática e área útil de um armazém</h3></header>
+    <div class="given">Armazém de 120 m × 40 m, resistência estrutural do piso de 10,0 t/m². Corredor de 1 m ao redor de todo o perímetro; corredor longitudinal de 8 m de largura; três corredores transversais de 6 m de largura cada; área administrativa (escritório etc.) de 12 m × 6 m.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Capacidade estática (parâmetro inicial)</h5><div class="eq">Área total = 120 × 40 = <b class="res">4.800 m²</b><br>CE = 4.800 × 10,0 = <b class="res">48.000 t</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Corredores laterais (1 m ao redor)</h5><div class="eq">Nova área = 118 × 38 = <b class="res">4.484 m²</b><br>Área perdida = 4.800 − 4.484 = <b class="res">316 m²</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Corredor longitudinal (8 m)</h5><div class="eq">Área perdida = 118 × 8 = <b class="res">944 m²</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Três corredores transversais (6 m) — sem contar a intersecção duas vezes</h5><div class="eq">Cada corredor: 38 × 6 = 228 m² &nbsp;×3 = 684 m²<br>Intersecção com o corredor longitudinal: 8 × 6 = 48 m² &nbsp;×3 = 144 m²<br>Área perdida líquida = 684 − 144 = <b class="res">540 m²</b></div><p>A intersecção já foi contada no corredor longitudinal do passo 3 — descontá-la de novo aqui evita abater a mesma área duas vezes.</p></li>
+      <li class="step"><h5><span class="n">5</span>Área administrativa</h5><div class="eq">12 × 6 = <b class="res">72 m²</b></div></li>
+      <li class="step"><h5><span class="n">6</span>Área útil final</h5><div class="eq">Total a abater = 316 + 944 + 540 + 72 = <b class="res">1.872 m²</b><br>Área útil = 4.800 − 1.872 = <b class="res">2.928 m²</b><br>Aproveitamento = 2.928 / 4.800 × 100 = <b class="res">61%</b></div></li>
+    </ol>
+    <div class="result bad"><span>Resposta</span><b>Área útil ≈ 2.928 m² (61% da área total)</b></div>
+    <p style="margin-top:10px">O mercado considera ideal um aproveitamento acima de 70%. Com 61%, este layout precisa de ajustes — por exemplo, reduzir o corredor longitudinal de 8 m para 6 m e os transversais de 6 m para 4 m, desde que os equipamentos de movimentação ainda consigam trafegar por eles.</p>
+  </div>
+
+  <div class="ex" id="a1ex2">
+    <header class="ex-h"><span class="tag">Exercício 2</span><h3>Docas de caminhão — Rico Discount Drug Stores</h3></header>
+    <div class="given">Um armazém reabastece 250 lojas de varejo por semana. O pedido médio por loja tem 6.500 libras-peso, e os pedidos de 4 lojas cabem em cada caminhão. O carregamento leva 8 horas, turno de 8 horas.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Processamento diário (D)</h5><div class="eq">50 lojas atendidas/dia (250 ÷ 5 dias úteis) × 6.500 lb = <b class="res">325.000 lb/dia</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Capacidade do caminhão (C)</h5><div class="eq">4 lojas × 6.500 lb = <b class="res">26.000 lb</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Aplicar N = DH/CS</h5><div class="eq">N = (325.000 × 2) / (26.000 × 8) = 650.000 / 208.000 = <b class="res">3,15 → 4 portas</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>4 portas de doca</b></div>
+    <p style="margin-top:10px">Quatro portas dão à Rico uma folga (arredondamento para cima) para absorver picos de demanda e contingências operacionais.</p>
+  </div>
+
+  <div class="ex" id="a1ex3">
+    <header class="ex-h"><span class="tag">Exercício 3</span><h3>Configuração ótima do armazém — peças de reposição</h3></header>
+    <div class="given">Armazém privado com processamento mensal de 100.000 caixas e custo médio de manuseio de $0,005/pé por caixa (entrada e saída). Área total necessária: 300.000 pés². Construção a $90/pé² (500×600 pés), vida útil de 20 anos. Doca localizada numa esquina.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Custo anual do perímetro (k)</h5><div class="eq">Perímetro = 2(500) + 2(600) = 2.200 pés<br>Custo de construção = $90 × 300.000 = $27.000.000, anualizado em 20 anos = $1.350.000/ano<br>k = 1.350.000 / 2.200 = <b class="res">$613,64/pé</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Custo de movimentação (C)</h5><div class="eq">C = 0,005 × 100.000 × 12 = <b class="res">$6.000/pé</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Largura e comprimento ótimos</h5><div class="eq">W* = √[(6.000+8×613,64)/(2×6.000+8×613,64)] × √300.000 = <b class="res">440 pés</b><br>L* = 300.000 / 440 = <b class="res">682 pés</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Custo relevante total</h5><div class="eq">TC = 2√{[(1/2)(6.000)+2(613,64)][(1/4)(6.000)+2(613,64)]} × √300.000<br>= 6.790,87 × 547,72 = <b class="res">$3.719.495/ano</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>440 × 682 pés · custo relevante total ≈ $3.719.495/ano</b></div>
+  </div>
+
+  <div class="ex" id="a1ex4">
+    <header class="ex-h"><span class="tag">Exercícios complementares</span><h3>Três variações do mesmo raciocínio</h3></header>
+    <div class="given">Enunciados: (1) armazém de 100.000 pés², processamento de 10.000 itens/ano a $0,01/pé, custo de perímetro de $210/pé, doca numa esquina; (2) CD de alimentícios com 75 lojas/dia, pedido de 12.000 lb/loja, 3 pedidos por caminhão, carregamento de 3 h, turno de 8 h; (3) três tipos de empilhadeira ($20.000/$10.000/$5.000, vida útil de 10 anos, residual de 15%, custos operacionais de $2.000/$2.500/$3.000, equivalência 3×tipo1 = 5×tipo2 = 7×tipo3, retorno exigido de 20%).</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Configuração ótima (100.000 pés²)</h5><div class="eq">C = 10.000 × 0,01 = 100 · k = 210 · S = 100.000<br>W* = <b class="res">307,70 pés</b> &nbsp;·&nbsp; L* = <b class="res">324,99 pés</b> &nbsp;·&nbsp; TC<sub>X</sub> = <b class="res">$289.240,38</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Docas de caminhão (75 lojas)</h5><div class="eq">D = 75 × 12.000 = 900.000 lb/dia &nbsp;·&nbsp; C = 3 × 12.000 = 36.000 lb<br>N = (900.000 × 3) / (36.000 × 8) = 9,375 → <b class="res">10 portas</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Escolha de empilhadeira (NPV, i = 20%, n = 10)</h5><div class="eq">NPV por unidade: tipo 1 = $27.900,43 · tipo 2 = $20.238,92 · tipo 3 = $17.456,29<br>Multiplicando pela equivalência: 3×tipo1 = <b class="res">$83.701,28</b> · 5×tipo2 = $101.194,60 · 7×tipo3 = $122.194,01</div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>10 portas de doca · melhor compra: empilhadeira tipo 1 (menor custo equivalente)</b></div>
+  </div>
+</section>
+
+<section class="aula" id="ex-custos">
+  <div class="aula-h"><span class="num">Ex</span><div><h2>Exercícios resolvidos — Custos de armazenagem</h2><p>As seis taxas aplicadas a quatro empresas diferentes.</p></div></div>
+
+  <div class="ex" id="c1ex1">
+    <header class="ex-h"><span class="tag">Exemplo 1</span><h3>Cálculo direto da taxa e do custo de armazenagem</h3></header>
+    <div class="given">Lucro = R$17.000 · Valor do estoque = R$350.000 · Área ocupada = 220 m² · Custo/m² = R$135 · Consumo anual = 350.000 · Preço médio = R$1,60 · Seguro = R$15.000 · Valor do prédio = R$35.000 · Depreciação = R$7.000 · Obsolescência = R$5.000 · Despesas gerais = R$45.000 · Apuração mensal.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>As seis taxas</h5><div class="eq">I<sub>a</sub> = 17.000/350.000 = 4,857% &nbsp;·&nbsp; I<sub>b</sub> = (220×135)/(350.000×1,6) = 5,304%<br>I<sub>c</sub> = 15.000/(350.000+35.000) = 3,896% &nbsp;·&nbsp; I<sub>d</sub> = 7.000/350.000 = 2,000%<br>I<sub>e</sub> = 5.000/350.000 = 1,429% &nbsp;·&nbsp; I<sub>f</sub> = 45.000/350.000 = 12,857%</div></li>
+      <li class="step"><h5><span class="n">2</span>Taxa total</h5><div class="eq">I = 4,857+5,304+3,896+2,000+1,429+12,857 = <b class="res">30,343% ≈ 0,3034</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Custo de armazenagem (T = 1 mês)</h5><div class="eq">CA = (350.000/12 / 2) × 1 × 1,6 × 0,3034 = <b class="res">R$ 7.079,92</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>CA ≈ R$ 7.079,92/mês</b></div>
+  </div>
+
+  <div class="ex" id="c1ex2">
+    <header class="ex-h"><span class="tag">Exemplo 2</span><h3>Manter a operação própria ou terceirizar?</h3></header>
+    <div class="given">Empresa Alpha avalia terceirizar a armazenagem. Cotação da Log-Master: R$0,45 por unidade movimentada + R$0,10 por R$ movimentado em seguro. Dados próprios: Lucro R$25.000 · Estoque R$551.000 · Área 1.000 m² · Custo/m² R$230 · Consumo anual 1.500.000 · Preço R$1,90 · Seguro R$66.120 · Prédio R$1.500.000 · Depreciação R$12.500 · Obsolescência R$8.000 · Despesas gerais R$250.000 · Apuração anual.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Taxa de armazenagem própria</h5><div class="eq">I<sub>a</sub>=4,537% · I<sub>b</sub>=8,070% · I<sub>c</sub>=3,224% · I<sub>d</sub>=2,269% · I<sub>e</sub>=1,452% · I<sub>f</sub>=45,372%<br>I = <b class="res">64,924%</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Custo de armazenagem própria</h5><div class="eq">CA = (1.500.000/2) × 1 × 1,9 × 0,6492 = <b class="res">R$ 925.167,00/ano</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Custo estimado com a Log-Master</h5><div class="eq">Movimentação: 0,45 × 1.500.000 = R$675.000,00<br>Seguro: 0,10 × (1.500.000 × 1,9) = R$285.000,00<br>Total = <b class="res">R$ 960.000,00/ano</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>Manter a armazenagem própria é mais barato (R$925.167 &lt; R$960.000)</b></div>
+  </div>
+
+  <div class="ex" id="c1ex3">
+    <header class="ex-h"><span class="tag">Exemplo 3</span><h3>Empresa Beta — avaliação de viabilidade</h3></header>
+    <div class="given">Lucro R$50.000 · Estoque R$1.500.000 · Área 2.000 m² · Custo/m² R$130 · Consumo anual 4.200.000 · Preço R$12 · Seguro R$180.000 · Prédio R$1.200.000 · Depreciação R$10.000 · Obsolescência R$10.000 · Despesas gerais R$300.000 · Apuração anual, índices com 3 casas decimais.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>As seis taxas</h5><div class="eq">I<sub>a</sub>=3,333% · I<sub>b</sub>=0,516% · I<sub>c</sub>=6,667% · I<sub>d</sub>=0,667% · I<sub>e</sub>=0,667% · I<sub>f</sub>=20,000%<br>I = <b class="res">31,849%</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Custo de armazenagem</h5><div class="eq">CA = (350.000) × 12 × 0,31849 = <b class="res">R$ 668.833,20/ano</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>Custo de armazenagem própria ≈ R$ 668.833,20/ano</b></div>
+    <p style="margin-top:10px">Esse valor é o que entraria na balança contra a cotação de cada um dos dois operadores logísticos consultados pela Beta para decidir a viabilidade da terceirização.</p>
+  </div>
+
+  <div class="ex" id="c1ex4">
+    <header class="ex-h"><span class="tag">Exemplo 4</span><h3>Empresa Delta — custo médio unitário</h3></header>
+    <div class="given">Lucro R$10.000 · Estoque R$1.000.000 · Área 1.000 m² · Custo/m² R$120 · Consumo anual 1.200.000 · Preço R$10 · Seguro R$120.000 · Prédio R$500.000 · Depreciação R$4.166,67 · Obsolescência R$5.000 · Despesas gerais R$120.000 · Apuração mensal.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>As seis taxas</h5><div class="eq">I<sub>a</sub>=1,000% · I<sub>b</sub>=1,000% · I<sub>c</sub>=8,000% · I<sub>d</sub>=0,417% · I<sub>e</sub>=0,500% · I<sub>f</sub>=12,000%<br>I = <b class="res">22,917%</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Custo de armazenagem do mês</h5><div class="eq">CA = (100.000) × 10 × 0,22917 = <b class="res">R$ 114.583,50</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Custo médio unitário</h5><div class="eq">CUn = CA / Qtde estocada = 114.583,50 / 100.000 = <b class="res">≈ R$ 1,15/unidade</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>Custo de armazenagem ≈ R$ 114.583,50/mês · custo médio unitário ≈ R$ 1,15</b></div>
+    <p class="tip">O comparativo com o faturamento mensal (% de custo sobre receita) depende de um dado que o enunciado não fornece (o faturamento em si) — na prova, se ele aparecer, basta dividir o CA pelo faturamento e multiplicar por 100.</p>
+  </div>
+</section>
+
+<section class="aula" id="ex-distribuicao">
+  <div class="aula-h"><span class="num">Ex</span><div><h2>Exercícios resolvidos — Distribuição física</h2><p>Tempo de ciclo, "um para um", "um para muitos" e um problema de alocação de fontes.</p></div></div>
+
+  <div class="ex" id="d1ex1">
+    <header class="ex-h"><span class="tag">Exercício 1</span><h3>Ganho de produtividade com a recuperação da rodovia</h3></header>
+    <div class="given">Transporte rodoviário entre A e B, 1.200 km. Carregamento em A: 8 h. Descarga em B: 6 h. Retorno vazio para A. Velocidade atual: 30 km/h (ida), 35 km/h (volta). Após a obra: 50 km/h (ida), 55 km/h (volta). Qual o aumento percentual de produtividade da frota?</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Tempo de ciclo atual</h5><div class="eq">TC = 8 + 1.200/30 + 6 + 1.200/35 = 8 + 40 + 6 + 34,29 = <b class="res">88,29 h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Tempo de ciclo após a obra</h5><div class="eq">TC = 8 + 1.200/50 + 6 + 1.200/55 = 8 + 24 + 6 + 21,82 = <b class="res">59,82 h</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Aumento de produtividade</h5><div class="eq">Produtividade ∝ 1/TC → aumento = (88,29/59,82 − 1) × 100 = <b class="res">≈ 47,6%</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>A frota ganha ≈ 47,6% de produtividade (quase metade mais viagens no mesmo período)</b></div>
+  </div>
+
+  <div class="ex" id="d1ex2">
+    <header class="ex-h"><span class="tag">Exercício 2</span><h3>"Um para um" — qual dos 10 veículos custa menos por ano?</h3></header>
+    <div class="given">Fábrica em Porto Alegre fornece 20.000 eletrodomésticos/ano para São Paulo (1.120 km, 2 dias de viagem, cada peça pesa 44 kg). Margem de lucro 25% · valor do produto R$216,22 · fator de segurança 0,5 · juros 30% a.a. · 25 dias de operação/mês. Frota candidata de 10 veículos, do menor (500 kg, custo fixo R$2.071/mês, custo variável R$0,263/km) ao maior (45.000 kg).</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Custo de transporte — veículo 1 (500 kg)</h5><div class="eq">CF<sub>d</sub> = (2.071/25) × (2×2) = R$331,36<br>CV = 0,263 × (1.120×2) = R$589,12<br>CT = (331,36+589,12) × 1,25 = <b class="res">R$1.150,60</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Custo unitário e custo anual de transporte</h5><div class="eq">CUn = 1.150,60 / (500/44) = R$101,25<br>CAT = 101,25 × 20.000 = <b class="res">R$2.025.000,00/ano</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Custo de estoque em trânsito e nas duas pontas</h5><div class="eq">CE<sub>t</sub> = (20.000 × 216,22 × 2 × 0,3)/365 = R$7.108,60<br>CE = (500/44) × 1,5 × 216,22 × 0,3 = R$1.105,67<br>CA<sub>e</sub> = <b class="res">R$8.214,27</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Custo total anual do veículo 1</h5><div class="eq">CTA = 2.025.000,00 + 8.214,27 = <b class="res">R$2.033.214,27</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Repetir para os 10 veículos e comparar</h5><div class="eq">Repetindo o mesmo cálculo, o custo total anual cai à medida que a capacidade sobe (menos viagens, mais eficiência), mas o custo de estoque em trânsito sobe (lotes maiores). O ponto de mínimo aparece no meio da frota.</div></li>
+    </ol>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>Veículo</th><th>Capacidade (kg)</th><th>CAT (R$)</th><th>CAe (R$)</th><th>Custo total anual (R$)</th></tr>
+        <tr><td>1</td><td>500</td><td>2.025.000,00</td><td>8.214,27</td><td>2.033.214,27</td></tr>
+        <tr><td>2</td><td>1.000</td><td>1.415.000,00</td><td>9.319,94</td><td>1.424.319,94</td></tr>
+        <tr><td>3</td><td>3.800</td><td>351.400,00</td><td>15.511,70</td><td>366.911,70</td></tr>
+        <tr><td>4</td><td>4.000</td><td>397.400,00</td><td>15.953,96</td><td>413.353,96</td></tr>
+        <tr><td>5</td><td>7.800</td><td>243.600,00</td><td>24.357,06</td><td>267.957,06</td></tr>
+        <tr><td>6</td><td>8.000</td><td>240.800,00</td><td>24.799,33</td><td>265.599,33</td></tr>
+        <tr><td>7</td><td>10.600</td><td>209.800,00</td><td>30.548,81</td><td>240.348,81</td></tr>
+        <tr><td>8</td><td>18.200</td><td>184.000,00</td><td>47.355,00</td><td>231.355,00</td></tr>
+        <tr><td><b>9</b></td><td><b>27.000</b></td><td>129.800,00</td><td>66.814,80</td><td><b>196.614,80</b></td></tr>
+        <tr><td>10</td><td>45.000</td><td>103.600,00</td><td>106.618,94</td><td>210.218,94</td></tr>
+      </table>
+    </div>
+    <div class="result ok"><span>Resposta</span><b>Veículo 9 (27.000 kg) tem o menor custo total anual: R$196.614,80</b></div>
+    <p class="tip">Repare que o veículo 10 (o maior) já não é o mais barato — ele viaja tão pouco carregado que o custo de estoque parado dispara. O mínimo de custo está sempre no equilíbrio entre custo de transporte (cai com o tamanho) e custo de estoque (sobe com o tamanho).</p>
+  </div>
+
+  <div class="ex" id="d1ex3">
+    <header class="ex-h"><span class="tag">Exercício 3</span><h3>"Um para muitos" — o tempo de ciclo cabe no turno?</h3></header>
+    <div class="given">Transportadora de bebidas, sistema "um para muitos". Zona de 12 clientes, soma dos percursos entre eles = 18,4 km. Depósito fica a 7 km ao sul do cliente 1. Velocidade dentro da zona: 30 km/h. Tempo médio de parada: 12 min/entrega. Coeficiente de variação do tempo de ciclo: 0,25. Turno comercial de 8 h.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Tempo até o bolsão (t₁)</h5><div class="eq">t<sub>1</sub> = 60 × 2 × 7/25 = <b class="res">33,6 min</b></div><p>V₁ (velocidade até o bolsão) considerada em 25 km/h, conforme dado em aula.</p></li>
+      <li class="step"><h5><span class="n">2</span>Tempo dentro do bolsão (t₂)</h5><div class="eq">t<sub>2</sub> = 60 × 18,4/30 = <b class="res">36,8 min</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Tempo total de entrega (t₃)</h5><div class="eq">t<sub>3</sub> = 12 × 12 = <b class="res">144 min</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Tempo médio de ciclo</h5><div class="eq">TC = 33,6 + 36,8 + 144 = <b class="res">214,4 min</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Tempo de ciclo máximo provável (98%)</h5><div class="eq">σ<sub>TC</sub> = 0,25 × 214,4 = 53,6<br>TC<sub>Máx</sub> = 214,4 + 2,06 × 53,6 = <b class="res">324,8 min ≈ 5h24min</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>TC médio = 214,4 min · TC máximo provável ≈ 5h24min</b></div>
+    <p style="margin-top:10px">Como o turno tem 8 h (480 min) e mesmo o pior caso provável (5h24min) cabe dentro dele com folga, será necessário <b>aumentar</b> a quantidade de pontos de venda atendidos nessa rota — sobrou capacidade ociosa no veículo.</p>
+  </div>
+
+  <div class="ex" id="d1ex4">
+    <header class="ex-h"><span class="tag">Exercício 4</span><h3>Modelo de transportes — de que porto abastecer cada loja</h3></header>
+    <div class="given">Quatro lojas de materiais de construção precisam de areia grossa: Loja 1 (50 m³), Loja 2 (80 m³), Loja 3 (40 m³) e Loja 4 (100 m³). Três portos suprem qualquer demanda; distâncias (km): P1→(30,20,24,18) · P2→(12,36,30,24) · P3→(8,15,25,20), na ordem das lojas 1–4. Cada viagem transporta 10 m³. Minimizar a distância total percorrida.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Como os portos não têm limite de capacidade, o problema não precisa de método de transportes (Vogel, canto noroeste etc.)</h5><p>Como qualquer porto pode suprir qualquer demanda, a distância total mínima é obtida simplesmente atendendo <b>cada loja pelo porto mais próximo dela</b> — não há disputa por capacidade entre lojas.</p></li>
+      <li class="step"><h5><span class="n">2</span>Porto mais próximo de cada loja</h5><div class="eq">Loja 1: min(30,12,8) = <b class="res">P3 (8 km)</b><br>Loja 2: min(20,36,15) = <b class="res">P3 (15 km)</b><br>Loja 3: min(24,30,25) = <b class="res">P1 (24 km)</b><br>Loja 4: min(18,24,20) = <b class="res">P1 (18 km)</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Número de viagens por loja</h5><div class="eq">Loja 1: 50/10=5 · Loja 2: 80/10=8 · Loja 3: 40/10=4 · Loja 4: 100/10=10 &nbsp;(total 27 viagens)</div></li>
+      <li class="step"><h5><span class="n">4</span>Distância total mínima (só ida)</h5><div class="eq">5×8 + 8×15 + 4×24 + 10×18 = 40+120+96+180 = <b class="res">436 km</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>P3 abastece as lojas 1 e 2; P1 abastece as lojas 3 e 4 · distância total mínima ≈ 436 km (27 viagens)</b></div>
+    <p class="tip">Se a prova pedir a "distância percorrida" incluindo o retorno vazio do caminhão, basta dobrar o resultado: 872 km.</p>
+  </div>
+</section>
+
+<section class="aula" id="picking-questoes">
+  <div class="aula-h"><span class="num">Q&amp;A</span><div><h2>Questões de picking</h2><p>Discussões conceituais de escolha de método — sem conta, só raciocínio técnico.</p></div></div>
+
+  <div class="qa">
+    <div class="q">Um CD tem três perfis de pedido — A (grandes, ~20 itens), B (pequenos, 3–4 itens) e C (horários específicos de expedição). Qual método de picking cabe melhor em cada um?</div>
+    <div class="a">
+      <p><b>Perfil A (pedidos grandes):</b> picking <b>por zona</b>. Um pedido com 20 itens espalhados pelo armazém exige um deslocamento enorme se um único operador tiver que separá-lo sozinho (discreto). Dividindo o armazém em zonas e passando o pedido de operador em operador, o trabalho é paralelizado e cada um percorre só a sua área.</p>
+      <p><b>Perfil B (pedidos pequenos):</b> picking <b>por lote</b>. Como cada pedido tem poucos itens, vale a pena um operador coletar vários pedidos numa única passada pelo armazém — reduz drasticamente o deslocamento por item coletado, desde que haja tecnologia (WMS) para não misturar os pedidos.</p>
+      <p><b>Perfil C (horários de expedição):</b> picking <b>por onda</b>. É o método desenhado justamente para isso — libera "ondas" de coleta em horários programados, casando a separação com a janela de expedição de cada horário.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q">Um armazém tem 5 SKUs com movimentações/dia bem diferentes (A: 500, B: 300, C: 150, D: 40, E: 10) e 5 posições de picking, sendo as posições 1 e 2 as de mais fácil acesso. Como distribuir os produtos e por quê?</div>
+    <div class="a">
+      <p><b>a)</b> Colocar A e B (os SKUs de maior giro) nas posições 1 e 2; C na posição seguinte; D e E nas posições mais distantes.</p>
+      <p><b>b)</b> O critério é o <b>giro do produto</b> — o mesmo critério que a aula usa para decidir o layout do armazém como um todo. Quem é coletado com mais frequência deve custar o menor deslocamento possível por coleta.</p>
+      <p><b>c)</b> Distribuir aleatoriamente reduz a produtividade porque, em média, os itens de alto giro acabam em posições distantes com a mesma probabilidade dos de baixo giro — e como eles são coletados muito mais vezes, cada metro extra de deslocamento é multiplicado por centenas de viagens/dia, inflando o tempo total de picking sem necessidade.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q">Um e-commerce com 3.000 pedidos/dia, alta variedade de SKUs, pedidos pequenos, entregas rápidas, demanda variável ao longo da semana e produtos heterogêneos (tamanho, peso, fragilidade) está escolhendo entre picking discreto na estocagem, picking por zona com flow-racks, ou picking by-light combinado com esteiras. Qual alternativa escolher?</div>
+    <div class="a">
+      <p><b>Picking by-light combinado com esteiras (alternativa C).</b> O perfil descrito — muitos pedidos pequenos, alta variedade, urgência na entrega e forte variação semanal de demanda — é exatamente o cenário em que o custo de picking mais pesa (até 60% da operação) e onde erros são mais caros de corrigir depois.</p>
+      <ul>
+        <li><b>Erros:</b> o <i>by-light</i> indica a posição e a quantidade exatas, reduzindo erros de separação num catálogo com muitos SKUs parecidos.</li>
+        <li><b>Produtividade e integração:</b> as esteiras aceleram a consolidação e conectam a separação direto à expedição, essencial para entregas rápidas.</li>
+        <li><b>Flexibilidade:</b> um sistema tecnológico absorve melhor os picos de demanda ao longo da semana do que o picking discreto manual, que escala mal.</li>
+      </ul>
+      <p>O contraponto é o investimento em tecnologia — maior que nas outras duas alternativas — mas ele se paga pelo volume (3.000 pedidos/dia) e pela penalidade alta de erro e atraso num negócio de entregas rápidas.</p>
+    </div>
+  </div>
+</section>
+
+<section class="aula" id="prova">
+  <div class="provahead">
+    <p>UFSC Joinville · EMB 5934 · Logística III</p>
+    <h3>Prova 1 resolvida — 2024/2, 2ª chamada</h3>
+  </div>
+
+  <div class="ex" id="p1q1">
+    <header class="ex-h"><span class="tag">Q1 · 2,0 pts</span><h3>Defina cada função de armazenagem</h3></header>
+    <div class="qa" style="padding:0; border:none; background:none">
+      <div class="a">
+        <p><b>Consolidação:</b> recebe cargas de várias plantas/fornecedores e as agrega num único carregamento maior para um mesmo cliente, gerando economia de escala no frete.</p>
+        <p><b>Desmembramento (break-bulk):</b> recebe uma carga grande de uma única origem e a fraciona em quantidades menores para vários clientes — o oposto da consolidação.</p>
+        <p><b>Centro de Distribuição (CD):</b> gerencia estoques na distribuição física, recebendo de diferentes fornecedores e fracionando/transferindo para diferentes clientes; sua forma mais enxuta é o cross-docking, sem passar pelo estoque.</p>
+        <p><b>Agrupamento em trânsito (merge in transit):</b> um cross-docking híbrido especializado, associado à distribuição de produtos de alto valor agregado — o pedido é "explodido" em componentes de fornecedores diferentes, que se consolidam já a caminho do cliente, eliminando estoques intermediários.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ex" id="p1q2">
+    <header class="ex-h"><span class="tag">Q2 · 1,0 pt</span><h3>Tema do artigo apresentado</h3></header>
+    <p style="color:var(--muted); font-size:15px">Esta questão pede o tema do artigo especificamente designado a cada estudante durante o semestre — não há uma resposta genérica válida para todos. Vale como lembrete de estudo: releia o resumo do seu próprio artigo e prepare 2–3 exemplos de outras aplicações do mesmo tema antes da prova.</p>
+  </div>
+
+  <div class="ex" id="p1q3">
+    <header class="ex-h"><span class="tag">Q3 · 1,0 pt</span><h3>Distribuição física e distribuição "um para um"</h3></header>
+    <div class="a" style="font-size:15px">
+      <p><b>Distribuição física</b> é o processo final (outbound) da cadeia logística: os processos operacionais de estocagem, transporte e controle que transferem os produtos do ponto de fabricação até o consumidor final.</p>
+      <p><b>Distribuição "um para um"</b> (ou transferência de produtos) é o sistema em que o veículo é totalmente carregado num ponto de origem e transporta a carga, sem paradas intermediárias, até um único ponto de destino.</p>
+    </div>
+  </div>
+
+  <div class="ex" id="p1q4">
+    <header class="ex-h"><span class="tag">Q4 · 2,0 pts</span><h3>Identificar os tipos de picking II, III e IV</h3></header>
+    <div class="given">Tipo I (discreto): 1 operador, 1 produto por vez, 1 período. Tipo II: mais de 1 operador, 1 produto por vez, 1 período. Tipo III: 1 operador, mais de 1 produto por vez, 1 período. Tipo IV: 1 operador, 1 produto por vez, mais de 1 período.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Comparar com a tabela Método × Operadores × Itens × Turnos</h5><div class="eq">Zona = vários operadores / um item / um turno &nbsp;→&nbsp; bate com o <b class="res">Tipo II</b><br>Lote = um operador / vários itens / um turno &nbsp;→&nbsp; bate com o <b class="res">Tipo III</b><br>Onda = um operador / um item / vários turnos &nbsp;→&nbsp; bate com o <b class="res">Tipo IV</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>II, III e IV são, respectivamente: por zona, por lote e por onda</b></div>
+  </div>
+
+  <div class="ex" id="p1q5">
+    <header class="ex-h"><span class="tag">Q5 · 2,0 pts</span><h3>Portas de doca — CD de alimentícios</h3></header>
+    <div class="given">85 lojas atendidas diariamente. Pedido médio de 15.000 libras-peso/loja. 3 pedidos de lojas diferentes por caminhão. Carregamento: 4 horas. Turno: 8 horas.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Montar os quatro termos da fórmula</h5><div class="eq">D = 85 × 15.000 = <b class="res">1.275.000 lb/dia</b><br>H = <b class="res">4 h</b><br>C = 3 × 15.000 = <b class="res">45.000 lb</b><br>S = <b class="res">8 h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Aplicar N = DH/CS</h5><div class="eq">N = (1.275.000 × 4) / (45.000 × 8) = 5.100.000 / 360.000 = 14,17 → <b class="res">15 portas</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>15 portas de doca</b></div>
+    <p style="margin-top:10px"><b>Discussão:</b> 14,17 arredonda para 15 porque uma porta não pode ser "compartilhada" fracionadamente — a folga sobre o valor exato (14,17) é pequena, então a operação já roda perto do limite de capacidade e qualquer crescimento de demanda pede planejamento de expansão.</p>
+  </div>
+
+  <div class="ex" id="p1q6">
+    <header class="ex-h"><span class="tag">Q6 · 2,0 pts</span><h3>Compra de empilhadeiras — NPV com equivalência de trabalho</h3></header>
+    <div class="given">Tipo 1: $25.000, custo operacional $2.500/ano · Tipo 2: $17.000, $3.500/ano · Tipo 3: $8.000, $4.000/ano. Vida útil de 10 anos, valor residual de 15% do valor original. Retorno exigido de 20% a.a. Três unidades do tipo 1 fazem o trabalho de cinco do tipo 2 ou sete do tipo 3.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>NPV de cada tipo (i = 20%, n = 10, fator de anuidade = 4,1925)</h5><div class="eq">Tipo 1: NPV = 25.000 + 2.500×4,1925 − 3.750/(1,2)¹⁰ = 25.000+10.481,25−605,65 = <b class="res">R$34.875,60</b><br>Tipo 2: NPV = 17.000 + 3.500×4,1925 − 2.550/(1,2)¹⁰ = <b class="res">R$31.261,81</b><br>Tipo 3: NPV = 8.000 + 4.000×4,1925 − 1.200/(1,2)¹⁰ = <b class="res">R$24.576,08</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Multiplicar pela quantidade equivalente</h5><div class="eq">3 × 34.875,60 = <b class="res">R$104.626,80</b><br>5 × 31.261,81 = R$156.309,05<br>7 × 24.576,08 = R$172.032,56</div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>Tipo 1 é a melhor compra — R$104.626,80 é o menor custo equivalente entre as três opções</b></div>
+    <p class="tip">Atenção: comparar apenas o NPV unitário (R$34.875,60 vs R$31.261,81 vs R$24.576,08) levaria à resposta errada, porque cada tipo precisa de uma quantidade diferente de unidades para entregar o mesmo trabalho. É a multiplicação pela equivalência que decide.</p>
+  </div>
+
+  <div class="foot">
+    <p>Fontes: slides "Armazenagem" (partes 1–4), "Custos de Armazenagem", "Canais de Distribuição" e "Distribuição Física" — Profa. Elisete Santos da Silva Zagheni, Logística III, EMB 5934, UFSC Joinville. Referências: BALLOU, R. H. <i>Gerenciamento da Cadeia de Suprimentos/Logística Empresarial</i>, 5ª ed.; DIAS, M. A. P. <i>Administração de Materiais — Uma Abordagem Logística</i>, 4ª ed.; NOVAES, A. G. <i>Logística e Gerenciamento da Cadeia de Distribuição</i>, 5ª ed.; CHRISTOPHER, M. <i>Logística e Gerenciamento da Cadeia de Suprimentos</i>, 5ª ed.</p>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
