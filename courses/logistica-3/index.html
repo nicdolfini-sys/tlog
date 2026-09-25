@@ -104,6 +104,7 @@ tr:last-child td{border-bottom:none}
 .n{font-family:var(--f-mono); font-size:13px; color:var(--bg); background:var(--ink); border-radius:50%; width:24px; height:24px; display:inline-grid; place-items:center; flex:none}
 .step .eq{font-family:var(--f-mono); font-size:15.5px; background:var(--lav); border:1px solid var(--lav-line); border-radius:6px; padding:10px 12px; margin:8px 0; line-height:1.8; overflow-x:auto}
 .res{color:var(--res); font-weight:700}
+.fref{font-family:var(--f-mono); font-size:12.5px; color:var(--accent); background:var(--accent-soft); display:inline-block; padding:3px 10px; border-radius:6px; margin-bottom:2px}
 
 .result{display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-top:20px; padding:14px 18px; border:2px solid var(--accent); border-radius:10px; background:var(--accent-soft)}
 .result span{font-family:var(--f-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent)}
@@ -443,12 +444,12 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Exercício 1</span><h3>Capacidade estática e área útil de um armazém</h3></header>
     <div class="given">Armazém de 120 m × 40 m, resistência estrutural do piso de 10,0 t/m². Corredor de 1 m ao redor de todo o perímetro; corredor longitudinal de 8 m de largura; três corredores transversais de 6 m de largura cada; área administrativa (escritório etc.) de 12 m × 6 m.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>Capacidade estática (parâmetro inicial)</h5><div class="eq">Área total = 120 × 40 = <b class="res">4.800 m²</b><br>CE = 4.800 × 10,0 = <b class="res">48.000 t</b></div></li>
-      <li class="step"><h5><span class="n">2</span>Corredores laterais (1 m ao redor)</h5><div class="eq">Nova área = 118 × 38 = <b class="res">4.484 m²</b><br>Área perdida = 4.800 − 4.484 = <b class="res">316 m²</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Corredor longitudinal (8 m)</h5><div class="eq">Área perdida = 118 × 8 = <b class="res">944 m²</b></div></li>
-      <li class="step"><h5><span class="n">4</span>Três corredores transversais (6 m) — sem contar a intersecção duas vezes</h5><div class="eq">Cada corredor: 38 × 6 = 228 m² &nbsp;×3 = 684 m²<br>Intersecção com o corredor longitudinal: 8 × 6 = 48 m² &nbsp;×3 = 144 m²<br>Área perdida líquida = 684 − 144 = <b class="res">540 m²</b></div><p>A intersecção já foi contada no corredor longitudinal do passo 3 — descontá-la de novo aqui evita abater a mesma área duas vezes.</p></li>
-      <li class="step"><h5><span class="n">5</span>Área administrativa</h5><div class="eq">12 × 6 = <b class="res">72 m²</b></div></li>
-      <li class="step"><h5><span class="n">6</span>Área útil final</h5><div class="eq">Total a abater = 316 + 944 + 540 + 72 = <b class="res">1.872 m²</b><br>Área útil = 4.800 − 1.872 = <b class="res">2.928 m²</b><br>Aproveitamento = 2.928 / 4.800 × 100 = <b class="res">61%</b></div></li>
+      <li class="step"><h5><span class="n">1</span>Capacidade estática (parâmetro inicial)</h5><p class="fref">Fórmula: CE = Área total do piso × Resistência estrutural</p><div class="eq">Área total = 120 × 40 = <b class="res">4.800 m²</b><br>CE = 4.800 × 10,0 = <b class="res">48.000 t</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Corredores laterais (1 m ao redor)</h5><p class="fref">Fórmula: Área perdida = Área total − (comprimento útil × largura útil)</p><div class="eq">Nova área = 118 × 38 = <b class="res">4.484 m²</b><br>Área perdida = 4.800 − 4.484 = <b class="res">316 m²</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Corredor longitudinal (8 m)</h5><p class="fref">Fórmula: Área do corredor = comprimento × largura do corredor</p><div class="eq">Área perdida = 118 × 8 = <b class="res">944 m²</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Três corredores transversais (6 m) — sem contar a intersecção duas vezes</h5><p class="fref">Fórmula: Área líquida = (nº de corredores × largura × comprimento) − (interseções com o corredor longitudinal)</p><div class="eq">Cada corredor: 38 × 6 = 228 m² &nbsp;×3 = 684 m²<br>Intersecção com o corredor longitudinal: 8 × 6 = 48 m² &nbsp;×3 = 144 m²<br>Área perdida líquida = 684 − 144 = <b class="res">540 m²</b></div><p>A intersecção já foi contada no corredor longitudinal do passo 3 — descontá-la de novo aqui evita abater a mesma área duas vezes.</p></li>
+      <li class="step"><h5><span class="n">5</span>Área administrativa</h5><p class="fref">Fórmula: Área = comprimento × largura</p><div class="eq">12 × 6 = <b class="res">72 m²</b></div></li>
+      <li class="step"><h5><span class="n">6</span>Área útil final</h5><p class="fref">Fórmula: Área útil = Área total − Σ(áreas descontadas) &nbsp;·&nbsp; Aproveitamento (%) = Área útil / Área total × 100</p><div class="eq">Total a abater = 316 + 944 + 540 + 72 = <b class="res">1.872 m²</b><br>Área útil = 4.800 − 1.872 = <b class="res">2.928 m²</b><br>Aproveitamento = 2.928 / 4.800 × 100 = <b class="res">61%</b></div></li>
     </ol>
     <div class="result bad"><span>Resposta</span><b>Área útil ≈ 2.928 m² (61% da área total)</b></div>
     <p style="margin-top:10px">O mercado considera ideal um aproveitamento acima de 70%. Com 61%, este layout precisa de ajustes — por exemplo, reduzir o corredor longitudinal de 8 m para 6 m e os transversais de 6 m para 4 m, desde que os equipamentos de movimentação ainda consigam trafegar por eles.</p>
@@ -456,11 +457,11 @@ tr:last-child td{border-bottom:none}
 
   <div class="ex" id="a1ex2">
     <header class="ex-h"><span class="tag">Exercício 2</span><h3>Docas de caminhão — Rico Discount Drug Stores</h3></header>
-    <div class="given">Um armazém reabastece 250 lojas de varejo por semana. O pedido médio por loja tem 6.500 libras-peso, e os pedidos de 4 lojas cabem em cada caminhão. O carregamento leva 8 horas, turno de 8 horas.</div>
+    <div class="given">Um armazém reabastece 250 lojas de varejo por semana. O pedido médio por loja tem 6.500 libras-peso, e os pedidos de 4 lojas cabem em cada caminhão. O carregamento leva 2 horas, turno de 8 horas.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>Processamento diário (D)</h5><div class="eq">50 lojas atendidas/dia (250 ÷ 5 dias úteis) × 6.500 lb = <b class="res">325.000 lb/dia</b></div></li>
-      <li class="step"><h5><span class="n">2</span>Capacidade do caminhão (C)</h5><div class="eq">4 lojas × 6.500 lb = <b class="res">26.000 lb</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Aplicar N = DH/CS</h5><div class="eq">N = (325.000 × 2) / (26.000 × 8) = 650.000 / 208.000 = <b class="res">3,15 → 4 portas</b></div></li>
+      <li class="step"><h5><span class="n">1</span>Processamento diário (D)</h5><p class="fref">Fórmula: D = lojas atendidas/dia × peso médio do pedido</p><div class="eq">50 lojas atendidas/dia (250 ÷ 5 dias úteis) × 6.500 lb = <b class="res">325.000 lb/dia</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Capacidade do caminhão (C)</h5><p class="fref">Fórmula: C = nº de lojas por caminhão × peso médio do pedido</p><div class="eq">4 lojas × 6.500 lb = <b class="res">26.000 lb</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Aplicar N = DH/CS</h5><p class="fref">Fórmula: N = D · H / (C · S)</p><div class="eq">N = (325.000 × 2) / (26.000 × 8) = 650.000 / 208.000 = <b class="res">3,15 → 4 portas</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>4 portas de doca</b></div>
     <p style="margin-top:10px">Quatro portas dão à Rico uma folga (arredondamento para cima) para absorver picos de demanda e contingências operacionais.</p>
@@ -470,10 +471,10 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Exercício 3</span><h3>Configuração ótima do armazém — peças de reposição</h3></header>
     <div class="given">Armazém privado com processamento mensal de 100.000 caixas e custo médio de manuseio de $0,005/pé por caixa (entrada e saída). Área total necessária: 300.000 pés². Construção a $90/pé² (500×600 pés), vida útil de 20 anos. Doca localizada numa esquina.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>Custo anual do perímetro (k)</h5><div class="eq">Perímetro = 2(500) + 2(600) = 2.200 pés<br>Custo de construção = $90 × 300.000 = $27.000.000, anualizado em 20 anos = $1.350.000/ano<br>k = 1.350.000 / 2.200 = <b class="res">$613,64/pé</b></div></li>
-      <li class="step"><h5><span class="n">2</span>Custo de movimentação (C)</h5><div class="eq">C = 0,005 × 100.000 × 12 = <b class="res">$6.000/pé</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Largura e comprimento ótimos</h5><div class="eq">W* = √[(6.000+8×613,64)/(2×6.000+8×613,64)] × √300.000 = <b class="res">440 pés</b><br>L* = 300.000 / 440 = <b class="res">682 pés</b></div></li>
-      <li class="step"><h5><span class="n">4</span>Custo relevante total</h5><div class="eq">TC = 2√{[(1/2)(6.000)+2(613,64)][(1/4)(6.000)+2(613,64)]} × √300.000<br>= 6.790,87 × 547,72 = <b class="res">$3.719.495/ano</b></div></li>
+      <li class="step"><h5><span class="n">1</span>Custo anual do perímetro (k)</h5><p class="fref">Fórmula: k = (Custo de construção ÷ vida útil) / Perímetro</p><div class="eq">Perímetro = 2(500) + 2(600) = 2.200 pés<br>Custo de construção = $90 × 300.000 = $27.000.000, anualizado em 20 anos = $1.350.000/ano<br>k = 1.350.000 / 2.200 = <b class="res">$613,64/pé</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Custo de movimentação (C)</h5><p class="fref">Fórmula: C = custo de manuseio por pé × itens/ano</p><div class="eq">C = 0,005 × 100.000 × 12 = <b class="res">$6.000/pé</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Largura e comprimento ótimos</h5><p class="fref">Fórmula (doca na esquina): W* = √[(C+8k)/(2C+8k)] × √S &nbsp;·&nbsp; L* = S / W*</p><div class="eq">W* = √[(6.000+8×613,64)/(2×6.000+8×613,64)] × √300.000 = <b class="res">440 pés</b><br>L* = 300.000 / 440 = <b class="res">682 pés</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Custo relevante total</h5><p class="fref">Fórmula: TC<sub>X</sub> = 2√{[(1/2)C+2k][(1/4)C+2k]} × √S</p><div class="eq">TC = 2√{[(1/2)(6.000)+2(613,64)][(1/4)(6.000)+2(613,64)]} × √300.000<br>= 6.790,87 × 547,72 = <b class="res">$3.719.495/ano</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>440 × 682 pés · custo relevante total ≈ $3.719.495/ano</b></div>
   </div>
@@ -482,9 +483,9 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Exercícios complementares</span><h3>Três variações do mesmo raciocínio</h3></header>
     <div class="given">Enunciados: (1) armazém de 100.000 pés², processamento de 10.000 itens/ano a $0,01/pé, custo de perímetro de $210/pé, doca numa esquina; (2) CD de alimentícios com 75 lojas/dia, pedido de 12.000 lb/loja, 3 pedidos por caminhão, carregamento de 3 h, turno de 8 h; (3) três tipos de empilhadeira ($20.000/$10.000/$5.000, vida útil de 10 anos, residual de 15%, custos operacionais de $2.000/$2.500/$3.000, equivalência 3×tipo1 = 5×tipo2 = 7×tipo3, retorno exigido de 20%).</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>Configuração ótima (100.000 pés²)</h5><div class="eq">C = 10.000 × 0,01 = 100 · k = 210 · S = 100.000<br>W* = <b class="res">307,70 pés</b> &nbsp;·&nbsp; L* = <b class="res">324,99 pés</b> &nbsp;·&nbsp; TC<sub>X</sub> = <b class="res">$289.240,38</b></div></li>
-      <li class="step"><h5><span class="n">2</span>Docas de caminhão (75 lojas)</h5><div class="eq">D = 75 × 12.000 = 900.000 lb/dia &nbsp;·&nbsp; C = 3 × 12.000 = 36.000 lb<br>N = (900.000 × 3) / (36.000 × 8) = 9,375 → <b class="res">10 portas</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Escolha de empilhadeira (NPV, i = 20%, n = 10)</h5><div class="eq">NPV por unidade: tipo 1 = $27.900,43 · tipo 2 = $20.238,92 · tipo 3 = $17.456,29<br>Multiplicando pela equivalência: 3×tipo1 = <b class="res">$83.701,28</b> · 5×tipo2 = $101.194,60 · 7×tipo3 = $122.194,01</div></li>
+      <li class="step"><h5><span class="n">1</span>Configuração ótima (100.000 pés²)</h5><p class="fref">Fórmula: W* = √[(C+8k)/(2C+8k)] × √S &nbsp;·&nbsp; L* = S/W* &nbsp;·&nbsp; TC<sub>X</sub> = 2√{[(1/2)C+2k][(1/4)C+2k]} × √S</p><div class="eq">C = 10.000 × 0,01 = 100 · k = 210 · S = 100.000<br>W* = <b class="res">307,70 pés</b> &nbsp;·&nbsp; L* = <b class="res">324,99 pés</b> &nbsp;·&nbsp; TC<sub>X</sub> = <b class="res">$289.240,38</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Docas de caminhão (75 lojas)</h5><p class="fref">Fórmula: N = D · H / (C · S)</p><div class="eq">D = 75 × 12.000 = 900.000 lb/dia &nbsp;·&nbsp; C = 3 × 12.000 = 36.000 lb<br>N = (900.000 × 3) / (36.000 × 8) = 9,375 → <b class="res">10 portas</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Escolha de empilhadeira (NPV, i = 20%, n = 10)</h5><p class="fref">Fórmula: NPV = I + C·[(1+i)ⁿ−1]/[i(1+i)ⁿ] − S<sub>n</sub>/(1+i)ⁿ &nbsp;·&nbsp; depois × quantidade equivalente</p><div class="eq">NPV por unidade: tipo 1 = $27.900,43 · tipo 2 = $20.238,92 · tipo 3 = $17.456,29<br>Multiplicando pela equivalência: 3×tipo1 = <b class="res">$83.701,28</b> · 5×tipo2 = $101.194,60 · 7×tipo3 = $122.194,01</div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>10 portas de doca · melhor compra: empilhadeira tipo 1 (menor custo equivalente)</b></div>
   </div>
@@ -497,9 +498,9 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Exemplo 1</span><h3>Cálculo direto da taxa e do custo de armazenagem</h3></header>
     <div class="given">Lucro = R$17.000 · Valor do estoque = R$350.000 · Área ocupada = 220 m² · Custo/m² = R$135 · Consumo anual = 350.000 · Preço médio = R$1,60 · Seguro = R$15.000 · Valor do prédio = R$35.000 · Depreciação = R$7.000 · Obsolescência = R$5.000 · Despesas gerais = R$45.000 · Apuração mensal.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>As seis taxas</h5><div class="eq">I<sub>a</sub> = 17.000/350.000 = 4,857% &nbsp;·&nbsp; I<sub>b</sub> = (220×135)/(350.000×1,6) = 5,304%<br>I<sub>c</sub> = 15.000/(350.000+35.000) = 3,896% &nbsp;·&nbsp; I<sub>d</sub> = 7.000/350.000 = 2,000%<br>I<sub>e</sub> = 5.000/350.000 = 1,429% &nbsp;·&nbsp; I<sub>f</sub> = 45.000/350.000 = 12,857%</div></li>
-      <li class="step"><h5><span class="n">2</span>Taxa total</h5><div class="eq">I = 4,857+5,304+3,896+2,000+1,429+12,857 = <b class="res">30,343% ≈ 0,3034</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Custo de armazenagem (T = 1 mês)</h5><div class="eq">CA = (350.000/12 / 2) × 1 × 1,6 × 0,3034 = <b class="res">R$ 7.079,92</b></div></li>
+      <li class="step"><h5><span class="n">1</span>As seis taxas</h5><p class="fref">Fórmulas: I<sub>a</sub>=100(L/Ve) &nbsp;I<sub>b</sub>=100(S×A)/(C×P) &nbsp;I<sub>c</sub>=100·Cs/(Ve+E) &nbsp;I<sub>d</sub>=100·D/Ve &nbsp;I<sub>e</sub>=100·O/Ve &nbsp;I<sub>f</sub>=100·De/Ve</p><div class="eq">I<sub>a</sub> = 17.000/350.000 = 4,857% &nbsp;·&nbsp; I<sub>b</sub> = (220×135)/(350.000×1,6) = 5,304%<br>I<sub>c</sub> = 15.000/(350.000+35.000) = 3,896% &nbsp;·&nbsp; I<sub>d</sub> = 7.000/350.000 = 2,000%<br>I<sub>e</sub> = 5.000/350.000 = 1,429% &nbsp;·&nbsp; I<sub>f</sub> = 45.000/350.000 = 12,857%</div></li>
+      <li class="step"><h5><span class="n">2</span>Taxa total</h5><p class="fref">Fórmula: I = I<sub>a</sub> + I<sub>b</sub> + I<sub>c</sub> + I<sub>d</sub> + I<sub>e</sub> + I<sub>f</sub></p><div class="eq">I = 4,857+5,304+3,896+2,000+1,429+12,857 = <b class="res">30,343% ≈ 0,3034</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Custo de armazenagem (T = 1 mês)</h5><p class="fref">Fórmula: CA = (Q/2) × T × P × I</p><div class="eq">CA = (350.000/12 / 2) × 1 × 1,6 × 0,3034 = <b class="res">R$ 7.079,92</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>CA ≈ R$ 7.079,92/mês</b></div>
   </div>
@@ -508,9 +509,9 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Exemplo 2</span><h3>Manter a operação própria ou terceirizar?</h3></header>
     <div class="given">Empresa Alpha avalia terceirizar a armazenagem. Cotação da Log-Master: R$0,45 por unidade movimentada + R$0,10 por R$ movimentado em seguro. Dados próprios: Lucro R$25.000 · Estoque R$551.000 · Área 1.000 m² · Custo/m² R$230 · Consumo anual 1.500.000 · Preço R$1,90 · Seguro R$66.120 · Prédio R$1.500.000 · Depreciação R$12.500 · Obsolescência R$8.000 · Despesas gerais R$250.000 · Apuração anual.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>Taxa de armazenagem própria</h5><div class="eq">I<sub>a</sub>=4,537% · I<sub>b</sub>=8,070% · I<sub>c</sub>=3,224% · I<sub>d</sub>=2,269% · I<sub>e</sub>=1,452% · I<sub>f</sub>=45,372%<br>I = <b class="res">64,924%</b></div></li>
-      <li class="step"><h5><span class="n">2</span>Custo de armazenagem própria</h5><div class="eq">CA = (1.500.000/2) × 1 × 1,9 × 0,6492 = <b class="res">R$ 925.167,00/ano</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Custo estimado com a Log-Master</h5><div class="eq">Movimentação: 0,45 × 1.500.000 = R$675.000,00<br>Seguro: 0,10 × (1.500.000 × 1,9) = R$285.000,00<br>Total = <b class="res">R$ 960.000,00/ano</b></div></li>
+      <li class="step"><h5><span class="n">1</span>Taxa de armazenagem própria</h5><p class="fref">Fórmulas: I<sub>a</sub>=100(L/Ve) &nbsp;I<sub>b</sub>=100(S×A)/(C×P) &nbsp;I<sub>c</sub>=100·Cs/(Ve+E) &nbsp;I<sub>d</sub>=100·D/Ve &nbsp;I<sub>e</sub>=100·O/Ve &nbsp;I<sub>f</sub>=100·De/Ve &nbsp;·&nbsp; I=ΣIx</p><div class="eq">I<sub>a</sub>=4,537% · I<sub>b</sub>=8,070% · I<sub>c</sub>=3,224% · I<sub>d</sub>=2,269% · I<sub>e</sub>=1,452% · I<sub>f</sub>=45,372%<br>I = <b class="res">64,924%</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Custo de armazenagem própria</h5><p class="fref">Fórmula: CA = (Q/2) × T × P × I</p><div class="eq">CA = (1.500.000/2) × 1 × 1,9 × 0,6492 = <b class="res">R$ 925.167,00/ano</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Custo estimado com a Log-Master</h5><p class="fref">Fórmula (fora da teoria, da cotação do enunciado): Custo terceirizado = tarifa/unidade × Q + tarifa seguro × (Q × P)</p><div class="eq">Movimentação: 0,45 × 1.500.000 = R$675.000,00<br>Seguro: 0,10 × (1.500.000 × 1,9) = R$285.000,00<br>Total = <b class="res">R$ 960.000,00/ano</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>Manter a armazenagem própria é mais barato (R$925.167 &lt; R$960.000)</b></div>
   </div>
@@ -519,8 +520,8 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Exemplo 3</span><h3>Empresa Beta — avaliação de viabilidade</h3></header>
     <div class="given">Lucro R$50.000 · Estoque R$1.500.000 · Área 2.000 m² · Custo/m² R$130 · Consumo anual 4.200.000 · Preço R$12 · Seguro R$180.000 · Prédio R$1.200.000 · Depreciação R$10.000 · Obsolescência R$10.000 · Despesas gerais R$300.000 · Apuração anual, índices com 3 casas decimais.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>As seis taxas</h5><div class="eq">I<sub>a</sub>=3,333% · I<sub>b</sub>=0,516% · I<sub>c</sub>=6,667% · I<sub>d</sub>=0,667% · I<sub>e</sub>=0,667% · I<sub>f</sub>=20,000%<br>I = <b class="res">31,849%</b></div></li>
-      <li class="step"><h5><span class="n">2</span>Custo de armazenagem</h5><div class="eq">CA = (350.000) × 12 × 0,31849 = <b class="res">R$ 668.833,20/ano</b></div></li>
+      <li class="step"><h5><span class="n">1</span>As seis taxas</h5><p class="fref">Fórmulas: I<sub>a</sub>=100(L/Ve) &nbsp;I<sub>b</sub>=100(S×A)/(C×P) &nbsp;I<sub>c</sub>=100·Cs/(Ve+E) &nbsp;I<sub>d</sub>=100·D/Ve &nbsp;I<sub>e</sub>=100·O/Ve &nbsp;I<sub>f</sub>=100·De/Ve &nbsp;·&nbsp; I=ΣIx</p><div class="eq">I<sub>a</sub>=3,333% · I<sub>b</sub>=0,516% · I<sub>c</sub>=6,667% · I<sub>d</sub>=0,667% · I<sub>e</sub>=0,667% · I<sub>f</sub>=20,000%<br>I = <b class="res">31,849%</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Custo de armazenagem</h5><p class="fref">Fórmula: CA = (Q/2) × T × P × I</p><div class="eq">CA = (350.000) × 12 × 0,31849 = <b class="res">R$ 668.833,20/ano</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>Custo de armazenagem própria ≈ R$ 668.833,20/ano</b></div>
     <p style="margin-top:10px">Esse valor é o que entraria na balança contra a cotação de cada um dos dois operadores logísticos consultados pela Beta para decidir a viabilidade da terceirização.</p>
@@ -530,9 +531,9 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Exemplo 4</span><h3>Empresa Delta — custo médio unitário</h3></header>
     <div class="given">Lucro R$10.000 · Estoque R$1.000.000 · Área 1.000 m² · Custo/m² R$120 · Consumo anual 1.200.000 · Preço R$10 · Seguro R$120.000 · Prédio R$500.000 · Depreciação R$4.166,67 · Obsolescência R$5.000 · Despesas gerais R$120.000 · Apuração mensal.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>As seis taxas</h5><div class="eq">I<sub>a</sub>=1,000% · I<sub>b</sub>=1,000% · I<sub>c</sub>=8,000% · I<sub>d</sub>=0,417% · I<sub>e</sub>=0,500% · I<sub>f</sub>=12,000%<br>I = <b class="res">22,917%</b></div></li>
-      <li class="step"><h5><span class="n">2</span>Custo de armazenagem do mês</h5><div class="eq">CA = (100.000) × 10 × 0,22917 = <b class="res">R$ 114.583,50</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Custo médio unitário</h5><div class="eq">CUn = CA / Qtde estocada = 114.583,50 / 100.000 = <b class="res">≈ R$ 1,15/unidade</b></div></li>
+      <li class="step"><h5><span class="n">1</span>As seis taxas</h5><p class="fref">Fórmulas: I<sub>a</sub>=100(L/Ve) &nbsp;I<sub>b</sub>=100(S×A)/(C×P) &nbsp;I<sub>c</sub>=100·Cs/(Ve+E) &nbsp;I<sub>d</sub>=100·D/Ve &nbsp;I<sub>e</sub>=100·O/Ve &nbsp;I<sub>f</sub>=100·De/Ve &nbsp;·&nbsp; I=ΣIx</p><div class="eq">I<sub>a</sub>=1,000% · I<sub>b</sub>=1,000% · I<sub>c</sub>=8,000% · I<sub>d</sub>=0,417% · I<sub>e</sub>=0,500% · I<sub>f</sub>=12,000%<br>I = <b class="res">22,917%</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Custo de armazenagem do mês</h5><p class="fref">Fórmula: CA = (Q/2) × T × P × I</p><div class="eq">CA = (100.000) × 10 × 0,22917 = <b class="res">R$ 114.583,50</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Custo médio unitário</h5><p class="fref">Fórmula (derivada): CUn = CA / Quantidade estocada</p><div class="eq">CUn = CA / Qtde estocada = 114.583,50 / 100.000 = <b class="res">≈ R$ 1,15/unidade</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>Custo de armazenagem ≈ R$ 114.583,50/mês · custo médio unitário ≈ R$ 1,15</b></div>
     <p class="tip">O comparativo com o faturamento mensal (% de custo sobre receita) depende de um dado que o enunciado não fornece (o faturamento em si) — na prova, se ele aparecer, basta dividir o CA pelo faturamento e multiplicar por 100.</p>
@@ -546,9 +547,9 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Exercício 1</span><h3>Ganho de produtividade com a recuperação da rodovia</h3></header>
     <div class="given">Transporte rodoviário entre A e B, 1.200 km. Carregamento em A: 8 h. Descarga em B: 6 h. Retorno vazio para A. Velocidade atual: 30 km/h (ida), 35 km/h (volta). Após a obra: 50 km/h (ida), 55 km/h (volta). Qual o aumento percentual de produtividade da frota?</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>Tempo de ciclo atual</h5><div class="eq">TC = 8 + 1.200/30 + 6 + 1.200/35 = 8 + 40 + 6 + 34,29 = <b class="res">88,29 h</b></div></li>
-      <li class="step"><h5><span class="n">2</span>Tempo de ciclo após a obra</h5><div class="eq">TC = 8 + 1.200/50 + 6 + 1.200/55 = 8 + 24 + 6 + 21,82 = <b class="res">59,82 h</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Aumento de produtividade</h5><div class="eq">Produtividade ∝ 1/TC → aumento = (88,29/59,82 − 1) × 100 = <b class="res">≈ 47,6%</b></div></li>
+      <li class="step"><h5><span class="n">1</span>Tempo de ciclo atual</h5><p class="fref">Fórmula: TC = T<sub>carregamento</sub> + T<sub>estrada(ida)</sub> + T<sub>descarga</sub> + T<sub>estrada(volta)</sub></p><div class="eq">TC = 8 + 1.200/30 + 6 + 1.200/35 = 8 + 40 + 6 + 34,29 = <b class="res">88,29 h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Tempo de ciclo após a obra</h5><p class="fref">Fórmula: TC = T<sub>carregamento</sub> + T<sub>estrada(ida)</sub> + T<sub>descarga</sub> + T<sub>estrada(volta)</sub></p><div class="eq">TC = 8 + 1.200/50 + 6 + 1.200/55 = 8 + 24 + 6 + 21,82 = <b class="res">59,82 h</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Aumento de produtividade</h5><p class="fref">Fórmula (derivada): produtividade ∝ 1/TC → aumento (%) = (TC<sub>antigo</sub>/TC<sub>novo</sub> − 1) × 100</p><div class="eq">Produtividade ∝ 1/TC → aumento = (88,29/59,82 − 1) × 100 = <b class="res">≈ 47,6%</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>A frota ganha ≈ 47,6% de produtividade (quase metade mais viagens no mesmo período)</b></div>
   </div>
@@ -557,11 +558,11 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Exercício 2</span><h3>"Um para um" — qual dos 10 veículos custa menos por ano?</h3></header>
     <div class="given">Fábrica em Porto Alegre fornece 20.000 eletrodomésticos/ano para São Paulo (1.120 km, 2 dias de viagem, cada peça pesa 44 kg). Margem de lucro 25% · valor do produto R$216,22 · fator de segurança 0,5 · juros 30% a.a. · 25 dias de operação/mês. Frota candidata de 10 veículos, do menor (500 kg, custo fixo R$2.071/mês, custo variável R$0,263/km) ao maior (45.000 kg).</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>Custo de transporte — veículo 1 (500 kg)</h5><div class="eq">CF<sub>d</sub> = (2.071/25) × (2×2) = R$331,36<br>CV = 0,263 × (1.120×2) = R$589,12<br>CT = (331,36+589,12) × 1,25 = <b class="res">R$1.150,60</b></div></li>
-      <li class="step"><h5><span class="n">2</span>Custo unitário e custo anual de transporte</h5><div class="eq">CUn = 1.150,60 / (500/44) = R$101,25<br>CAT = 101,25 × 20.000 = <b class="res">R$2.025.000,00/ano</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Custo de estoque em trânsito e nas duas pontas</h5><div class="eq">CE<sub>t</sub> = (20.000 × 216,22 × 2 × 0,3)/365 = R$7.108,60<br>CE = (500/44) × 1,5 × 216,22 × 0,3 = R$1.105,67<br>CA<sub>e</sub> = <b class="res">R$8.214,27</b></div></li>
-      <li class="step"><h5><span class="n">4</span>Custo total anual do veículo 1</h5><div class="eq">CTA = 2.025.000,00 + 8.214,27 = <b class="res">R$2.033.214,27</b></div></li>
-      <li class="step"><h5><span class="n">5</span>Repetir para os 10 veículos e comparar</h5><div class="eq">Repetindo o mesmo cálculo, o custo total anual cai à medida que a capacidade sobe (menos viagens, mais eficiência), mas o custo de estoque em trânsito sobe (lotes maiores). O ponto de mínimo aparece no meio da frota.</div></li>
+      <li class="step"><h5><span class="n">1</span>Custo de transporte — veículo 1 (500 kg)</h5><p class="fref">Fórmula: CF<sub>d</sub> = (CF<sub>m</sub>/T<sub>op</sub>) × (T<sub>a-b</sub>×2) &nbsp;·&nbsp; CV = C<sub>km</sub> × (D×2) &nbsp;·&nbsp; CT = (CF<sub>d</sub>+CV) × (1+margem)</p><div class="eq">CF<sub>d</sub> = (2.071/25) × (2×2) = R$331,36<br>CV = 0,263 × (1.120×2) = R$589,12<br>CT = (331,36+589,12) × 1,25 = <b class="res">R$1.150,60</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Custo unitário e custo anual de transporte</h5><p class="fref">Fórmula: CUn = CT / (capacidade do veículo / peso da peça) &nbsp;·&nbsp; CAT = CUn × Q</p><div class="eq">CUn = 1.150,60 / (500/44) = R$101,25<br>CAT = 101,25 × 20.000 = <b class="res">R$2.025.000,00/ano</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Custo de estoque em trânsito e nas duas pontas</h5><p class="fref">Fórmula: CE<sub>t</sub> = (Q×V×T<sub>a-b</sub>×j)/365 &nbsp;·&nbsp; CE = [L/peso peça]×(1+f<sub>s</sub>)×V×j &nbsp;·&nbsp; CA<sub>e</sub> = CE+CE<sub>t</sub></p><div class="eq">CE<sub>t</sub> = (20.000 × 216,22 × 2 × 0,3)/365 = R$7.108,60<br>CE = (500/44) × 1,5 × 216,22 × 0,3 = R$1.105,67<br>CA<sub>e</sub> = <b class="res">R$8.214,27</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Custo total anual do veículo 1</h5><p class="fref">Fórmula: CTA = CAT + CA<sub>e</sub></p><div class="eq">CTA = 2.025.000,00 + 8.214,27 = <b class="res">R$2.033.214,27</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Repetir para os 10 veículos e comparar</h5><p class="fref">Mesmas fórmulas dos passos 1–4 (CF<sub>d</sub>, CV, CT, CUn, CAT, CE<sub>t</sub>, CE, CA<sub>e</sub>, CTA), recalculadas para cada capacidade de veículo</p><div class="eq">Repetindo o mesmo cálculo, o custo total anual cai à medida que a capacidade sobe (menos viagens, mais eficiência), mas o custo de estoque em trânsito sobe (lotes maiores). O ponto de mínimo aparece no meio da frota.</div></li>
     </ol>
     <div class="tbl-wrap">
       <table>
@@ -586,11 +587,11 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Exercício 3</span><h3>"Um para muitos" — o tempo de ciclo cabe no turno?</h3></header>
     <div class="given">Transportadora de bebidas, sistema "um para muitos". Zona de 12 clientes, soma dos percursos entre eles = 18,4 km. Depósito fica a 7 km ao sul do cliente 1. Velocidade dentro da zona: 30 km/h. Tempo médio de parada: 12 min/entrega. Coeficiente de variação do tempo de ciclo: 0,25. Turno comercial de 8 h.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>Tempo até o bolsão (t₁)</h5><div class="eq">t<sub>1</sub> = 60 × 2 × 7/25 = <b class="res">33,6 min</b></div><p>V₁ (velocidade até o bolsão) considerada em 25 km/h, conforme dado em aula.</p></li>
-      <li class="step"><h5><span class="n">2</span>Tempo dentro do bolsão (t₂)</h5><div class="eq">t<sub>2</sub> = 60 × 18,4/30 = <b class="res">36,8 min</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Tempo total de entrega (t₃)</h5><div class="eq">t<sub>3</sub> = 12 × 12 = <b class="res">144 min</b></div></li>
-      <li class="step"><h5><span class="n">4</span>Tempo médio de ciclo</h5><div class="eq">TC = 33,6 + 36,8 + 144 = <b class="res">214,4 min</b></div></li>
-      <li class="step"><h5><span class="n">5</span>Tempo de ciclo máximo provável (98%)</h5><div class="eq">σ<sub>TC</sub> = 0,25 × 214,4 = 53,6<br>TC<sub>Máx</sub> = 214,4 + 2,06 × 53,6 = <b class="res">324,8 min ≈ 5h24min</b></div></li>
+      <li class="step"><h5><span class="n">1</span>Tempo até o bolsão (t₁)</h5><p class="fref">Fórmula: t<sub>1</sub> = 60 × 2 × d<sub>1</sub>/V<sub>1</sub></p><div class="eq">t<sub>1</sub> = 60 × 2 × 7/25 = <b class="res">33,6 min</b></div><p>V₁ (velocidade até o bolsão) considerada em 25 km/h, conforme dado em aula.</p></li>
+      <li class="step"><h5><span class="n">2</span>Tempo dentro do bolsão (t₂)</h5><p class="fref">Fórmula: t<sub>2</sub> = 60 × d<sub>2</sub>/V<sub>2</sub></p><div class="eq">t<sub>2</sub> = 60 × 18,4/30 = <b class="res">36,8 min</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Tempo total de entrega (t₃)</h5><p class="fref">Fórmula: t<sub>3</sub> = n × T</p><div class="eq">t<sub>3</sub> = 12 × 12 = <b class="res">144 min</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Tempo médio de ciclo</h5><p class="fref">Fórmula: TC = t<sub>1</sub> + t<sub>2</sub> + t<sub>3</sub></p><div class="eq">TC = 33,6 + 36,8 + 144 = <b class="res">214,4 min</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Tempo de ciclo máximo provável (98%)</h5><p class="fref">Fórmula: CV = σ<sub>TC</sub>/TC &nbsp;→&nbsp; TC<sub>Máx</sub> = TC + 2,06 × σ<sub>TC</sub></p><div class="eq">σ<sub>TC</sub> = 0,25 × 214,4 = 53,6<br>TC<sub>Máx</sub> = 214,4 + 2,06 × 53,6 = <b class="res">324,8 min ≈ 5h24min</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>TC médio = 214,4 min · TC máximo provável ≈ 5h24min</b></div>
     <p style="margin-top:10px">Como o turno tem 8 h (480 min) e mesmo o pior caso provável (5h24min) cabe dentro dele com folga, será necessário <b>aumentar</b> a quantidade de pontos de venda atendidos nessa rota — sobrou capacidade ociosa no veículo.</p>
@@ -600,10 +601,10 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Exercício 4</span><h3>Modelo de transportes — de que porto abastecer cada loja</h3></header>
     <div class="given">Quatro lojas de materiais de construção precisam de areia grossa: Loja 1 (50 m³), Loja 2 (80 m³), Loja 3 (40 m³) e Loja 4 (100 m³). Três portos suprem qualquer demanda; distâncias (km): P1→(30,20,24,18) · P2→(12,36,30,24) · P3→(8,15,25,20), na ordem das lojas 1–4. Cada viagem transporta 10 m³. Minimizar a distância total percorrida.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>Como os portos não têm limite de capacidade, o problema não precisa de método de transportes (Vogel, canto noroeste etc.)</h5><p>Como qualquer porto pode suprir qualquer demanda, a distância total mínima é obtida simplesmente atendendo <b>cada loja pelo porto mais próximo dela</b> — não há disputa por capacidade entre lojas.</p></li>
-      <li class="step"><h5><span class="n">2</span>Porto mais próximo de cada loja</h5><div class="eq">Loja 1: min(30,12,8) = <b class="res">P3 (8 km)</b><br>Loja 2: min(20,36,15) = <b class="res">P3 (15 km)</b><br>Loja 3: min(24,30,25) = <b class="res">P1 (24 km)</b><br>Loja 4: min(18,24,20) = <b class="res">P1 (18 km)</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Número de viagens por loja</h5><div class="eq">Loja 1: 50/10=5 · Loja 2: 80/10=8 · Loja 3: 40/10=4 · Loja 4: 100/10=10 &nbsp;(total 27 viagens)</div></li>
-      <li class="step"><h5><span class="n">4</span>Distância total mínima (só ida)</h5><div class="eq">5×8 + 8×15 + 4×24 + 10×18 = 40+120+96+180 = <b class="res">436 km</b></div></li>
+      <li class="step"><h5><span class="n">1</span>Como os portos não têm limite de capacidade, o problema não precisa de método de transportes (Vogel, canto noroeste etc.)</h5><p class="fref">Critério (não é fórmula da teoria de Log III, é regra de alocação): cada loja é suprida pelo porto de menor distância até ela</p><p>Como qualquer porto pode suprir qualquer demanda, a distância total mínima é obtida simplesmente atendendo <b>cada loja pelo porto mais próximo dela</b> — não há disputa por capacidade entre lojas.</p></li>
+      <li class="step"><h5><span class="n">2</span>Porto mais próximo de cada loja</h5><p class="fref">Fórmula: porto escolhido = argmin(distância porto→loja)</p><div class="eq">Loja 1: min(30,12,8) = <b class="res">P3 (8 km)</b><br>Loja 2: min(20,36,15) = <b class="res">P3 (15 km)</b><br>Loja 3: min(24,30,25) = <b class="res">P1 (24 km)</b><br>Loja 4: min(18,24,20) = <b class="res">P1 (18 km)</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Número de viagens por loja</h5><p class="fref">Fórmula: nº de viagens = demanda da loja (m³) / capacidade da viagem (m³)</p><div class="eq">Loja 1: 50/10=5 · Loja 2: 80/10=8 · Loja 3: 40/10=4 · Loja 4: 100/10=10 &nbsp;(total 27 viagens)</div></li>
+      <li class="step"><h5><span class="n">4</span>Distância total mínima (só ida)</h5><p class="fref">Fórmula: Distância total = Σ(nº de viagens da loja × distância do porto mais próximo)</p><div class="eq">5×8 + 8×15 + 4×24 + 10×18 = 40+120+96+180 = <b class="res">436 km</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>P3 abastece as lojas 1 e 2; P1 abastece as lojas 3 e 4 · distância total mínima ≈ 436 km (27 viagens)</b></div>
     <p class="tip">Se a prova pedir a "distância percorrida" incluindo o retorno vazio do caminhão, basta dobrar o resultado: 872 km.</p>
@@ -680,7 +681,7 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Q4 · 2,0 pts</span><h3>Identificar os tipos de picking II, III e IV</h3></header>
     <div class="given">Tipo I (discreto): 1 operador, 1 produto por vez, 1 período. Tipo II: mais de 1 operador, 1 produto por vez, 1 período. Tipo III: 1 operador, mais de 1 produto por vez, 1 período. Tipo IV: 1 operador, 1 produto por vez, mais de 1 período.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>Comparar com a tabela Método × Operadores × Itens × Turnos</h5><div class="eq">Zona = vários operadores / um item / um turno &nbsp;→&nbsp; bate com o <b class="res">Tipo II</b><br>Lote = um operador / vários itens / um turno &nbsp;→&nbsp; bate com o <b class="res">Tipo III</b><br>Onda = um operador / um item / vários turnos &nbsp;→&nbsp; bate com o <b class="res">Tipo IV</b></div></li>
+      <li class="step"><h5><span class="n">1</span>Comparar com a tabela Método × Operadores × Itens × Turnos</h5><p class="fref">Critério (tabela da teoria, não fórmula matemática): qual coluna do perfil (operadores/itens/turnos) aparece como "mais de um"</p><div class="eq">Zona = vários operadores / um item / um turno &nbsp;→&nbsp; bate com o <b class="res">Tipo II</b><br>Lote = um operador / vários itens / um turno &nbsp;→&nbsp; bate com o <b class="res">Tipo III</b><br>Onda = um operador / um item / vários turnos &nbsp;→&nbsp; bate com o <b class="res">Tipo IV</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>II, III e IV são, respectivamente: por zona, por lote e por onda</b></div>
   </div>
@@ -689,8 +690,8 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Q5 · 2,0 pts</span><h3>Portas de doca — CD de alimentícios</h3></header>
     <div class="given">85 lojas atendidas diariamente. Pedido médio de 15.000 libras-peso/loja. 3 pedidos de lojas diferentes por caminhão. Carregamento: 4 horas. Turno: 8 horas.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>Montar os quatro termos da fórmula</h5><div class="eq">D = 85 × 15.000 = <b class="res">1.275.000 lb/dia</b><br>H = <b class="res">4 h</b><br>C = 3 × 15.000 = <b class="res">45.000 lb</b><br>S = <b class="res">8 h</b></div></li>
-      <li class="step"><h5><span class="n">2</span>Aplicar N = DH/CS</h5><div class="eq">N = (1.275.000 × 4) / (45.000 × 8) = 5.100.000 / 360.000 = 14,17 → <b class="res">15 portas</b></div></li>
+      <li class="step"><h5><span class="n">1</span>Montar os quatro termos da fórmula</h5><p class="fref">Fórmulas: D = lojas/dia × peso médio do pedido &nbsp;·&nbsp; C = pedidos por caminhão × peso médio do pedido</p><div class="eq">D = 85 × 15.000 = <b class="res">1.275.000 lb/dia</b><br>H = <b class="res">4 h</b><br>C = 3 × 15.000 = <b class="res">45.000 lb</b><br>S = <b class="res">8 h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Aplicar N = DH/CS</h5><p class="fref">Fórmula: N = D · H / (C · S)</p><div class="eq">N = (1.275.000 × 4) / (45.000 × 8) = 5.100.000 / 360.000 = 14,17 → <b class="res">15 portas</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>15 portas de doca</b></div>
     <p style="margin-top:10px"><b>Discussão:</b> 14,17 arredonda para 15 porque uma porta não pode ser "compartilhada" fracionadamente — a folga sobre o valor exato (14,17) é pequena, então a operação já roda perto do limite de capacidade e qualquer crescimento de demanda pede planejamento de expansão.</p>
@@ -700,8 +701,8 @@ tr:last-child td{border-bottom:none}
     <header class="ex-h"><span class="tag">Q6 · 2,0 pts</span><h3>Compra de empilhadeiras — NPV com equivalência de trabalho</h3></header>
     <div class="given">Tipo 1: $25.000, custo operacional $2.500/ano · Tipo 2: $17.000, $3.500/ano · Tipo 3: $8.000, $4.000/ano. Vida útil de 10 anos, valor residual de 15% do valor original. Retorno exigido de 20% a.a. Três unidades do tipo 1 fazem o trabalho de cinco do tipo 2 ou sete do tipo 3.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>NPV de cada tipo (i = 20%, n = 10, fator de anuidade = 4,1925)</h5><div class="eq">Tipo 1: NPV = 25.000 + 2.500×4,1925 − 3.750/(1,2)¹⁰ = 25.000+10.481,25−605,65 = <b class="res">R$34.875,60</b><br>Tipo 2: NPV = 17.000 + 3.500×4,1925 − 2.550/(1,2)¹⁰ = <b class="res">R$31.261,81</b><br>Tipo 3: NPV = 8.000 + 4.000×4,1925 − 1.200/(1,2)¹⁰ = <b class="res">R$24.576,08</b></div></li>
-      <li class="step"><h5><span class="n">2</span>Multiplicar pela quantidade equivalente</h5><div class="eq">3 × 34.875,60 = <b class="res">R$104.626,80</b><br>5 × 31.261,81 = R$156.309,05<br>7 × 24.576,08 = R$172.032,56</div></li>
+      <li class="step"><h5><span class="n">1</span>NPV de cada tipo (i = 20%, n = 10, fator de anuidade = 4,1925)</h5><p class="fref">Fórmula: NPV = I + C·[(1+i)ⁿ−1]/[i(1+i)ⁿ] − S<sub>n</sub>/(1+i)ⁿ</p><div class="eq">Tipo 1: NPV = 25.000 + 2.500×4,1925 − 3.750/(1,2)¹⁰ = 25.000+10.481,25−605,65 = <b class="res">R$34.875,60</b><br>Tipo 2: NPV = 17.000 + 3.500×4,1925 − 2.550/(1,2)¹⁰ = <b class="res">R$31.261,81</b><br>Tipo 3: NPV = 8.000 + 4.000×4,1925 − 1.200/(1,2)¹⁰ = <b class="res">R$24.576,08</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Multiplicar pela quantidade equivalente</h5><p class="fref">Fórmula: Custo equivalente = NPV unitário × quantidade equivalente</p><div class="eq">3 × 34.875,60 = <b class="res">R$104.626,80</b><br>5 × 31.261,81 = R$156.309,05<br>7 × 24.576,08 = R$172.032,56</div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>Tipo 1 é a melhor compra — R$104.626,80 é o menor custo equivalente entre as três opções</b></div>
     <p class="tip">Atenção: comparar apenas o NPV unitário (R$34.875,60 vs R$31.261,81 vs R$24.576,08) levaria à resposta errada, porque cada tipo precisa de uma quantidade diferente de unidades para entregar o mesmo trabalho. É a multiplicação pela equivalência que decide.</p>
