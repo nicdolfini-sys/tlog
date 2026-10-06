@@ -35,6 +35,12 @@ h1{font-size:clamp(32px,6vw,50px); font-weight:700; letter-spacing:-.01em; margi
 .card h2{font-size:21px; margin:8px 0 6px; font-weight:700}
 .card p{font-size:14.5px; color:var(--muted); margin:0}
 .card.disabled{opacity:.5; cursor:default; pointer-events:none}
+.card .code{color:var(--c, var(--accent))}
+.card:hover{border-color:var(--c-line, var(--accent-line))}
+.card.logistica{--c:#8A5A2E; --c-line:#DCB98A}
+.card.trafego{--c:#8A4462; --c-line:#E7B0C3}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .card.trafego{--c:#E7A9C0; --c-line:#5C3548}}
+:root[data-theme="dark"] .card.trafego{--c:#E7A9C0; --c-line:#5C3548}
 .card.disabled .code{color:var(--muted)}
 .foot{margin-top:64px; padding-top:24px; border-top:1px solid var(--line); color:var(--muted); font-size:14px}
 </style>
@@ -46,10 +52,15 @@ h1{font-size:clamp(32px,6vw,50px); font-weight:700; letter-spacing:-.01em; margi
   <p class="lead">Revisões conceituais e resoluções de exercícios, aula por aula, organizadas por disciplina. Escolha uma abaixo para começar.</p>
 
   <div class="grid">
-    <a class="card" href="courses/logistica-3/">
+    <a class="card logistica" href="courses/logistica-3/">
       <span class="code">EMB 5934</span>
       <h2>Logística III</h2>
       <p>Armazenagem, custos de armazenagem, canais de distribuição e distribuição física — revisão da P1 com exercícios e prova antiga resolvidos.</p>
+    </a>
+    <a class="card trafego" href="courses/trafego-2/">
+      <span class="code">EMB 5936</span>
+      <h2>Engenharia de Tráfego II</h2>
+      <p>Mecânica ferroviária, capacidade de vias, controle de tráfego, espaço aéreo e orientação de pistas — teoria das cinco aulas com exercícios e as duas provas antigas resolvidas.</p>
     </a>
   </div>
 

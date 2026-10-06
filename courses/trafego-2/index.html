@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Revisão Tráfego II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#FDFBF8; --surface:#FFFFFF; --ink:#2C2833; --muted:#6B6574; --line:#E7E1E9;
+  --accent:#8A4462; --accent-soft:#F8DFE7; --accent-line:#E7B0C3;
+  --blue:#DCE7F6; --blue-ink:#2B4C73;
+  --mint:#DDF0E6; --mint-ink:#2F7355;
+  --yellow:#FBF1CF; --yellow-ink:#87671A;
+  --lav:#F2F0F4; --lav-line:#DAD5E0;
+  --res:#8A4462; --ok:#2F7355; --bad:#B0413F;
+  --f-head:'Lora',Georgia,serif; --f-mono:'JetBrains Mono',ui-monospace,'Courier New',monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1B1620; --surface:#251E2C; --ink:#F1EAF1; --muted:#BBA9C0; --line:#3A3140;
+  --accent:#E7A9C0; --accent-soft:#3B2530; --accent-line:#5C3548;
+  --blue:#243447; --blue-ink:#B9D3F0;
+  --mint:#1E3830; --mint-ink:#8FD9BC;
+  --yellow:#3A3320; --yellow-ink:#E7CE8C;
+  --lav:#2C2732; --lav-line:#443B4C;
+  --res:#E7A9C0; --ok:#8FD9BC; --bad:#E79A97;
+  color-scheme: dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#1B1620; --surface:#251E2C; --ink:#F1EAF1; --muted:#BBA9C0; --line:#3A3140;
+  --accent:#E7A9C0; --accent-soft:#3B2530; --accent-line:#5C3548;
+  --blue:#243447; --blue-ink:#B9D3F0;
+  --mint:#1E3830; --mint-ink:#8FD9BC;
+  --yellow:#3A3320; --yellow-ink:#E7CE8C;
+  --lav:#2C2732; --lav-line:#443B4C;
+  --res:#E7A9C0; --ok:#8FD9BC; --bad:#E79A97;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-head); font-size:17px; line-height:1.55}
+.page{max-width:980px; margin:0 auto; padding-inline:20px; padding-block:40px 100px}
+h1,h2,h3,h4{font-family:var(--f-head); text-wrap:balance; line-height:1.15; margin:0}
+p{margin:0 0 .7em; max-width:70ch}
+b{font-weight:600}
+
+.hero{padding-block:12px 40px; border-bottom:1px solid var(--line); margin-bottom:40px}
+.eyebrow{display:inline-block; font-family:var(--f-mono); font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); padding:7px 16px; border-radius:999px; margin-bottom:18px}
+h1.title{font-size:clamp(34px,6vw,54px); font-weight:700; letter-spacing:-.01em; margin-bottom:16px}
+.lead{color:var(--muted); font-size:19px; max-width:64ch; font-style:italic}
+.byline{margin-top:22px; font-size:15px; color:var(--muted); font-family:var(--f-mono)}
+
+.nav{display:flex; flex-wrap:wrap; gap:8px; margin-top:28px}
+.nav a{font-family:var(--f-mono); font-size:13px; padding:8px 14px; border-radius:8px; text-decoration:none; background:var(--surface); border:1px solid var(--line); color:var(--ink)}
+.nav a.hd{background:var(--accent); border-color:var(--accent); color:var(--bg)}
+
+section.aula{margin-block:56px}
+.aula-h{display:flex; gap:18px; align-items:baseline; border-top:2px solid var(--ink); padding-top:14px; margin-bottom:26px}
+.aula-h .num{font-family:var(--f-mono); font-weight:700; font-size:44px; color:var(--accent); line-height:1}
+.aula-h h2{font-size:clamp(26px,4vw,34px); font-weight:700}
+.aula-h p{color:var(--muted); margin:4px 0 0; font-size:16px}
+
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-bottom:18px}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px}
+.card.wide{grid-column:1/-1}
+.card h4{font-size:17px; margin-bottom:8px; color:var(--accent)}
+.card p{font-size:15px; margin-bottom:.5em; color:var(--ink)}
+.card p:last-child{margin-bottom:0}
+.card.blue{background:var(--blue)}
+.card.mint{background:var(--mint)} .card.mint h4{color:var(--mint-ink)}
+.card.yellow{background:var(--yellow)} .card.yellow h4{color:var(--yellow-ink)}
+.card.lav{background:var(--lav)}
+
+.f{font-family:var(--f-mono); font-size:15px}
+p.f{background:var(--lav); border:1px solid var(--lav-line); padding:10px 14px; border-radius:8px; display:block; margin:10px 0}
+.formula-box{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:14px}
+.formula-box .lbl{font-family:var(--f-mono); font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:8px}
+.formula-box .eq{font-family:var(--f-mono); font-size:19px; font-weight:600; color:var(--ink); margin-bottom:8px}
+.formula-box .key{font-size:14px; color:var(--muted); line-height:1.5}
+
+table{width:100%; border-collapse:collapse; font-size:15px; margin-bottom:18px}
+th{text-align:left; background:var(--lav); padding:10px 12px; font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted)}
+td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+
+.ex{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:24px 26px 28px; margin-bottom:28px}
+.ex-h{display:flex; align-items:baseline; gap:14px; margin-bottom:16px; flex-wrap:wrap}
+.tag{font-family:var(--f-mono); font-weight:700; background:var(--accent); color:var(--bg); padding:3px 12px; border-radius:6px; font-size:15px}
+.ex-h h3{font-size:21px}
+.given{background:var(--lav); border-radius:10px; padding:14px 18px; margin-bottom:18px; font-size:15px; color:var(--muted)}
+
+.steps{list-style:none; margin:0; padding:0; display:grid; gap:20px}
+.step{padding-top:18px; border-top:1px dashed var(--line)}
+.step:first-child{border-top:0; padding-top:0}
+.step h5{font-size:16px; margin-bottom:8px; display:flex; gap:10px; align-items:baseline}
+.n{font-family:var(--f-mono); font-size:13px; color:var(--bg); background:var(--ink); border-radius:50%; width:24px; height:24px; display:inline-grid; place-items:center; flex:none}
+.step .eq{font-family:var(--f-mono); font-size:15.5px; background:var(--lav); border:1px solid var(--lav-line); border-radius:6px; padding:10px 12px; margin:8px 0; line-height:1.8; overflow-x:auto}
+.res{color:var(--res); font-weight:700}
+
+.result{display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-top:20px; padding:14px 18px; border:2px solid var(--accent); border-radius:10px; background:var(--accent-soft)}
+.result span{font-family:var(--f-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent)}
+.result b{font-family:var(--f-mono); font-size:20px; color:var(--accent)}
+.result.ok{border-color:var(--ok); background:transparent}
+.result.ok span,.result.ok b{color:var(--ok)}
+.result.bad{border-color:var(--bad)}
+.result.bad span,.result.bad b{color:var(--bad)}
+
+.qa{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:16px}
+.qa .q{font-weight:600; font-size:16px; margin-bottom:10px; color:var(--accent)}
+.qa .a{font-size:15px; color:var(--ink)}
+.qa .a p{margin-bottom:.6em}
+.qa .a ul{margin:.3em 0 .6em; padding-left:20px}
+.qa .a li{margin-bottom:.3em}
+
+.provahead{background:var(--ink); color:var(--bg); border-radius:16px; padding:26px 28px; margin-bottom:26px}
+.provahead p{color:var(--bg); opacity:.75; margin:0; font-size:14px; font-family:var(--f-mono)}
+.provahead h3{font-size:24px; margin-top:4px}
+
+.tip{font-size:14px; color:var(--muted); border-left:3px solid var(--line); padding-left:12px; margin-top:12px}
+.foot{margin-top:60px; padding-top:24px; border-top:1px solid var(--line); color:var(--muted); font-size:14px}
+
+@media (max-width:760px){
+  .aula-h{flex-direction:column; gap:6px}
+  .ex{padding:18px}
+}
+</style>
+
+<div class="page">
+
+<header class="hero">
+  <p class="eyebrow">UFSC Joinville · EMB 5936 · Prof. Helry Dias</p>
+  <h1 class="title">Engenharia de Tráfego II — revisão da P1</h1>
+  <p class="lead">Teoria das cinco aulas explicada do zero, mais todos os exercícios das aulas e as duas provas antigas do professor resolvidas passo a passo — o suficiente para chegar na prova sabendo responder qualquer questão do tipo.</p>
+  <p class="byline">Companheiro dos slides "Engenharia de Tráfego II — Revisão P1" · Setembro de 2026</p>
+  <nav class="nav">
+    <a class="hd" href="#teoria1">1 · Locomoção</a>
+    <a class="hd" href="#teoria2">2 · Capacidade</a>
+    <a class="hd" href="#teoria3">3 · Controle ferroviário</a>
+    <a class="hd" href="#teoria4">4 · Espaço aéreo</a>
+    <a class="hd" href="#teoria5">5 · Pistas e tráfego aéreo</a>
+    <a href="#exaula1">Exercícios · Aula 1</a>
+    <a href="#exaula2">Exercícios · Aula 2</a>
+    <a href="#prova2020">Prova 2020 resolvida</a>
+    <a href="#prova2021">Prova 2021 resolvida</a>
+  </nav>
+</header>
+
+<section class="aula" id="teoria1">
+  <div class="aula-h"><span class="num">1</span><div><h2>Mecânica de locomoção ferroviária</h2><p>O que faz — e o que impede — um trem de andar.</p></div></div>
+
+  <div class="cards">
+    <div class="card wide">
+      <h4>A ideia central</h4>
+      <p>Um trem se move sob duas forças opostas: a <b>força motriz F<sub>t</sub></b> (produzida pelos motores da locomotiva) e a <b>resistência total R</b> (tudo que se opõe ao movimento). A comparação entre as duas decide tudo:</p>
+      <p class="f">F<sub>t</sub> &gt; R → acelera &nbsp;·&nbsp; F<sub>t</sub> = R → velocidade de equilíbrio (constante) &nbsp;·&nbsp; F<sub>t</sub> &lt; R → desacelera (ou nem sai do lugar)</p>
+    </div>
+  </div>
+
+  <h4 style="margin:22px 0 10px">Força de propulsão</h4>
+  <div class="formula-box">
+    <div class="lbl">Força motriz — potência em cv (cavalo-vapor)</div>
+    <div class="eq">F<sub>t</sub> = η · 2649 · P / V</div>
+    <div class="key">1 cv = 735,5 W · F<sub>t</sub> em N, P em cv, V em km/h</div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">Força motriz — potência em hp (horse-power)</div>
+    <div class="eq">F<sub>t</sub> = η · 2685 · P / V</div>
+    <div class="key">1 hp = 745,7 W · F<sub>t</sub> em N, P em hp, V em km/h · <b>η ≈ 0,81</b> para diesel-elétrica (eficiência da transmissão — nem toda potência do motor vira força motriz)</div>
+  </div>
+  <p class="tip">O erro mais comum da lista: usar a constante errada. <b>cv → 2649</b>, <b>hp → 2685</b>. Sempre confira em qual unidade o enunciado deu a potência.</p>
+
+  <h4 style="margin:26px 0 10px">Tração por aderência</h4>
+  <div class="cards">
+    <div class="card blue">
+      <h4>Aderência</h4>
+      <p>F<sub>a</sub> = N·f — força que impede o deslizamento da roda no trilho. f (coeficiente de aderência) varia com o estado do trilho: ≈0,33 seco e limpo, caindo até ≈0,10 sujo com óleo.</p>
+    </div>
+    <div class="card blue">
+      <h4>Peso aderente</h4>
+      <p>Peso que atua sobre as rodas motrizes. Quanto mais eixos motrizes (menos peso morto), maior a força motriz máxima possível.</p>
+    </div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Resistência ao movimento — quatro componentes</h4>
+  <div class="cards">
+    <div class="card"><h4>R<sub>r</sub> — Rolamento</h4><p>Deformação roda–trilho, atrito nos mancais, choques das flanges. Sempre existe.</p></div>
+    <div class="card"><h4>R<sub>a</sub> — Aerodinâmica</h4><p>Arrasto do ar; depende de área frontal, forma e V². Cresce rápido com a velocidade.</p></div>
+    <div class="card"><h4>R<sub>g</sub> — Rampa</h4><p>Gravidade: positiva em aclive, negativa em declive. Zero em trecho plano.</p></div>
+    <div class="card"><h4>R<sub>c</sub> — Curva</h4><p>Força centrífuga + arrasto das rodas externas. Zero em trecho reto.</p></div>
+  </div>
+  <p class="f">R = R<sub>r</sub> + R<sub>a</sub> + R<sub>g</sub> + R<sub>c</sub> &nbsp;·&nbsp; em trecho <b>reto e plano</b>: R<sub>g</sub>=R<sub>c</sub>=0, então R = R<sub>t</sub> (resistência básica) = R<sub>r</sub> + R<sub>a</sub></p>
+
+  <div class="formula-box">
+    <div class="lbl">R<sub>r</sub> — resistência de rolamento (fórmula de Davis)</div>
+    <div class="eq">R<sub>r</sub> = (c<sub>1</sub> + c<sub>2</sub>·x/G + c<sub>3</sub>·V) · G</div>
+    <div class="key">x = nº de eixos · G = peso (kN) · V = km/h · c<sub>1</sub>≈0,65 · c<sub>2</sub>≈125 · c<sub>3</sub>≈0,009 (locomotivas e vagões de passageiros) ou 0,013 (vagões de carga)</div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">R<sub>a</sub> — resistência aerodinâmica</div>
+    <div class="eq">R<sub>a</sub> = c<sub>a</sub> · A · V²</div>
+    <div class="key">A = área frontal (m²) · V = km/h · c<sub>a</sub>: locomotiva aerodinâmica 0,031 · locomotiva normal 0,046 · vagão de carga 0,009 · vagão de passageiros 0,006</div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">R<sub>g</sub> — resistência de rampa</div>
+    <div class="eq">R<sub>g</sub> = 10 · G · i</div>
+    <div class="key">G = peso (kN) · i = rampa (%)</div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">R<sub>c</sub> — resistência de curva</div>
+    <div class="eq">R<sub>c</sub> = 698 · G / r</div>
+    <div class="key">G = peso (kN) · r = raio de curva (m)</div>
+  </div>
+  <p class="f">Composição inteira: some por tipo de veículo — R<sub>t</sub> = n<sub>L</sub>·R<sub>rL</sub> + n<sub>V</sub>·R<sub>rV</sub> + n<sub>L</sub>·R<sub>aL</sub> + n<sub>V</sub>·R<sub>aV</sub></p>
+
+  <h4 style="margin:26px 0 10px">Velocidade de equilíbrio e frenagem</h4>
+  <div class="cards">
+    <div class="card mint"><h4>Velocidade de equilíbrio</h4><p>Quando F<sub>t</sub> = R<sub>t</sub>, o trem mantém velocidade constante enquanto a potência não mudar e não surgir rampa/curva.</p></div>
+    <div class="card yellow"><h4>Comprimento máximo do trem</h4><p>Limitado pela potência/nº de locomotivas, peso total, declividade do trecho, capacidade dos engates e aderência no aclive crítico.</p></div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">Força limite de frenagem</div>
+    <div class="eq">F<sub>flim</sub> = η · f<sub>s</sub> · (n<sub>L</sub>·N<sub>L</sub> + n<sub>V</sub>·N<sub>V</sub>)</div>
+    <div class="key">η ≈ 0,3 (eficiência do sistema de freio) · f<sub>s</sub> = coeficiente de atrito trilho–roda: ≈0,2 em baixa velocidade, ≈0,1 em alta · N<sub>L</sub>, N<sub>V</sub> = normal ao peso (N) das rodas freadas</div>
+  </div>
+</section>
+
+<section class="aula" id="teoria2">
+  <div class="aula-h"><span class="num">2</span><div><h2>Capacidade ferroviária</h2><p>Quantos trens cabem numa via — por hora, por dia, com folga de segurança.</p></div></div>
+
+  <div class="cards">
+    <div class="card wide">
+      <h4>Cinco tipos de capacidade</h4>
+      <p><b>Teórica máxima</b> — nº de trens sem interrupções, movimento homogêneo (o teto matemático). <b>Prática</b> — ≈2/3 da teórica, descontando imprevistos reais (horários, manutenção, licenciamento). <b>Econômica</b> — nº de trens com menor custo por unidade transportada. <b>Utilizada</b> — o que circula hoje de fato. <b>Disponível</b> — prática menos utilizada (o excedente ainda explorável).</p>
+    </div>
+  </div>
+
+  <h4 style="margin:22px 0 10px">Headway: o intervalo que define tudo</h4>
+  <div class="card lav" style="margin-bottom:18px">
+    <p><b>Headway</b> é o intervalo de tempo entre a passagem sucessiva de dois trens na mesma via, medido de frente a frente, no mesmo ponto da via. Capacidade é, essencialmente, o <b>inverso do headway mínimo</b>.</p>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">Capacidade de projeto (linhas de passageiros)</div>
+    <div class="eq">Capacidade = [3600 / (t.mínimo entre trens + t.controle nas estações)] × passageiros/vagão × vagões/trem</div>
+    <div class="key">O primeiro termo é o número de trens por hora.</div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Via singela — método do diagrama espaço-tempo</h4>
+  <p>Num trecho sem desvios, um trem sobe (vai) e outro desce (volta) sem se cruzar no meio: a capacidade depende só do tempo do ciclo completo.</p>
+  <div class="cards">
+    <div class="card">
+      <h4>Tempo de ciclo</h4>
+      <p class="f">t<sub>s</sub> = d/v<sub>s</sub> &nbsp;·&nbsp; t<sub>d</sub> = d/v<sub>d</sub> &nbsp;·&nbsp; t<sub>i</sub> = t<sub>s</sub> + t<sub>d</sub></p>
+      <p>d = distância entre pátios de cruzamento (km) · v<sub>s</sub>, v<sub>d</sub> = velocidades de subida e descida</p>
+    </div>
+    <div class="card">
+      <h4>Capacidade teórica</h4>
+      <p class="f">N = 2 · P / t<sub>i</sub></p>
+      <p>P = período de apuração (h, normalmente 24h) · N = nº de trens (nos dois sentidos) no período — cada ciclo completo t<sub>i</sub> gera exatamente 1 par de trens (1 sobe + 1 desce)</p>
+    </div>
+  </div>
+  <p class="tip">Como cada ciclo é indivisível, o número de <b>pares</b> de trens que cabem no período é sempre <b>⌊P/t<sub>i</sub>⌋</b> (arredondado para baixo) — não dá pra "completar" um ciclo pela metade.</p>
+
+  <div class="cards" style="margin-top:16px">
+    <div class="card yellow">
+      <h4>Capacidade prática</h4>
+      <p>Multiplica-se a teórica por dois fatores: e<sub>1</sub> (disponibilidade da linha, ≈0,75) e e<sub>2</sub> (utilização, ≈0,70).</p>
+    </div>
+    <div class="card">
+      <h4>Fórmula de Colson</h4>
+      <p class="f">N = [2880 / (t<sub>s</sub> + t<sub>d</sub> + θ)] · k</p>
+      <p>θ = tempo em cruzamentos (≈10 min, número de segurança) · k = coeficiente redutor (0,6–0,8)</p>
+    </div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Linha dupla</h4>
+  <p>Trens no mesmo sentido, separados por seções de bloqueio de sinalização (vermelho/amarelo/verde). Com 3 seções livres exigidas entre trens sucessivos:</p>
+  <div class="formula-box">
+    <div class="lbl">Headway mínimo e capacidade de linha dupla</div>
+    <div class="eq">H = 3 · T<sub>sb</sub> + T<sub>trem</sub> &nbsp;&nbsp;→&nbsp;&nbsp; C<sub>via</sub> = 2 · (P·60/H) · e<sub>1</sub> · e<sub>2</sub></div>
+    <div class="key">T<sub>sb</sub> = tempo para percorrer uma seção de bloqueio na velocidade máxima admissível · T<sub>trem</sub> = tempo para o trem percorrer seu próprio comprimento</div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Dimensionando pátios de cruzamento — o exercício mais cobrado</h4>
+  <div class="steps">
+    <li class="step"><h5><span class="n">1</span>Divida a via</h5><p>Com n pátios de comprimento L<sub>p</sub> ao longo de uma via de comprimento L<sub>v</sub>, sobram (n+1) trechos de corrida iguais:</p><div class="eq">d = (L<sub>v</sub> − n·L<sub>p</sub>) / (n+1)</div></li>
+    <li class="step"><h5><span class="n">2</span>Calcule o ciclo de cada trecho</h5><div class="eq">t<sub>i</sub> = d/v<sub>s</sub> + d/v<sub>d</sub></div></li>
+    <li class="step"><h5><span class="n">3</span>Converta em pares de trens/dia e teste</h5><p>Com P = 24h, pares/dia = ⌊P/t<sub>i</sub>⌋. Aumente n até esse valor bater (ou superar) a capacidade demandada — o menor n que funciona é a resposta.</p></li>
+  </div>
+  <p class="tip">Mais pátios → trechos mais curtos → ciclo mais rápido → mais pares de trens por dia. O comprimento do próprio pátio "consome" via útil, por isso entra subtraído de L<sub>v</sub>.</p>
+</section>
+
+<section class="aula" id="teoria3">
+  <div class="aula-h"><span class="num">3</span><div><h2>Sistemas de controle de tráfego ferroviário</h2><p>Como garantir que dois trens nunca ocupem o mesmo trecho.</p></div></div>
+
+  <h4 style="margin:0 0 10px">Sete componentes do sistema de controle</h4>
+  <table>
+    <tr><th>Componente</th><th>Função</th></tr>
+    <tr><td><b>Licenciamento</b></td><td>Autorização de movimento por ordem escrita</td></tr>
+    <tr><td><b>Sinais mecânicos</b></td><td>Identificam os Aparelhos de Mudança de Via (AMV)</td></tr>
+    <tr><td><b>Intertravamento</b></td><td>Libera um fluxo e, ao mesmo tempo, impede o fluxo concorrente</td></tr>
+    <tr><td><b>Seção de bloqueio</b></td><td>Trecho de limites definidos, ocupável por apenas um trem por vez</td></tr>
+    <tr><td><b>Circuito de via</b></td><td>Detecta trens (e trilhos partidos) por corrente elétrica nos trilhos</td></tr>
+    <tr><td><b>Sinais luminosos</b></td><td>Instruções visuais; substituem sinais mecânicos onde há energia</td></tr>
+    <tr><td><b>Intertravamento a relés</b></td><td>Automatiza os sinais luminosos sob o conceito <i>fail safe</i></td></tr>
+  </table>
+  <p class="tip">Interface do sistema: Centro de Controle Operacional (CCO), Painel de Controle Local (PCL) e equipamentos de via (máquinas de chave, sinaleiros, circuitos de via, geradores de cab signal, detectores de descarrilamento).</p>
+
+  <h4 style="margin:26px 0 10px">Centro de Controle Operacional (CCO)</h4>
+  <div class="cards">
+    <div class="card blue"><h4>Centro de vagões</h4><p>Programa e acompanha a frota de vagões; distribui vazios e carregados conforme o programa de transportes.</p></div>
+    <div class="card blue"><h4>Centro de locomotivas</h4><p>Aloca locomotivas ao programa de trens e às manobras de pátio; cumpre manutenção preventiva.</p></div>
+    <div class="card blue"><h4>Centro de equipagem</h4><p>Programa e controla maquinistas e manobradores (escala diária, semanal ou mensal).</p></div>
+    <div class="card blue"><h4>Controle de tráfego</h4><p>Comanda a circulação dos trens do início ao fim da rota, minimizando paradas e otimizando cruzamentos.</p></div>
+  </div>
+  <p>Vantagens da centralização: maior velocidade comercial, menor tempo de espera nos pátios, menor consumo de combustível, melhor aproveitamento das janelas de manutenção da via e mais segurança.</p>
+
+  <h4 style="margin:26px 0 10px">Dispositivos de proteção e sinalização</h4>
+  <div class="cards">
+    <div class="card mint"><h4>ATP</h4><p>Automatic Train Protection — atua diretamente nos freios para separar composições com segurança.</p></div>
+    <div class="card mint"><h4>ATC</h4><p>Automatic Train Control — soma controle automático de velocidade, com operação automática em situações específicas.</p></div>
+    <div class="card mint"><h4>ATS</h4><p>Automatic Train Supervision — regula o serviço ferroviário como um todo.</p></div>
+  </div>
+  <p class="f">Cores: <b>vermelho</b> parada imediata · <b>verde</b> linha livre · <b>amarelo</b> reduza, vermelho à frente</p>
+  <p><b>Seção em blocos:</b> trens no mesmo sentido são separados por, no mínimo, a distância de frenagem "d" — usa-se, por margem de segurança, <b>1,5 × d</b>.</p>
+  <p><b>Controle de velocidade:</b> intermitente (antes de sinais, ex. AMVs), contínuo (comunicação permanente via-locomotiva) ou eletromecânico (o "crocodilo": alerta sonoro e até 5 s para frear antes da parada automática de emergência).</p>
+  <p><b>Passagens em nível</b> concentram mais acidentes: sem proteção técnica, velocidade máxima de 120 km/h; com sinalização visual sem barreira, até 140 km/h; com barreiras (parciais ou totais), até 160 km/h.</p>
+</section>
+
+<section class="aula" id="teoria4">
+  <div class="aula-h"><span class="num">4</span><div><h2>Definições e estrutura do espaço aéreo</h2><p>Como o céu é organizado, controlado e classificado.</p></div></div>
+
+  <div class="card wide" style="margin-bottom:18px">
+    <h4>Divisão vertical</h4>
+    <p><b>Espaço aéreo inferior:</b> do solo até FL 245 inclusive (≈7.500 m) — aviões menores, turboélice, helicópteros. <b>Espaço aéreo superior:</b> acima do FL 245 — jatos e companhias comerciais. Dividir verticalmente compatibiliza voos diretos com o espaçamento entre auxílios à navegação, topografia e outros fatores.</p>
+  </div>
+
+  <h4 style="margin:0 0 10px">Espaço aéreo controlado</h4>
+  <table>
+    <tr><th>Sigla</th><th>O que é</th><th>Órgão</th></tr>
+    <tr><td><b>ATZ</b></td><td>Zona de tráfego de aeródromo — protege o circuito de tráfego, voos VFR</td><td>TWR</td></tr>
+    <tr><td><b>CTR</b></td><td>Zona de controle — do solo até certa altitude, ao redor de aeródromos próximos</td><td>APP</td></tr>
+    <tr><td><b>TMA</b></td><td>Área de controle terminal — onde aerovias convergem; contém uma ou mais CTR</td><td>APP</td></tr>
+    <tr><td><b>CTA</b></td><td>Área de controle — aerovias inferiores e outras áreas do espaço inferior</td><td>ACC</td></tr>
+    <tr><td><b>UTA</b></td><td>Área superior de controle — começa após a CTA, sem teto vertical</td><td>ACC</td></tr>
+    <tr><td><b>AWY</b></td><td>Aerovias — corredores dentro de uma área de controle</td><td>ACC</td></tr>
+  </table>
+  <div class="cards">
+    <div class="card yellow"><h4>FIR (não controlado)</h4><p>Região de Informação de Voo: presta apenas informação e alerta. O Brasil tem 5 FIR (Amazônica, Recife, Brasília, Curitiba, Atlântico).</p></div>
+    <div class="card"><h4>Espaço condicionado</h4><p><b>P</b>roibida (sobrevoo nunca permitido) · <b>R</b>estrita (só sob condições, ex. treinamento militar) · <b>D</b>angerous/perigosa (treinamento civil, sem acrobacias)</p></div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Gerenciamento do espaço aéreo (ATM)</h4>
+  <p>Estrutura da concepção operacional nacional: <b>AOM</b> (organização e gerenciamento do espaço aéreo), <b>AO</b> (operações em aeródromos), <b>DCB</b> (balanceamento de demanda e capacidade), <b>TS</b> (sincronização de tráfego), <b>AUO</b> (operações dos usuários), <b>CM</b> (gerenciamento de conflito), <b>ATM SDM</b> (gerenciamento da entrega do serviço). Objetivos estratégicos: segurança, capacidade, eficiência, trajetórias mais precisas e mitigação do impacto ambiental.</p>
+
+  <h4 style="margin:26px 0 10px">Altimetria</h4>
+  <div class="cards">
+    <div class="card"><h4>QNH</h4><p>Pressão no solo reduzida ao nível do mar → o altímetro mostra a <b>altitude</b>. Usado na decolagem e no pouso.</p></div>
+    <div class="card"><h4>QNE</h4><p>Padrão fixo de 1013,2 hPa → o altímetro mostra o <b>nível de voo</b>. Usado em cruzeiro, acima da altitude de transição.</p></div>
+    <div class="card"><h4>QFE</h4><p>Pressão no solo → o altímetro mostra <b>altura zero</b> ao pousar ali.</p></div>
+  </div>
+  <p class="f">Separação vertical: 1000 pés até FL 410 · 2000 pés acima do FL 410 (imprecisão do altímetro em altitude)</p>
+  <p><b>Separação horizontal</b> depende de: tipo de espaço aéreo, auxílio de navegação disponível, uso de radar, esteira de turbulência, velocidade das aeronaves, serviço prestado e regra de voo (VFR/IFR).</p>
+
+  <h4 style="margin:26px 0 10px">Classes de espaço aéreo (A a G)</h4>
+  <table>
+    <tr><th>Classe</th><th>Voos permitidos</th><th>Separação</th><th>Rádio / autorização</th></tr>
+    <tr><td><b>A</b></td><td>Só IFR</td><td>Todos separados entre si</td><td>Obrigatórios</td></tr>
+    <tr><td><b>B</b></td><td>IFR e VFR</td><td>Todos separados entre si</td><td>Obrigatórios</td></tr>
+    <tr><td><b>C</b></td><td>IFR e VFR</td><td>IFR/IFR e IFR/VFR</td><td>Obrigatórios</td></tr>
+    <tr><td><b>D</b></td><td>IFR e VFR</td><td>Só entre IFR</td><td>Obrigatórios</td></tr>
+    <tr><td><b>E</b></td><td>IFR e VFR</td><td>Só entre IFR</td><td>Só para IFR</td></tr>
+    <tr><td><b>F</b></td><td>IFR e VFR</td><td>Assessoramento (não é controle)</td><td>Só p/ IFR, sem autorização</td></tr>
+    <tr><td><b>G</b></td><td>IFR e VFR</td><td>Nenhuma</td><td>Só p/ IFR, sem autorização</td></tr>
+  </table>
+  <p class="tip">Fio condutor: de A para G, o controle, a separação e a obrigatoriedade de rádio/autorização para voos VFR vão caindo progressivamente.</p>
+
+  <h4 style="margin:26px 0 10px">IFR vs. VFR</h4>
+  <div class="cards">
+    <div class="card blue"><h4>IFR — voo por instrumentos</h4><p>Depende de controladores e instrumentos de bordo; opera em qualquer condição meteorológica; sempre separado por controle de tráfego.</p></div>
+    <div class="card blue"><h4>VFR — voo visual</h4><p>Depende de condições meteorológicas mínimas e referência visual; mais simples/barato, mas restrito a bom tempo e, em muitas classes, sem separação garantida.</p></div>
+  </div>
+</section>
+
+<section class="aula" id="teoria5">
+  <div class="aula-h"><span class="num">5</span><div><h2>Orientação de pistas e controle de tráfego aéreo</h2><p>Por que as pistas apontam para onde apontam — e como o voo é conduzido.</p></div></div>
+
+  <h4 style="margin:0 0 10px">Cabeceiras e direção das pistas</h4>
+  <div class="cards">
+    <div class="card">
+      <h4>Numeração</h4>
+      <p>De 01 a 36 — cabeceira "27" = bússola marcando 270° no pouso/decolagem. Duas pistas paralelas ganham <b>L</b>/<b>R</b> (left/right); três, a central ganha <b>C</b>.</p>
+    </div>
+    <div class="card blue">
+      <h4>O que define a direção</h4>
+      <p>Layout do aeroporto, obstáculos, instrumentação disponível, ruído, tráfego de outros aeroportos, declividade e <b>vento</b> (perpendicular ou transversal).</p>
+    </div>
+  </div>
+  <p>Sem vento, a proa coincide com o eixo da pista. Com vento incidindo de lado, o piloto corrige a proa até que a componente da velocidade ortogonal à pista anule a componente transversal do vento.</p>
+
+  <h4 style="margin:26px 0 10px">Componente transversal do vento</h4>
+  <table>
+    <tr><th>Comprimento de referência da pista</th><th>Componente transversal máxima</th></tr>
+    <tr><td>≥ 1500 m</td><td>20 kt (≈37 km/h)</td></tr>
+    <tr><td>1200 a 1500 m</td><td>13 kt (≈24 km/h)</td></tr>
+    <tr><td>&lt; 1200 m</td><td>10 kt (≈19 km/h)</td></tr>
+  </table>
+  <div class="card yellow" style="margin-bottom:18px">
+    <h4>Fator de utilização</h4>
+    <p>% do tempo em que a pista <b>não</b> está limitada pela componente transversal do vento. A recomendação de projeto é escolher o número e a orientação das pistas para atingir <b>95%</b> de fator de utilização.</p>
+  </div>
+
+  <h4 style="margin:0 0 10px">Lendo o anemograma</h4>
+  <p>Cada <b>raio</b> representa uma direção de incidência do vento (0° a 360°); cada <b>anel</b> é uma faixa de velocidade (em nós). O valor marcado é a <b>% de observações</b> daquela direção, naquela faixa de velocidade. Exemplo clássico do enunciado: 0,3% das observações registraram vento de "ESE" (lés-sudeste) entre 25 e 40 nós. É a partir desses dados que se calcula, para cada orientação candidata de pista, o fator de utilização e a componente transversal esperada.</p>
+
+  <h4 style="margin:26px 0 10px">Sistemas de controle de tráfego aéreo — etapas do voo controlado</h4>
+  <table>
+    <tr><th>Etapa</th><th>Órgão</th><th>O que acontece</th></tr>
+    <tr><td>1–3</td><td><b>TWR</b></td><td>Plano de voo aprovado; autorização de acionamento/push-back; táxi até o ponto de espera</td></tr>
+    <tr><td>4</td><td><b>TWR</b></td><td>Decolagem autorizada</td></tr>
+    <tr><td>5</td><td><b>APP</b></td><td>Saída da terminal por procedimento SID</td></tr>
+    <tr><td>6</td><td><b>ACC</b></td><td>Voo em cruzeiro</td></tr>
+    <tr><td>7</td><td><b>ACC</b></td><td>Início da descida por procedimento STAR</td></tr>
+    <tr><td>8–9</td><td><b>APP</b></td><td>Entrada na terminal (vetoração se necessário) e aproximação final</td></tr>
+    <tr><td>10</td><td><b>TWR</b></td><td>Pouso e táxi até o pátio</td></tr>
+  </table>
+
+  <h4 style="margin:26px 0 10px">Auxílios à navegação</h4>
+  <div class="cards">
+    <div class="card"><h4>NDB</h4><p>Radiofarol não-direcional; impreciso à noite e perto de formações meteorológicas; em desativação no Brasil.</p></div>
+    <div class="card"><h4>VOR</h4><p>Mede a radial (ângulo a partir do Norte magnético); preciso, não sofre com o clima; curto/médio alcance.</p></div>
+    <div class="card"><h4>DME</h4><p>Distância oblíqua até a estação; integrado ao VOR; atende até 100 aeronaves simultaneamente.</p></div>
+    <div class="card"><h4>ILS</h4><p>Localizer (alinhamento) + Glide Slope (ângulo de descida); classificado em categorias CAT I a IIIc pela precisão.</p></div>
+  </div>
+</section>
+
+<section class="aula" id="exaula1">
+  <div class="aula-h"><span class="num">Ex</span><div><h2>Exercícios da Aula 1 — resolvidos</h2><p>Os dois exercícios propostos nos slides de Mecânica de Locomoção.</p></div></div>
+
+  <div class="ex" id="a1ex1">
+    <header class="ex-h"><span class="tag">Exercício 1</span><h3>Resistência, força motriz e deslocamento</h3></header>
+    <div class="given">Trem em trecho <b>reto e plano</b>: 2 locomotivas <b>aerodinâmicas</b> de 4000 cv, 1200 kN cada, e 50 vagões de minério, 1100 kN cada. Área frontal: locomotiva 10 m², vagão 8,5 m². 4 eixos em todos os veículos, todos os eixos das locomotivas motrizes. V = 90 km/h.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Resistência de rolamento — locomotiva</h5><div class="eq">R<sub>r</sub> = (0,65 + 125·4/1200 + 0,009·90) · 1200<br>= (0,65 + 0,4167 + 0,81) · 1200 = 1,8767 · 1200 = <b class="res">2252,0 N</b></div><p>c<sub>3</sub> = 0,009 porque locomotiva não é vagão de carga.</p></li>
+      <li class="step"><h5><span class="n">2</span>Resistência aerodinâmica — locomotiva</h5><div class="eq">R<sub>a</sub> = 0,031 · 10 · 90² = 0,031 · 10 · 8100 = <b class="res">2511,0 N</b></div><p>c<sub>a</sub> = 0,031 (locomotiva aerodinâmica, conforme o enunciado).</p></li>
+      <li class="step"><h5><span class="n">3</span>Resistência de rolamento — vagão de minério</h5><div class="eq">R<sub>r</sub> = (0,65 + 125·4/1100 + 0,013·90) · 1100<br>= (0,65 + 0,4545 + 1,17) · 1100 = 2,2745 · 1100 = <b class="res">2502,0 N</b></div><p>c<sub>3</sub> = 0,013 porque é vagão de carga (minério).</p></li>
+      <li class="step"><h5><span class="n">4</span>Resistência aerodinâmica — vagão</h5><div class="eq">R<sub>a</sub> = 0,009 · 8,5 · 90² = 0,009 · 8,5 · 8100 = <b class="res">619,65 N</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Resistência total da composição</h5><div class="eq">Por locomotiva: 2252,0 + 2511,0 = 4763,0 N &nbsp;×2 = 9526,0 N<br>Por vagão: 2502,0 + 619,65 = 3121,65 N &nbsp;×50 = 156.082,5 N<br>R<sub>t</sub> = 9526,0 + 156.082,5 = <b class="res">165.608,5 N ≈ 165,6 kN</b></div></li>
+      <li class="step"><h5><span class="n">6</span>Força motriz por locomotiva</h5><div class="eq">F<sub>t</sub> = 0,81 · 2649 · 4000 / 90 = <b class="res">95.364,0 N</b> por locomotiva<br>Total: 2 × 95.364,0 = <b class="res">190.728,0 N ≈ 190,7 kN</b></div><p>Potência dada em <b>cv</b> → constante 2649.</p></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>R<sub>t</sub> ≈ 165,6 kN &nbsp;·&nbsp; F<sub>t</sub> ≈ 95,4 kN/locomotiva (190,7 kN total)</b></div>
+    <p style="margin-top:10px"><b>A composição consegue se deslocar?</b> Sim — F<sub>t</sub> (190,7 kN) &gt; R<sub>t</sub> (165,6 kN), com folga confortável de ≈25 kN (≈15%). A composição acelera.</p>
+  </div>
+
+  <div class="ex" id="a1ex2">
+    <header class="ex-h"><span class="tag">Exercício 2</span><h3>Mesmo raciocínio, margem muito mais apertada</h3></header>
+    <div class="given">Trem em trecho reto e plano: 3 locomotivas <b>normais</b> de 3000 hp, 1300 kN cada, e 80 vagões de minério, 1100 kN cada. Área frontal: locomotiva 10 m², vagão 8,5 m². 4 eixos em todos, todos os eixos das locomotivas motrizes. V = 80 km/h.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Resistência de rolamento — locomotiva</h5><div class="eq">R<sub>r</sub> = (0,65 + 125·4/1300 + 0,009·80) · 1300<br>= (0,65 + 0,3846 + 0,72) · 1300 = 1,7546 · 1300 = <b class="res">2281,0 N</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Resistência aerodinâmica — locomotiva</h5><div class="eq">R<sub>a</sub> = 0,046 · 10 · 80² = <b class="res">2944,0 N</b></div><p>c<sub>a</sub> = 0,046 (locomotiva <b>normal</b>, não aerodinâmica).</p></li>
+      <li class="step"><h5><span class="n">3</span>Resistência de rolamento — vagão</h5><div class="eq">R<sub>r</sub> = (0,65 + 125·4/1100 + 0,013·80) · 1100<br>= (0,65 + 0,4545 + 1,04) · 1100 = 2,1445 · 1100 = <b class="res">2359,0 N</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Resistência aerodinâmica — vagão</h5><div class="eq">R<sub>a</sub> = 0,009 · 8,5 · 80² = <b class="res">489,6 N</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Resistência total da composição</h5><div class="eq">Por locomotiva: 2281,0 + 2944,0 = 5225,0 N &nbsp;×3 = 15.675,0 N<br>Por vagão: 2359,0 + 489,6 = 2848,6 N &nbsp;×80 = 227.888,0 N<br>R<sub>t</sub> = 15.675,0 + 227.888,0 = <b class="res">243.563,0 N ≈ 243,56 kN</b></div></li>
+      <li class="step"><h5><span class="n">6</span>Força motriz por locomotiva</h5><div class="eq">F<sub>t</sub> = 0,81 · 2685 · 3000 / 80 = <b class="res">81.556,9 N</b> por locomotiva<br>Total: 3 × 81.556,9 = <b class="res">244.670,6 N ≈ 244,67 kN</b></div><p>Potência dada em <b>hp</b> → constante 2685 (não 2649!).</p></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>R<sub>t</sub> ≈ 243,56 kN &nbsp;·&nbsp; F<sub>t</sub> ≈ 244,67 kN total</b></div>
+    <p style="margin-top:10px"><b>A composição consegue se deslocar?</b> Sim, mas por muito pouco — F<sub>t</sub> supera R<sub>t</sub> em apenas ≈1,1 kN (≈0,45%). É o tipo de resultado que a prova adora: se você arredondar demais no meio da conta, pode inverter a resposta.</p>
+    <p class="tip">Compare com o Exercício 1: mesma lógica, mas aqui a locomotiva é "normal" (c<sub>a</sub> maior) e a potência está em hp — dois detalhes que, juntos, apertam a margem de segurança do trem.</p>
+  </div>
+</section>
+
+<section class="aula" id="exaula2">
+  <div class="aula-h"><span class="num">Ex</span><div><h2>Exercícios da Aula 2 — resolvidos</h2><p>Capacidade de via singela: do diagrama espaço-tempo ao dimensionamento de pátios.</p></div></div>
+
+  <div class="ex" id="a2ex1">
+    <header class="ex-h"><span class="tag">Exercício 1</span><h3>Capacidade de um trecho sem desvios</h3></header>
+    <div class="given">Trecho de 50 km, sem desvios ou cruzamentos. Velocidade de subida 20 km/h, de descida 35 km/h. Período de apuração: 1 dia (24 h).</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Tempo de subida e de descida</h5><div class="eq">t<sub>s</sub> = 50/20 = <b class="res">2,5 h</b> &nbsp;·&nbsp; t<sub>d</sub> = 50/35 = <b class="res">1,4286 h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Tempo do ciclo</h5><div class="eq">t<sub>i</sub> = 2,5 + 1,4286 = <b class="res">3,9286 h</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Número de ciclos (pares de trens) no período</h5><div class="eq">P/t<sub>i</sub> = 24 / 3,9286 = 6,11 → <b class="res">6 pares de trens/dia</b></div><p>Arredonda-se para baixo: um ciclo incompleto não produz um trem extra.</p></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>6 pares de trens/dia (12 trens no total)</b></div>
+  </div>
+
+  <div class="ex" id="a2ex2">
+    <header class="ex-h"><span class="tag">Exercício 2</span><h3>Mesma lógica, período mais curto</h3></header>
+    <div class="given">Trecho de 80 km, sem desvios ou cruzamentos. Velocidade de subida 25 km/h, de descida 45 km/h. Período de apuração: 15 h.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Tempo de subida e de descida</h5><div class="eq">t<sub>s</sub> = 80/25 = <b class="res">3,2 h</b> &nbsp;·&nbsp; t<sub>d</sub> = 80/45 = <b class="res">1,7778 h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Tempo do ciclo</h5><div class="eq">t<sub>i</sub> = 3,2 + 1,7778 = <b class="res">4,9778 h</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Número de ciclos no período</h5><div class="eq">P/t<sub>i</sub> = 15 / 4,9778 = 3,01 → <b class="res">3 pares de trens</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>3 pares de trens no período de 15 h (6 trens no total)</b></div>
+    <p class="tip">Repare como o resultado veio muito perto de 3,00 — pequenas variações no enunciado (14 h, por exemplo) já derrubariam para 2 pares. Vale sempre checar o valor exato antes de arredondar.</p>
+  </div>
+
+  <div class="ex" id="a2ex3">
+    <header class="ex-h"><span class="tag">Exercício 3</span><h3>Quantos pátios de cruzamento construir?</h3></header>
+    <div class="given">Via singela nova. Capacidade demandada: 17 pares de trens/dia. Comprimento da via: 250 km. Comprimento do pátio de cruzamento: 3 km. Velocidade média subindo: 40 km/h. Velocidade média descendo: 30 km/h.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Monte a fórmula do trecho entre pátios</h5><div class="eq">d(n) = (250 − 3n) / (n+1) &nbsp;·&nbsp; t<sub>i</sub>(n) = d·(1/40 + 1/30) = d · 7/120</div></li>
+      <li class="step"><h5><span class="n">2</span>Teste n = 8 pátios</h5><div class="eq">d = (250 − 24)/9 = 25,11 km &nbsp;·&nbsp; t<sub>i</sub> = 25,11 · 7/120 = 1,465 h<br>P/t<sub>i</sub> = 24/1,465 = 16,4 → <b class="res">16 pares/dia — não atinge os 17 pedidos</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Teste n = 9 pátios</h5><div class="eq">d = (250 − 27)/10 = 22,3 km &nbsp;·&nbsp; t<sub>i</sub> = 22,3 · 7/120 = 1,3008 h<br>P/t<sub>i</sub> = 24/1,3008 = 18,45 → <b class="res">18 pares/dia — atende</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>9 pátios de cruzamento · capacidade resultante: 18 pares de trens/dia (36 trens)</b></div>
+    <p style="margin-top:10px">Com 9 pátios a via entrega 1 par de trens/dia <b>a mais</b> do que o demandado — folga pequena e saudável de projeto.</p>
+  </div>
+
+  <div class="ex" id="a2ex4">
+    <header class="ex-h"><span class="tag">Exercício 4</span><h3>Mesmo método, via mais curta</h3></header>
+    <div class="given">Via singela nova. Capacidade demandada: 15 pares de trens/dia. Comprimento da via: 180 km. Comprimento do pátio de cruzamento: 3 km. Velocidade média subindo: 40 km/h. Velocidade média descendo: 30 km/h.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Teste n = 5 pátios</h5><div class="eq">d = (180 − 15)/6 = 27,5 km &nbsp;·&nbsp; t<sub>i</sub> = 27,5 · 7/120 = 1,604 h<br>P/t<sub>i</sub> = 24/1,604 = 14,96 → <b class="res">14 pares/dia — não atinge os 15 pedidos</b></div><p>Repare: 14,96 é quase 15, mas "quase" não conta — o ciclo tem que fechar inteiro.</p></li>
+      <li class="step"><h5><span class="n">2</span>Teste n = 6 pátios</h5><div class="eq">d = (180 − 18)/7 = 23,14 km &nbsp;·&nbsp; t<sub>i</sub> = 162/120 = 1,35 h<br>P/t<sub>i</sub> = 24/1,35 = 17,78 → <b class="res">17 pares/dia — atende</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>6 pátios de cruzamento · capacidade resultante: 17 pares de trens/dia (34 trens)</b></div>
+  </div>
+</section>
+
+<section class="aula" id="prova2020">
+  <div class="aula-h"><span class="num">P1</span><div><h2>Prova 2020 resolvida — Avaliação Parcial 01</h2><p>UFSC Joinville · EMB 5936 · aplicada em 14/10/2020, 7 questões, 10 pontos.</p></div></div>
+
+  <div class="ex" id="p20q1">
+    <header class="ex-h"><span class="tag">Q1 · 2,0 pts</span><h3>Resistência, força motriz e deslocamento</h3></header>
+    <div class="given">Trecho reto e plano: 3 locomotivas normais de 4000 hp, 1400 kN cada, e 90 vagões de minério, 1200 kN cada. Área frontal: locomotiva 9,5 m², vagão 8,0 m². 4 eixos em todos, todos motrizes na locomotiva. V = 70 km/h.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Resistências da locomotiva</h5><div class="eq">R<sub>r</sub> = (0,65 + 125·4/1400 + 0,009·70) · 1400 = 1,6371 · 1400 = <b class="res">2292,0 N</b><br>R<sub>a</sub> = 0,046 · 9,5 · 70² = <b class="res">2141,3 N</b> &nbsp;(loco normal)<br>Por locomotiva: <b class="res">4433,3 N</b> &nbsp;×3 = 13.299,9 N</div></li>
+      <li class="step"><h5><span class="n">2</span>Resistências do vagão</h5><div class="eq">R<sub>r</sub> = (0,65 + 125·4/1200 + 0,013·70) · 1200 = 1,9767 · 1200 = <b class="res">2372,0 N</b><br>R<sub>a</sub> = 0,009 · 8,0 · 70² = <b class="res">352,8 N</b><br>Por vagão: <b class="res">2724,8 N</b> &nbsp;×90 = 245.232,0 N</div></li>
+      <li class="step"><h5><span class="n">3</span>Resistência total</h5><div class="eq">R<sub>t</sub> = 13.299,9 + 245.232,0 = <b class="res">258.531,9 N ≈ 258,53 kN</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Força motriz por locomotiva</h5><div class="eq">F<sub>t</sub> = 0,81 · 2685 · 4000 / 70 = <b class="res">124.277,1 N</b> por locomotiva &nbsp;(potência em <b>hp</b> → 2685)<br>Total: 3 × 124.277,1 = <b class="res">372.831,4 N ≈ 372,83 kN</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>R<sub>t</sub> ≈ 258,53 kN &nbsp;·&nbsp; F<sub>t</sub> ≈ 372,83 kN total</b></div>
+    <p style="margin-top:10px"><b>Desloca?</b> Sim, com folga grande — F<sub>t</sub> supera R<sub>t</sub> em ≈114 kN (≈44%). Três locomotivas de 4000 hp são bastante potência para este trem: a composição acelera sem dificuldade.</p>
+  </div>
+
+  <div class="ex" id="p20q2">
+    <header class="ex-h"><span class="tag">Q2 · 1,5 pts</span><h3>Capacidade de três trechos, a partir do gráfico</h3></header>
+    <div class="given">Gráfico espaço-tempo com três trechos superpostos (picos em 55, 35 e 15 km). Ler os vértices do zigue-zague de cada trecho para achar t<sub>s</sub> e t<sub>d</sub>.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Leia os tempos de cada trecho no gráfico</h5><div class="eq">Trecho 1: sobe de 0 a 4h, desce de 4 a 6h → t<sub>i</sub> = 4+2 = <b class="res">6 h</b><br>Trecho 2: sobe de 0 a 2h, desce de 2 a 4h → t<sub>i</sub> = 2+2 = <b class="res">4 h</b><br>Trecho 3: sobe de 0 a 1h, desce de 1 a 2h → t<sub>i</sub> = 1+1 = <b class="res">2 h</b></div><p>O padrão se repete a cada t<sub>i</sub> — dá para conferir contando quantos triângulos cabem até a hora 12 no desenho.</p></li>
+      <li class="step"><h5><span class="n">2</span>Capacidade no período mostrado no gráfico (P = 12 h)</h5><div class="eq">Trecho 1: 2·12/6 = <b class="res">4 trens</b> &nbsp;·&nbsp; Trecho 2: 2·12/4 = <b class="res">6 trens</b> &nbsp;·&nbsp; Trecho 3: 2·12/2 = <b class="res">12 trens</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Capacidade em 1 dia (P = 24 h)</h5><div class="eq">Trecho 1: 2·24/6 = <b class="res">8 trens</b> &nbsp;·&nbsp; Trecho 2: 2·24/4 = <b class="res">12 trens</b> &nbsp;·&nbsp; Trecho 3: 2·24/2 = <b class="res">24 trens</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>Trecho 1: 8 trens/dia · Trecho 2: 12 trens/dia · Trecho 3: 24 trens/dia</b></div>
+    <p style="margin-top:10px"><b>Discussão conceitual:</b> aqui a capacidade dobrou exatamente porque 24 h é múltiplo inteiro do ciclo t<sub>i</sub> dos três trechos (6, 4 e 2 dividem 24 sem resto). Isso não é garantido em geral: como N = ⌊P/t<sub>i</sub>⌋, se o período apurado não fosse múltiplo do ciclo, a capacidade cresceria "em degraus" (por ciclos completos), não de forma proporcional ao tempo — sempre existe uma fração de ciclo que não gera trem extra.</p>
+  </div>
+
+  <div class="ex" id="p20q3">
+    <header class="ex-h"><span class="tag">Q3 · 1,5 pts</span><h3>Dimensionamento de pátios de cruzamento</h3></header>
+    <div class="given">Capacidade demandada: 12 pares de trens/dia. Via de 150 km. Pátio de cruzamento de 2,5 km. Velocidade média subindo: 35 km/h. Velocidade média descendo: 30 km/h.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Teste n = 3 pátios</h5><div class="eq">d = (150 − 7,5)/4 = 35,625 km &nbsp;·&nbsp; t<sub>i</sub> = 35,625·(1/35+1/30) = 35,625 · 13/210 = 2,205 h<br>P/t<sub>i</sub> = 24/2,205 = 10,88 → <b class="res">10 pares/dia — não atinge os 12 pedidos</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Teste n = 4 pátios</h5><div class="eq">d = (150 − 10)/5 = 28,0 km &nbsp;·&nbsp; t<sub>i</sub> = 28,0 · 13/210 = 1,733 h<br>P/t<sub>i</sub> = 24/1,733 = 13,85 → <b class="res">13 pares/dia — atende</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>4 pátios de cruzamento · capacidade máxima resultante: 13 pares de trens/dia (26 trens)</b></div>
+    <p style="margin-top:10px">A via projetada entrega 1 par de trens/dia a mais do que o mínimo demandado (12).</p>
+  </div>
+
+  <div class="qa" id="p20q4">
+    <div class="q">Q4 · 1,0 pt — Discuta os principais componentes de: (a) Sistema de Controle de Tráfego Ferroviário; (b) Dispositivos e Técnicas de Operação; (c) Centro de Controle Operacional.</div>
+    <div class="a">
+      <p><b>(a) Sistema de controle de tráfego ferroviário</b> — sete componentes trabalham juntos: licenciamento (autorização escrita de movimento), sinais mecânicos (identificam AMVs), intertravamento (libera um fluxo e bloqueia o concorrente), seção de bloqueio (um trem por vez), circuito de via (detecção elétrica de trens e trilhos partidos), sinais luminosos (substituem os mecânicos onde há energia) e intertravamento a relés (automação sob o princípio <i>fail safe</i> — na dúvida, o sistema sempre assume a posição mais segura).</p>
+      <p><b>(b) Dispositivos e técnicas de operação</b> — ATP (freia automaticamente para manter separação segura), ATC (soma controle de velocidade automático) e ATS (regula o serviço). A sinalização semafórica usa cores padronizadas (vermelho = parada, verde = livre, amarelo = reduza) e a separação física mínima entre trens no mesmo sentido é 1,5× a distância de frenagem. O controle de velocidade pode ser intermitente (nos AMVs e estações), contínuo (comunicação permanente via-locomotiva) ou eletromecânico (o "crocodilo", que aciona parada de emergência se o maquinista não reagir em até 5 s).</p>
+      <p><b>(c) Centro de Controle Operacional (CCO)</b> — gerenciamento centralizado dividido em quatro frentes: centro de vagões (distribuição de vazios/carregados), centro de locomotivas (alocação de tração e manutenção), centro de equipagem (escalas de maquinistas/manobradores) e controle de tráfego (comanda a circulação fim a fim). A centralização aumenta a velocidade comercial, reduz o tempo de espera em pátios, reduz consumo de combustível e melhora a segurança.</p>
+    </div>
+  </div>
+
+  <div class="qa" id="p20q5">
+    <div class="q">Q5 · 2,0 pts — Discuta: (a) Estrutura do Espaço de Tráfego Aéreo; (b) Elementos de Organização do Tráfego Aéreo; (c) Tipos de Voos; (d) Diferenças entre Classes de Espaço Aéreo.</div>
+    <div class="a">
+      <p><b>(a) Estrutura</b> — o espaço aéreo se divide verticalmente em inferior (solo até FL 245) e superior (acima do FL 245). Dentro dele, o espaço controlado organiza-se em ATZ (zona de aeródromo, TWR), CTR (zona de controle, APP), TMA (área terminal, APP), CTA e UTA (áreas de controle inferior/superior, ACC) e AWY (aerovias). Fora do controlado existe a FIR (informação de voo, não controlada) e o espaço condicionado (Proibido, Restrito, Perigoso).</p>
+      <p><b>(b) Elementos de organização (ATM)</b> — AOM (organização e gerenciamento do espaço aéreo), AO (operações em aeródromos), DCB (balanceamento de demanda e capacidade), TS (sincronização de tráfego), AUO (operações dos usuários), CM (gerenciamento de conflito) e ATM SDM (entrega do serviço). Os objetivos estratégicos são segurança, capacidade, eficiência, trajetórias mais precisas e mitigação ambiental.</p>
+      <p><b>(c) Tipos de voos</b> — IFR (por instrumentos: sempre separado por controle de tráfego, funciona em qualquer clima, mas exige mais equipamento e treinamento) e VFR (visual: mais simples e barato, porém depende de boas condições meteorológicas e, em várias classes, não tem separação garantida por controle).</p>
+      <p><b>(d) Diferenças entre classes</b> — de A a G a rigidez cai progressivamente: A e B separam todos os voos entre si; C e D só garantem separação total ou parcial envolvendo IFR; E, F e G reduzem cada vez mais a exigência de separação, de rádio e de autorização para voos VFR, até G, onde não há separação controlada nenhuma.</p>
+    </div>
+  </div>
+
+  <div class="qa" id="p20q6">
+    <div class="q">Q6 · 1,0 pt — Componentes e parâmetros do projeto e orientação de pistas.</div>
+    <div class="a">
+      <p>A orientação de uma pista nasce da <b>direção predominante do vento</b> — medida no anemograma — combinada com layout do aeroporto, obstáculos, instrumentação de controle disponível, ruído, tráfego de aeroportos vizinhos e declividade. O objetivo de projeto é atingir <b>95% de fator de utilização</b> respeitando os limites de componente transversal do vento (20 kt para pistas ≥1500 m; 13 kt entre 1200–1500 m; 10 kt abaixo de 1200 m).</p>
+      <p>Essas informações são comunicadas aos operadores de duas formas: fisicamente, pela <b>cabeceira numerada</b> pintada na pista (01 a 36, correspondendo à orientação magnética em dezenas de grau, com L/R/C para pistas paralelas); e operacionalmente, pelo rádio — em aeroportos com torre, o controlador informa qual cabeceira usar; sem torre, o próprio piloto decide e anuncia.</p>
+    </div>
+  </div>
+
+  <div class="qa" id="p20q7">
+    <div class="q">Q7 · 1,0 pt — Como o anemograma apresenta os dados para a orientação de pistas.</div>
+    <div class="a">
+      <p>O anemograma é um gráfico polar: cada <b>raio</b> marca uma direção de incidência do vento (0° a 360°, os 360° coincidindo com o Norte) e cada <b>anel concêntrico</b> marca uma faixa de velocidade, em nós. O número escrito em cada célula é a <b>porcentagem de observações</b> registradas naquela direção e naquela faixa de velocidade — por exemplo, "0,3" no raio ESE entre os anéis de 25 e 40 kt significa que 0,3% de todas as medições de vento vieram de lés-sudeste, com velocidade entre 25 e 40 nós.</p>
+      <p>A importância: somando as porcentagens ao longo de cada direção candidata de pista, o projetista calcula quanto tempo o vento ficaria dentro do limite de componente transversal admissível para aquele comprimento de pista — e escolhe a orientação (ou combinação de pistas) que maximiza esse fator de utilização, buscando os 95% recomendados.</p>
+    </div>
+  </div>
+</section>
+
+<section class="aula" id="prova2021">
+  <div class="aula-h"><span class="num">P2</span><div><h2>Prova 2021 resolvida — Avaliação Parcial 01</h2><p>UFSC Joinville · EMB 5936 · aplicada em 17/03/2021, 7 questões, 10 pontos.</p></div></div>
+
+  <div class="provahead">
+    <p>Atenção</p>
+    <h3>Esta prova tem uma pegadinha na Q1 — o trem não sai do lugar</h3>
+  </div>
+
+  <div class="ex" id="p21q1">
+    <header class="ex-h"><span class="tag">Q1 · 2,0 pts</span><h3>Resistência, força motriz — e um trem que não desloca</h3></header>
+    <div class="given">Trecho reto e plano: 2 locomotivas normais de 2700 cv, 1400 kN cada, e 60 vagões de minério de ferro, 1200 kN cada. Área frontal: locomotiva 9,0 m², vagão 8,0 m². 4 eixos em todos, todos motrizes na locomotiva. V = 70 km/h.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Resistências da locomotiva</h5><div class="eq">R<sub>r</sub> = (0,65 + 125·4/1400 + 0,009·70) · 1400 = <b class="res">2292,0 N</b><br>R<sub>a</sub> = 0,046 · 9,0 · 70² = <b class="res">2028,6 N</b> &nbsp;(loco normal)<br>Por locomotiva: <b class="res">4320,6 N</b> &nbsp;×2 = 8641,2 N</div></li>
+      <li class="step"><h5><span class="n">2</span>Resistências do vagão</h5><div class="eq">R<sub>r</sub> = (0,65 + 125·4/1200 + 0,013·70) · 1200 = <b class="res">2372,0 N</b><br>R<sub>a</sub> = 0,009 · 8,0 · 70² = <b class="res">352,8 N</b><br>Por vagão: <b class="res">2724,8 N</b> &nbsp;×60 = 163.488,0 N</div></li>
+      <li class="step"><h5><span class="n">3</span>Resistência total</h5><div class="eq">R<sub>t</sub> = 8641,2 + 163.488,0 = <b class="res">172.129,2 N ≈ 172,13 kN</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Força motriz por locomotiva</h5><div class="eq">F<sub>t</sub> = 0,81 · 2649 · 2700 / 70 = <b class="res">82.762,3 N</b> por locomotiva &nbsp;(potência em <b>cv</b> → 2649)<br>Total: 2 × 82.762,3 = <b class="res">165.524,7 N ≈ 165,52 kN</b></div></li>
+    </ol>
+    <div class="result bad"><span>Resposta</span><b>R<sub>t</sub> ≈ 172,13 kN &nbsp;·&nbsp; F<sub>t</sub> ≈ 165,52 kN total</b></div>
+    <p style="margin-top:10px"><b>Desloca?</b> <b>Não.</b> Aqui R<sub>t</sub> supera F<sub>t</sub> em ≈6,6 kN (≈3,8%) — só duas locomotivas de 2700 cv não têm força motriz suficiente para vencer a resistência de 60 vagões carregados. Motivo: menos locomotivas (2 em vez de 3) puxando praticamente o mesmo peso de trem, com potência individual menor. A composição não consegue iniciar (ou manter) o deslocamento nessas condições.</p>
+    <p class="tip">Compare com a prova de 2020, Q1: mesmos pesos e velocidade, mas lá havia 3 locomotivas de 4000 hp — muito mais força motriz disponível. É o mesmo tipo de questão testando se você realmente compara os dois lados, em vez de assumir que "trem sempre anda".</p>
+  </div>
+
+  <div class="ex" id="p21q2">
+    <header class="ex-h"><span class="tag">Q2 · 1,0 pt</span><h3>Capacidade de três trechos — período de dois dias</h3></header>
+    <div class="given">Gráfico espaço-tempo com três trechos superpostos (picos em 110, 70 e 30 km).</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Leia os tempos de cada trecho no gráfico</h5><div class="eq">Trecho 1: sobe de 0 a 8h, desce de 8 a 12h → t<sub>i</sub> = 8+4 = <b class="res">12 h</b><br>Trecho 2: sobe de 0 a 4h, desce de 4 a 8h → t<sub>i</sub> = 4+4 = <b class="res">8 h</b><br>Trecho 3: sobe de 0 a 2h, desce de 2 a 4h → t<sub>i</sub> = 2+2 = <b class="res">4 h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Capacidade em 1 dia (P = 24 h, o período mostrado no gráfico)</h5><div class="eq">Trecho 1: 2·24/12 = <b class="res">4 trens</b> &nbsp;·&nbsp; Trecho 2: 2·24/8 = <b class="res">6 trens</b> &nbsp;·&nbsp; Trecho 3: 2·24/4 = <b class="res">12 trens</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Capacidade em 2 dias (P = 48 h)</h5><div class="eq">Trecho 1: 2·48/12 = <b class="res">8 trens</b> &nbsp;·&nbsp; Trecho 2: 2·48/8 = <b class="res">12 trens</b> &nbsp;·&nbsp; Trecho 3: 2·48/4 = <b class="res">24 trens</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>Trecho 1: 8 trens em 2 dias · Trecho 2: 12 trens · Trecho 3: 24 trens</b></div>
+    <p style="margin-top:10px"><b>Discussão conceitual:</b> de novo a capacidade dobra exatamente, porque 48 h é múltiplo de 12, 8 e 4 — os três ciclos "cabem inteiros" tanto em 24 h quanto em 48 h. O ponto conceitual a registrar na resposta é justamente esse: a proporcionalidade não é uma lei geral da fórmula N = 2P/t<sub>i</sub>, é uma coincidência de quando P é múltiplo do ciclo. Se o ciclo não dividisse o período exatamente, o crescimento da capacidade seria em degraus.</p>
+  </div>
+
+  <div class="ex" id="p21q3">
+    <header class="ex-h"><span class="tag">Q3 · 1,5 pts</span><h3>Dimensionamento de pátios de cruzamento</h3></header>
+    <div class="given">Capacidade demandada: 13 pares de trens/dia. Via de 150 km. Pátio de cruzamento de 2,5 km. Velocidade média subindo: 35 km/h. Velocidade média descendo: 30 km/h.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Teste n = 3 pátios</h5><div class="eq">d = (150 − 7,5)/4 = 35,625 km &nbsp;·&nbsp; t<sub>i</sub> = 35,625 · 13/210 = 2,205 h<br>P/t<sub>i</sub> = 24/2,205 = 10,88 → <b class="res">10 pares/dia — insuficiente</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Teste n = 4 pátios</h5><div class="eq">d = (150 − 10)/5 = 28,0 km &nbsp;·&nbsp; t<sub>i</sub> = 28,0 · 13/210 = 1,733 h<br>P/t<sub>i</sub> = 24/1,733 = 13,85 → <b class="res">13 pares/dia — atende exatamente</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>4 pátios de cruzamento · capacidade máxima resultante: 13 pares de trens/dia (26 trens)</b></div>
+    <p style="margin-top:10px">Aqui a via projetada bate <b>exatamente</b> a demanda (13 pares), sem folga — diferente da prova de 2020, onde a mesma via (mesmo L<sub>v</sub>, L<sub>p</sub>, v<sub>s</sub>, v<sub>d</sub>) sobrava 1 par porque a demanda era menor (12). Mesmo método, resposta ligeiramente diferente por causa do enunciado.</p>
+  </div>
+
+  <div class="qa" id="p21q4">
+    <div class="q">Q4 · 1,5 pts — Como se controla o headway das composições? Discuta (a) CCO e (b) Componentes de Controle de Tráfego Ferroviário.</div>
+    <div class="a">
+      <p><b>Controle do headway</b> — o intervalo entre trens é garantido fisicamente pela <b>seção em blocos</b>: cada seção só pode ser ocupada por um trem por vez, com distância mínima de segurança de 1,5× a distância de frenagem. Essa ocupação é detectada pelo <b>circuito de via</b> e comunicada por <b>sinais luminosos/mecânicos</b>, com o <b>intertravamento</b> (manual ou a relés) impedindo fisicamente que dois trens recebam autorização para a mesma seção. Os sistemas ATP/ATC atuam automaticamente nos freios/velocidade caso o maquinista não respeite a separação.</p>
+      <p><b>(a) CCO</b> — centraliza a decisão sobre todas as rotas e supervisiona 24h os controladores de tráfego, apoiado pelos centros de vagões, locomotivas e equipagem, o que permite otimizar cruzamentos, reduzir paradas e aumentar a segurança.</p>
+      <p><b>(b) Componentes de controle de tráfego ferroviário</b> — licenciamento, sinais mecânicos, intertravamento, seção de bloqueio, circuito de via, sinais luminosos e intertravamento a relés (ver Aula 3 acima para o detalhe de cada um).</p>
+    </div>
+  </div>
+
+  <div class="qa" id="p21q5">
+    <div class="q">Q5 · 2,0 pts — Finalidades do serviço de organização do tráfego aéreo; (a) Elementos de Organização; (b) Tipos de Voos; (c) Diferenças entre Classes.</div>
+    <div class="a">
+      <p><b>Finalidades</b> — o serviço de organização do tráfego aéreo existe para: melhorar ou manter a segurança operacional, aumentar a capacidade de tráfego aéreo, melhorar a eficiência, viabilizar trajetórias de voo mais precisas e eficientes, e mitigar o impacto ambiental.</p>
+      <p><b>(a) Elementos de organização</b> — AOM, AO, DCB, TS, AUO, CM e ATM SDM (ver Aula 4 acima), que juntos definem como o espaço aéreo é desenhado e usado pelos operadores.</p>
+      <p><b>(b) Tipos de voos</b> — IFR (por instrumentos, separado por controle de tráfego, opera em qualquer clima) versus VFR (visual, mais simples, restrito a boas condições meteorológicas e, em várias classes, sem separação garantida).</p>
+      <p><b>(c) Diferenças entre classes</b> — de A a G a exigência de separação, controle, rádio e autorização cai progressivamente: A/B separam tudo; C/D combinam separação parcial; E/F/G vão perdendo o controle até G, sem qualquer separação.</p>
+    </div>
+  </div>
+
+  <div class="qa" id="p21q6">
+    <div class="q">Q6 · 1,0 pt — Componentes e parâmetros do projeto e orientação de pistas.</div>
+    <div class="a"><p>Mesma resposta da prova de 2020 (Q6, acima): a direção da pista nasce do regime de ventos (anemograma) combinado com layout, obstáculos, instrumentação, ruído, tráfego vizinho e declividade, visando 95% de fator de utilização dentro dos limites de componente transversal (20/13/10 kt conforme o comprimento da pista). A comunicação aos operadores é feita pela cabeceira numerada pintada na pista e pelo rádio da torre (ou do próprio piloto, em aeródromo sem torre).</p></div>
+  </div>
+
+  <div class="qa" id="p21q7">
+    <div class="q">Q7 · 1,0 pt — Como o anemograma apresenta os dados para a orientação de pistas.</div>
+    <div class="a"><p>Mesma resposta da prova de 2020 (Q7, acima): raios = direção do vento (0°–360°), anéis = faixas de velocidade em nós, valor na célula = % de observações naquela direção e faixa. Os dados permitem calcular, para cada orientação candidata de pista, o fator de utilização e escolher a que mais se aproxima de 95%.</p></div>
+  </div>
+</section>
+
+<div class="foot">
+  <p>Revisão preparada a partir dos slides do Prof. Helry Dias (EMB 5936, UFSC Joinville) e das duas avaliações parciais aplicadas em 2020 e 2021. Todos os cálculos foram conferidos numericamente antes da publicação — ainda assim, confira sempre as fórmulas contra os slides oficiais da disciplina antes da prova.</p>
+</div>
+
+</div>
+
+</body>
+</html>
