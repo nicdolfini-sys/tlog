@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Revisão Tráfego II — P2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#FDFBF8; --surface:#FFFFFF; --ink:#2C2833; --muted:#6B6574; --line:#E7E1E9;
+  --accent:#8A4462; --accent-soft:#F8DFE7; --accent-line:#E7B0C3;
+  --blue:#DCE7F6; --blue-ink:#2B4C73;
+  --mint:#DDF0E6; --mint-ink:#2F7355;
+  --yellow:#FBF1CF; --yellow-ink:#87671A;
+  --lav:#F2F0F4; --lav-line:#DAD5E0;
+  --res:#8A4462; --ok:#2F7355; --bad:#B0413F;
+  --f-head:'Lora',Georgia,serif; --f-mono:'JetBrains Mono',ui-monospace,'Courier New',monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1B1620; --surface:#251E2C; --ink:#F1EAF1; --muted:#BBA9C0; --line:#3A3140;
+  --accent:#E7A9C0; --accent-soft:#3B2530; --accent-line:#5C3548;
+  --blue:#243447; --blue-ink:#B9D3F0;
+  --mint:#1E3830; --mint-ink:#8FD9BC;
+  --yellow:#3A3320; --yellow-ink:#E7CE8C;
+  --lav:#2C2732; --lav-line:#443B4C;
+  --res:#E7A9C0; --ok:#8FD9BC; --bad:#E79A97;
+  color-scheme: dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#1B1620; --surface:#251E2C; --ink:#F1EAF1; --muted:#BBA9C0; --line:#3A3140;
+  --accent:#E7A9C0; --accent-soft:#3B2530; --accent-line:#5C3548;
+  --blue:#243447; --blue-ink:#B9D3F0;
+  --mint:#1E3830; --mint-ink:#8FD9BC;
+  --yellow:#3A3320; --yellow-ink:#E7CE8C;
+  --lav:#2C2732; --lav-line:#443B4C;
+  --res:#E7A9C0; --ok:#8FD9BC; --bad:#E79A97;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-head); font-size:17px; line-height:1.55}
+.page{max-width:980px; margin:0 auto; padding-inline:20px; padding-block:40px 100px}
+h1,h2,h3,h4{font-family:var(--f-head); text-wrap:balance; line-height:1.15; margin:0}
+p{margin:0 0 .7em; max-width:70ch}
+b{font-weight:600}
+
+.hero{padding-block:12px 40px; border-bottom:1px solid var(--line); margin-bottom:40px}
+.eyebrow{display:inline-block; font-family:var(--f-mono); font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); padding:7px 16px; border-radius:999px; margin-bottom:18px}
+h1.title{font-size:clamp(34px,6vw,54px); font-weight:700; letter-spacing:-.01em; margin-bottom:16px}
+.lead{color:var(--muted); font-size:19px; max-width:64ch; font-style:italic}
+.byline{margin-top:22px; font-size:15px; color:var(--muted); font-family:var(--f-mono)}
+.byline a{color:var(--accent)}
+
+.nav{display:flex; flex-wrap:wrap; gap:8px; margin-top:28px}
+.nav a{font-family:var(--f-mono); font-size:13px; padding:8px 14px; border-radius:8px; text-decoration:none; background:var(--surface); border:1px solid var(--line); color:var(--ink)}
+.nav a.hd{background:var(--accent); border-color:var(--accent); color:var(--bg)}
+
+section.aula{margin-block:56px}
+.aula-h{display:flex; gap:18px; align-items:baseline; border-top:2px solid var(--ink); padding-top:14px; margin-bottom:26px}
+.aula-h .num{font-family:var(--f-mono); font-weight:700; font-size:44px; color:var(--accent); line-height:1}
+.aula-h h2{font-size:clamp(26px,4vw,34px); font-weight:700}
+.aula-h p{color:var(--muted); margin:4px 0 0; font-size:16px}
+
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-bottom:18px}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px}
+.card.wide{grid-column:1/-1}
+.card h4{font-size:17px; margin-bottom:8px; color:var(--accent)}
+.card p{font-size:15px; margin-bottom:.5em; color:var(--ink)}
+.card p:last-child{margin-bottom:0}
+.card.blue{background:var(--blue)}
+.card.mint{background:var(--mint)} .card.mint h4{color:var(--mint-ink)}
+.card.yellow{background:var(--yellow)} .card.yellow h4{color:var(--yellow-ink)}
+.card.lav{background:var(--lav)}
+
+.f{font-family:var(--f-mono); font-size:15px}
+p.f{background:var(--lav); border:1px solid var(--lav-line); padding:10px 14px; border-radius:8px; display:block; margin:10px 0}
+.formula-box{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:14px}
+.formula-box .lbl{font-family:var(--f-mono); font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:8px}
+.formula-box .eq{font-family:var(--f-mono); font-size:19px; font-weight:600; color:var(--ink); margin-bottom:8px; overflow-wrap:anywhere}
+.formula-box .key{font-size:14px; color:var(--muted); line-height:1.5}
+
+table{width:100%; border-collapse:collapse; font-size:15px; margin-bottom:18px}
+th{text-align:left; background:var(--lav); padding:10px 12px; font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted)}
+td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:none}
+
+.ex{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:24px 26px 28px; margin-bottom:28px}
+.ex-h{display:flex; align-items:baseline; gap:14px; margin-bottom:16px; flex-wrap:wrap}
+.tag{font-family:var(--f-mono); font-weight:700; background:var(--accent); color:var(--bg); padding:3px 12px; border-radius:6px; font-size:15px}
+.ex-h h3{font-size:21px}
+.given{background:var(--lav); border-radius:10px; padding:14px 18px; margin-bottom:18px; font-size:15px; color:var(--muted)}
+
+.steps{list-style:none; margin:0; padding:0; display:grid; gap:20px}
+.step{padding-top:18px; border-top:1px dashed var(--line)}
+.step:first-child{border-top:0; padding-top:0}
+.step h5{font-size:16px; margin-bottom:8px; display:flex; gap:10px; align-items:baseline}
+.n{font-family:var(--f-mono); font-size:13px; color:var(--bg); background:var(--ink); border-radius:50%; width:24px; height:24px; display:inline-grid; place-items:center; flex:none}
+.step .eq{font-family:var(--f-mono); font-size:15.5px; background:var(--lav); border:1px solid var(--lav-line); border-radius:6px; padding:10px 12px; margin:8px 0; line-height:1.8; overflow-x:auto}
+.res{color:var(--res); font-weight:700}
+
+.result{display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-top:20px; padding:14px 18px; border:2px solid var(--accent); border-radius:10px; background:var(--accent-soft)}
+.result span{font-family:var(--f-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent)}
+.result b{font-family:var(--f-mono); font-size:20px; color:var(--accent)}
+.result.ok{border-color:var(--ok); background:transparent}
+.result.ok span,.result.ok b{color:var(--ok)}
+.result.bad{border-color:var(--bad)}
+.result.bad span,.result.bad b{color:var(--bad)}
+
+.qa{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:16px}
+.qa .q{font-weight:600; font-size:16px; margin-bottom:10px; color:var(--accent)}
+.qa .a{font-size:15px; color:var(--ink)}
+.qa .a p{margin-bottom:.6em}
+.qa .a ul{margin:.3em 0 .6em; padding-left:20px}
+.qa .a li{margin-bottom:.3em}
+
+.provahead{background:var(--ink); color:var(--bg); border-radius:16px; padding:26px 28px; margin-bottom:26px}
+.provahead p{color:var(--bg); opacity:.75; margin:0; font-size:14px; font-family:var(--f-mono)}
+.provahead h3{font-size:24px; margin-top:4px}
+
+.tip{font-size:14px; color:var(--muted); border-left:3px solid var(--line); padding-left:12px; margin-top:12px}
+.foot{margin-top:60px; padding-top:24px; border-top:1px solid var(--line); color:var(--muted); font-size:14px}
+
+@media (max-width:760px){
+  .aula-h{flex-direction:column; gap:6px}
+  .ex{padding:18px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+  <p class="eyebrow">UFSC Joinville · EMB 5936 · Prof. Helry Dias</p>
+  <h1 class="title">Engenharia de Tráfego II — revisão da P2</h1>
+  <p class="lead">Conteúdo da P2, aula por aula. Por enquanto: Aula 7, com interseções, rotatórias (método do HCM), canalizações e sistemas de controle de tráfego rodoviário. No fim, os seis exercícios de rotatória dos slides resolvidos passo a passo.</p>
+  <p class="byline">Companheiro dos slides "Interseções, Rotatórias e Canalizações / Controle de Tráfego Rodoviário (atualizado HCM)" · Outubro de 2026 · <a href="../">← Engenharia de Tráfego II</a></p>
+  <nav class="nav">
+    <a class="hd" href="#intersecoes">1 · Interseções</a>
+    <a class="hd" href="#rotatorias">2 · Rotatórias (HCM)</a>
+    <a class="hd" href="#canalizacoes">3 · Canalizações e desnível</a>
+    <a class="hd" href="#controle">4 · Controle de tráfego</a>
+    <a href="#exercicios">Exercícios 1–6 resolvidos</a>
+  </nav>
+</header>
+
+<section class="aula" id="intersecoes">
+  <div class="aula-h"><span class="num">1</span><div><h2>Interseções</h2><p>Onde as vias se cruzam e os acidentes se concentram.</p></div></div>
+
+  <div class="cards">
+    <div class="card wide">
+      <h4>Definição</h4>
+      <p>Interseção é a área em que duas ou mais vias <b>se cruzam ou se unificam</b>. Nela devem existir dispositivos que ordenem os movimentos de tráfego. Pode ser classificada pelo número de ramos, pelos dispositivos de controle e pela configuração das faixas.</p>
+      <p>Cada <b>movimento</b> (ou manobra) gera <b>conflitos</b>. Um cruzamento simples de 4 ramos tem <b>32 conflitos</b>: 16 de cruzamento e 16 de convergência ou divergência.</p>
+    </div>
+    <div class="card yellow">
+      <h4>Por que importam</h4>
+      <p>Rodovias federais e estaduais: interseções e travessias são <b>4%</b> da área, mas concentram <b>53%</b> dos acidentes.</p>
+      <p>Meio urbano: <b>19%</b> da área pavimentada e <b>78%</b> dos acidentes.</p>
+    </div>
+    <div class="card">
+      <h4>Qualidade da interseção</h4>
+      <p>A qualidade do projeto viário depende muito da qualidade das interseções. Ela é medida por: <b>eficiência, segurança, custo de operação, capacidade e velocidade</b>.</p>
+    </div>
+  </div>
+
+  <h4 style="margin:22px 0 10px">Condicionantes de projeto</h4>
+  <table>
+    <tr><th>Tipo</th><th>O que considerar</th></tr>
+    <tr><td><b>Funcionais</b></td><td>Classificação funcional das vias, controle de acesso, prioridades de passagem, velocidades</td></tr>
+    <tr><td><b>Físicas</b></td><td>Topografia, edificações, serviços públicos</td></tr>
+    <tr><td><b>Tráfego</b></td><td>VDM e VHP, composição do tráfego, diagrama de fluxos, volume de pedestres</td></tr>
+    <tr><td><b>Acidentes</b></td><td>Número, tipo, causas e distribuição no tempo</td></tr>
+    <tr><td><b>Financeiras</b></td><td>Recursos disponíveis; custos de construção, exploração e manutenção</td></tr>
+  </table>
+  <div class="cards">
+    <div class="card blue"><h4>Em nível</h4><p>3 ramos (em T ou em Y), 4 ramos ou ramos múltiplos. Inclui rotatórias e canalizações.</p></div>
+    <div class="card blue"><h4>Em desnível (interconexão)</h4><p>Uma ou mais rampas ligam as vias que se cruzam. Com volumes muito altos, pode ser a única solução viável.</p></div>
+  </div>
+</section>
+
+<section class="aula" id="rotatorias">
+  <div class="aula-h"><span class="num">2</span><div><h2>Rotatórias — metodologia do HCM</h2><p>Capacidade por aceitação de brechas, atraso de controle e nível de serviço.</p></div></div>
+
+  <div class="cards">
+    <div class="card wide">
+      <h4>O que é e para que serve</h4>
+      <p>Interseção em círculo, de forma simples a elaborada (pode ter jardim, fonte, escultura no centro). Objetivo: <b>limitar a velocidade e organizar os fluxos</b>, reduzindo conflitos e acidentes e melhorando a fluidez.</p>
+      <p><b>Prós:</b> permite todas as conversões e, bem projetada, reduz a velocidade e alerta o motorista. <b>Contras:</b> desconforto para passageiros de ônibus e travessia difícil (insegura ou inconveniente) para pedestres.</p>
+    </div>
+  </div>
+
+  <h4 style="margin:22px 0 10px">Seis categorias</h4>
+  <table>
+    <tr><th>Tipo</th><th>Característica</th></tr>
+    <tr><td><b>Mini rotatória</b></td><td>Urbana, baixa velocidade (≈60 km/h), onde a rotatória tradicional não cabe</td></tr>
+    <tr><td><b>Urbana compacta</b></td><td>Favorece pedestres e bicicletas; acesso perpendicular; todas as entradas com uma faixa</td></tr>
+    <tr><td><b>Urbana de faixa simples</b></td><td>Uma faixa de entrada em todas as aproximações e uma faixa circulatória</td></tr>
+    <tr><td><b>Urbana de faixa dupla</b></td><td>Pelo menos uma entrada com duas faixas</td></tr>
+    <tr><td><b>Rural simples e dupla</b></td><td>Como as urbanas, mas com velocidades maiores e raios de curvatura maiores</td></tr>
+  </table>
+
+  <h4 style="margin:26px 0 10px">Lógica do HCM (Cap. 22)</h4>
+  <p>O HCM usa a <b>teoria da aceitação de brechas</b> (<i>gap acceptance</i>) para achar a capacidade de cada entrada, e depois o <b>atraso de controle</b> (<i>delay</i>) para definir o nível de serviço. Sem fluxo circulante, a entrada máxima é 3600 s/h dividido pelo headway, como num fluxo de saturação no verde de um semáforo. Quanto maior o fluxo conflitante, menor a capacidade.</p>
+  <div class="card lav" style="margin-bottom:18px">
+    <p><b>Dados necessários:</b> nº e configuração de faixas por aproximação · volume de demanda por entrada e por faixa de pedestre (hora pico, com FHP se preciso) · % de veículos pesados (para converter em ucp) · distribuição do volume entre faixas · duração da análise (1 h, ou 15 min de pico).</p>
+  </div>
+
+  <div class="formula-box">
+    <div class="lbl">Passo 1 — capacidade da faixa de entrada</div>
+    <div class="eq">c = A · e<sup>−B · v<sub>conflitante</sub></sup></div>
+    <div class="key">Resultado em ucp/h. O fluxo conflitante é o <b>circulante v<sub>c</sub></b> nas entradas normais e o <b>de saída v<sub>ex</sub></b> no bypass.</div>
+  </div>
+  <table>
+    <tr><th>Faixa</th><th>A</th><th>B</th><th>Fluxo conflitante</th></tr>
+    <tr><td>Faixa única</td><td>1380</td><td>0,00102</td><td>v<sub>c</sub> (circulante)</td></tr>
+    <tr><td>Faixa dupla — esquerda</td><td>1350</td><td>0,00105</td><td>v<sub>c</sub> (circulante)</td></tr>
+    <tr><td>Faixa dupla — direita</td><td>1420</td><td>0,00085</td><td>v<sub>c</sub> (circulante)</td></tr>
+    <tr><td>Bypass (passagem direta)</td><td>1420</td><td>0,00085</td><td>v<sub>ex</sub> (saída)</td></tr>
+  </table>
+  <div class="formula-box">
+    <div class="lbl">Passo 2 — relação volume/capacidade</div>
+    <div class="eq">x = v / c</div>
+    <div class="key">Na faixa dupla calcula-se uma por faixa: x<sub>L</sub> = v<sub>e,L</sub>/c<sub>e,L</sub> e x<sub>R</sub> = v<sub>e,R</sub>/c<sub>e,R</sub>. No bypass: x<sub>b</sub> = v<sub>b</sub>/c<sub>b</sub>.</div>
+  </div>
+  <div class="formula-box">
+    <div class="lbl">Passo 3 — atraso de controle (s/veíc)</div>
+    <div class="eq">d = 3600/c + 900T · [ (x − 1) + √( (x − 1)² + (3600/c)·x / (450T) ) ]</div>
+    <div class="key">T = período de análise em horas (normalmente 1,0). É a mesma fórmula para faixa única, faixa dupla (uma por faixa) e bypass.</div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Pedestres na travessia</h4>
+  <p>Pedestres reduzem a capacidade da entrada. O HCM aplica um <b>fator de ajuste f<sub>ped</sub></b> (entre 0 e 1), que depende do fluxo de pedestres e do fluxo veicular conflitante (v<sub>c</sub> ou v<sub>ex</sub>):</p>
+  <div class="cards">
+    <div class="card mint"><h4>V<sub>ped</sub> ≤ 100 peds/h</h4><p>Efeito desprezível: <b>f<sub>ped</sub> ≈ 1,0</b>.</p></div>
+    <div class="card yellow"><h4>Fluxo moderado ou alto</h4><p class="f">f<sub>ped</sub> = 1,0 − (0,00013 · V<sub>ped</sub>) · e<sup>−0,001 · v<sub>conflitante</sub></sup></p></div>
+  </div>
+  <p class="f">c<sub>adj</sub> = c<sub>base</sub> × f<sub>ped</sub> &nbsp;→&nbsp; depois segue com x e d usando c<sub>adj</sub></p>
+
+  <h4 style="margin:26px 0 10px">Nível de serviço</h4>
+  <table>
+    <tr><th>Atraso (s/veíc)</th><th>v/c ≤ 1,0</th><th>v/c &gt; 1,0</th><th>Situação</th></tr>
+    <tr><td>0–10</td><td><b>A</b></td><td>F</td><td>Fluxo livre, praticamente sem atraso</td></tr>
+    <tr><td>&gt;10–15</td><td><b>B</b></td><td>F</td><td>Operação estável, atrasos aceitáveis</td></tr>
+    <tr><td>&gt;15–25</td><td><b>C</b></td><td>F</td><td>Estável, começa a formar fila</td></tr>
+    <tr><td>&gt;25–35</td><td><b>D</b></td><td>F</td><td>Aproximação instável, atrasos começam</td></tr>
+    <tr><td>&gt;35–50</td><td><b>E</b></td><td>F</td><td>Instável, atrasos significativos</td></tr>
+    <tr><td>&gt;50</td><td><b>F</b></td><td>F</td><td>Fluxo forçado, congestionamento extremo</td></tr>
+  </table>
+  <p class="tip"><b>Regra de ouro:</b> se x &gt; 1,0, o nível de serviço é <b>F automaticamente</b>, seja qual for o atraso. Confira o x antes de olhar a tabela.</p>
+</section>
+
+<section class="aula" id="canalizacoes">
+  <div class="aula-h"><span class="num">3</span><div><h2>Canalizações, faixas de mudança de velocidade e interseções em desnível</h2><p>Como a geometria organiza os movimentos.</p></div></div>
+
+  <div class="card wide" style="margin-bottom:18px">
+    <h4>Canalização de tráfego</h4>
+    <p>Conjunto de princípios e técnicas para organizar interseções em nível, sobretudo as não semaforizadas. Usa dispositivos físicos (sinalização horizontal, alinhamento da via, ilhas físicas ou pintadas, barreiras) para <b>delinear a trajetória de cada movimento</b>. Busca reduzir e separar os pontos de conflito. Quando ainda sobram conflitos, busca melhorar a intervisibilidade e reduzir as velocidades relativas de impacto.</p>
+  </div>
+
+  <h4 style="margin:0 0 10px">Tipos de conflito</h4>
+  <div class="cards">
+    <div class="card"><h4>Divergência (separação)</h4><p>Correntes paralelas tomam trajetos distintos a partir de um ponto comum. É o menos grave, mas perigoso com velocidades diferentes.</p></div>
+    <div class="card"><h4>Convergência (incorporação)</h4><p>Correntes de pontos distintos passam a usar o mesmo trecho. Costuma ocorrer com intervisibilidade deficiente.</p></div>
+    <div class="card"><h4>Cruzamento</h4><p>Movimentos com origem e destino distintos atravessam a mesma área. A gravidade varia com o ângulo e a orientação das trajetórias.</p></div>
+  </div>
+
+  <h4 style="margin:26px 0 10px">Sete regras gerais</h4>
+  <ol class="steps">
+    <li class="step"><h5><span class="n">1</span>Reduzir e separar as áreas de conflito</h5><p>Ex.: "proibido dobrar à esquerda".</p></li>
+    <li class="step"><h5><span class="n">2</span>Cruzamentos em ângulo reto</h5><p>Fluxos que se cruzam sem convergir nem entrelaçar devem se cruzar o mais perto possível de 90°.</p></li>
+    <li class="step"><h5><span class="n">3</span>Convergência em ângulos pequenos</h5><p>Minimiza o efeito da diferença de velocidade entre os veículos.</p></li>
+    <li class="step"><h5><span class="n">4</span>Afunilamento gradativo</h5><p>Controla a velocidade de quem se aproxima da interseção.</p></li>
+    <li class="step"><h5><span class="n">5</span>Refúgio</h5><p>Dar espaço de espera para quem vai cruzar ou convergir.</p></li>
+    <li class="step"><h5><span class="n">6</span>Desencorajar movimentos proibidos</h5><p>A geometria deve evitar ou ao menos dificultar as manobras não permitidas.</p></li>
+    <li class="step"><h5><span class="n">7</span>Espaço para sinalização</h5><p>Criar locais apropriados para os dispositivos de sinalização e controle.</p></li>
+  </ol>
+
+  <h4 style="margin:26px 0 10px">Faixas de mudança de velocidade</h4>
+  <p>Faixas que dão espaço para <b>acelerar e desacelerar</b> sem interferir no tráfego principal. O <b>taper</b> (do inglês "fita") é o trecho de transição usado para acelerar ou desacelerar.</p>
+
+  <h4 style="margin:26px 0 10px">Interseções em desnível (interconexões)</h4>
+  <div class="cards">
+    <div class="card blue"><h4>Diamante simples</h4><p>Rampas em forma de losango ligando as duas vias; comum em meio urbano.</p></div>
+    <div class="card blue"><h4>Trevo completo</h4><p>Alças nos quatro quadrantes; todos os movimentos sem cruzamento em nível.</p></div>
+    <div class="card blue"><h4>Trombeta</h4><p>Para entroncamentos de 3 ramos (em T).</p></div>
+  </div>
+  <table>
+    <tr><th>Via que intercepta a expressa</th><th>Rural</th><th>Urbana</th></tr>
+    <tr><td><b>Local principal (coletora)</b></td><td>Trevo parcial de 2 quadrantes (B) · diamante simples</td><td>Diamante simples</td></tr>
+    <tr><td><b>Arterial</b></td><td>Trevo completo · trevo completo com coletoras-distribuidoras · diamante simples · trevo parcial de 4 quadrantes (A) · direcional</td><td>Diamante simples · diamante separado com mão dupla · trevo parcial de 4 quadrantes (A) · diamante separado com mão única dupla</td></tr>
+    <tr><td><b>Expressa</b></td><td>Direcional (desejável)</td><td>Direcional (desejável)</td></tr>
+  </table>
+</section>
+
+<section class="aula" id="controle">
+  <div class="aula-h"><span class="num">4</span><div><h2>Sistemas de controle de tráfego rodoviário</h2><p>Monitorar, informar e agir: do semáforo ao guincho.</p></div></div>
+
+  <div class="cards">
+    <div class="card wide">
+      <h4>O que são e para que servem</h4>
+      <p>Conjunto de atores e ações para gerir melhor o transporte público e a demanda por viagens e usar com mais eficiência a infraestrutura existente. A função principal é garantir <b>fluidez, segurança e controle de emergências</b>, com monitoramento contínuo e ações de engenharia, operacionais e educativas.</p>
+    </div>
+    <div class="card">
+      <h4>CTA — Controle de Tráfego por Área</h4>
+      <p>Computadores centrais por sub-região recebem dados de detectores e câmeras e aplicam as temporizações semafóricas mais adequadas. Abrange os cruzamentos semaforizados e as principais vias.</p>
+    </div>
+    <div class="card">
+      <h4>Estruturas do CTA</h4>
+      <p><b>a)</b> controle semafórico em tempo real · <b>b)</b> CFTV · <b>c)</b> painéis de mensagens variáveis · <b>d)</b> boletins de trânsito pela internet.</p>
+    </div>
+  </div>
+
+  <h4 style="margin:22px 0 10px">CCO — Centro de Controle Operacional</h4>
+  <p>Monitora de forma centralizada as informações e ocorrências da rodovia. Dá agilidade aos recursos e <b>reduz o tempo de resposta</b>. Registra cada evento (acidente, pane, animal na pista, obra, congestionamento), as ações tomadas (guincho, ambulância, combustível) e o horário de cada uma. Gera estatísticas gerenciais e ajuda a <b>agência reguladora</b> a fiscalizar a concessionária, por exemplo no tempo de atendimento previsto em contrato.</p>
+
+  <h4 style="margin:26px 0 10px">Subsistemas</h4>
+  <table>
+    <tr><th>Sistema</th><th>O que faz</th></tr>
+    <tr><td><b>PMV</b> — Painel de Mensagens Variáveis</td><td>Comunicação CCO → usuário: tráfego, acidentes, clima, tempo de percurso, campanhas. <b>Fixo</b> em pontos estratégicos (segurança, emergências) ou <b>móvel</b> para eventos temporários, como obras.</td></tr>
+    <tr><td><b>CFTV</b> — Circuito Fechado de TV</td><td>Câmeras + meio de comunicação + armazenamento + videowall. Cobre pedágios, postos de pesagem e pontos críticos. Em túneis, o tratamento de imagem faz contagem (laços virtuais), detecta congestionamento, fumaça/incêndio, incidentes (pedestre, animal, contramão, pane) e altura de veículos.</td></tr>
+    <tr><td><b>Fiscalização de velocidade</b></td><td>Radar estático, fixo, múltiplo/misto (avanço de sinal + velocidade) e ostensivo (com display). O OCR lê a placa sozinho. Também flagra contramão, conversão proibida e circulação fora da faixa permitida.</td></tr>
+    <tr><td><b>SAT</b> — Sistema de Análise de Tráfego</td><td>Laços indutivos ou sensores piezoelétricos na pista. Por faixa e sentido, em intervalos típicos de 15 min: volume, classificação (leve, médio, pesado), velocidade, headway e ocupação. Também orienta balanças e radares móveis e o controle no entorno de pedágios.</td></tr>
+    <tr><td><b>SCP</b> — Sistema de Controle de Peso</td><td>Protege o pavimento e as estruturas e reduz acidentes. No posto de pesagem, a <b>pesagem seletiva</b> filtra os suspeitos e libera os demais por semáforo. Só os suspeitos vão à <b>pesagem de precisão</b>, que pode emitir o AIIP (Auto de Infração para Imposição de Penalidade).</td></tr>
+    <tr><td><b>SAU</b> — Serviço de Atendimento ao Usuário</td><td>Primeiros socorros com remoção a hospitais e atendimento mecânico (guincho). Apoio de unidades de inspeção de tráfego, de apreensão de animais e caminhão-pipa (pequenos incêndios, limpeza de pista).</td></tr>
+    <tr><td><b>SCA</b> — Serviço de Controle Ambiental</td><td>Mede CO, CO₂, NO, NO₂ e H₂S, além de temperatura, umidade, chuva, vento, visibilidade e pressão. Gera alarmes de visibilidade e chuva e apoia a análise de acidentes. Em túneis, comanda os jato-ventiladores.</td></tr>
+  </table>
+</section>
+
+<section class="aula" id="exercicios">
+  <div class="aula-h"><span class="num">Ex</span><div><h2>Exercícios de rotatória — resolvidos</h2><p>Os seis exercícios dos slides, todos com T = 1 h e as fórmulas da seção 2.</p></div></div>
+
+  <div class="ex" id="ex1">
+    <header class="ex-h"><span class="tag">Exercício 1</span><h3>Faixa única — rotatória saturada</h3></header>
+    <div class="given">Faixa única · v<sub>e</sub> = 800 ucp/h · v<sub>c</sub> = 600 ucp/h · T = 1 h</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Capacidade — c = A·e<sup>−B·v<sub>c</sub></sup> (A = 1380, B = 0,00102)</h5><div class="eq">c<sub>e</sub> = 1380 · e<sup>−0,00102·600</sup> = 1380 · e<sup>−0,612</sup> = 1380 · 0,5423 = <b class="res">748,3 ucp/h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Volume/capacidade — x = v/c</h5><div class="eq">x = 800 / 748,3 = <b class="res">1,069</b></div><p>x &gt; 1,0: a entrada recebe mais carros do que consegue escoar, e a fila cresce sem parar.</p></li>
+      <li class="step"><h5><span class="n">3</span>Atraso (só para registro)</h5><div class="eq">3600/c = 4,811 · (x−1) = 0,0691 · (x−1)² = 0,0048<br>(4,811 · 1,069)/450 = 0,01143 · √(0,0048 + 0,01143) = 0,1273<br>d = 4,811 + 900 · (0,0691 + 0,1273) = 4,811 + 176,69 = <b class="res">181,5 s/veíc</b></div></li>
+    </ol>
+    <div class="result bad"><span>Resposta</span><b>x ≈ 1,07 &gt; 1,0 → LOS F</b></div>
+    <p class="tip">Com x &gt; 1, o nível F sai direto, nem precisava do atraso. Os 181,5 s confirmam: muito acima de 50 s.</p>
+  </div>
+
+  <div class="ex" id="ex2">
+    <header class="ex-h"><span class="tag">Exercício 2</span><h3>Faixa única — volumes menores</h3></header>
+    <div class="given">Faixa única · v<sub>e</sub> = 500 ucp/h · v<sub>c</sub> = 400 ucp/h · T = 1 h</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Capacidade — c = A·e<sup>−B·v<sub>c</sub></sup></h5><div class="eq">c<sub>e</sub> = 1380 · e<sup>−0,00102·400</sup> = 1380 · e<sup>−0,408</sup> = 1380 · 0,6650 = <b class="res">917,7 ucp/h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Volume/capacidade</h5><div class="eq">x = 500 / 917,7 = <b class="res">0,545</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Atraso</h5><div class="eq">3600/c = 3,923 · (x−1) = −0,4551 · (x−1)² = 0,2072<br>(3,923 · 0,545)/450 = 0,00475 · √(0,2072 + 0,00475) = 0,4603<br>d = 3,923 + 900 · (−0,4551 + 0,4603) = 3,923 + 4,67 = <b class="res">8,6 s/veíc</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>d ≈ 8,6 s/veíc · x ≈ 0,54 → LOS A</b></div>
+  </div>
+
+  <div class="ex" id="ex3">
+    <header class="ex-h"><span class="tag">Exercício 3</span><h3>Faixa dupla — uma conta por faixa</h3></header>
+    <div class="given">Faixa dupla · v<sub>e,L</sub> = 450 ucp/h · v<sub>e,R</sub> = 550 ucp/h · v<sub>c</sub> = 700 ucp/h · T = 1 h</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Capacidade da esquerda (A = 1350, B = 0,00105)</h5><div class="eq">c<sub>e,L</sub> = 1350 · e<sup>−0,00105·700</sup> = 1350 · e<sup>−0,735</sup> = 1350 · 0,4795 = <b class="res">647,3 ucp/h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Capacidade da direita (A = 1420, B = 0,00085)</h5><div class="eq">c<sub>e,R</sub> = 1420 · e<sup>−0,00085·700</sup> = 1420 · e<sup>−0,595</sup> = 1420 · 0,5516 = <b class="res">783,2 ucp/h</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Volume/capacidade de cada faixa</h5><div class="eq">x<sub>L</sub> = 450 / 647,3 = <b class="res">0,695</b> &nbsp;·&nbsp; x<sub>R</sub> = 550 / 783,2 = <b class="res">0,702</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Atraso da esquerda</h5><div class="eq">3600/c = 5,561 · (x−1) = −0,3048 · (x−1)² = 0,0929<br>(5,561 · 0,695)/450 = 0,00859 · √(0,0929 + 0,00859) = 0,3186<br>d<sub>L</sub> = 5,561 + 900 · 0,01378 = 5,561 + 12,40 = <b class="res">18,0 s/veíc → C</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Atraso da direita</h5><div class="eq">3600/c = 4,596 · (x−1) = −0,2978 · (x−1)² = 0,0887<br>(4,596 · 0,702)/450 = 0,00717 · √(0,0887 + 0,00717) = 0,3096<br>d<sub>R</sub> = 4,596 + 900 · 0,01181 = 4,596 + 10,63 = <b class="res">15,2 s/veíc → C</b></div></li>
+      <li class="step"><h5><span class="n">6</span>Aproximação inteira (média ponderada pelo volume)</h5><div class="eq">d = (450 · 17,96 + 550 · 15,23) / (450 + 550) = <b class="res">16,5 s/veíc</b></div><p>Os slides param no atraso por faixa. Essa média é como o HCM combina as faixas numa aproximação.</p></li>
+    </ol>
+    <div class="result"><span>Resposta</span><b>Esquerda 18,0 s (C) · Direita 15,2 s (C) · Aproximação 16,5 s → LOS C</b></div>
+  </div>
+
+  <div class="ex" id="ex4">
+    <header class="ex-h"><span class="tag">Exercício 4</span><h3>Bypass com parada</h3></header>
+    <div class="given">Bypass à direita · v<sub>b</sub> = 300 ucp/h · v<sub>ex</sub> (saída conflitante) = 800 ucp/h · T = 1 h</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Capacidade do bypass (A = 1420, B = 0,00085, com v<sub>ex</sub>)</h5><div class="eq">c<sub>b</sub> = 1420 · e<sup>−0,00085·800</sup> = 1420 · e<sup>−0,68</sup> = 1420 · 0,5066 = <b class="res">719,4 ucp/h</b></div><p>No bypass, quem atrapalha é o fluxo que <b>sai</b> da rotatória, não o que circula.</p></li>
+      <li class="step"><h5><span class="n">2</span>Volume/capacidade</h5><div class="eq">x<sub>b</sub> = 300 / 719,4 = <b class="res">0,417</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Atraso</h5><div class="eq">3600/c = 5,004 · (x−1) = −0,5830 · (x−1)² = 0,3399<br>(5,004 · 0,417)/450 = 0,00464 · √(0,3399 + 0,00464) = 0,5869<br>d<sub>b</sub> = 5,004 + 900 · 0,00396 = 5,004 + 3,57 = <b class="res">8,6 s/veíc</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>d ≈ 8,6 s/veíc · x ≈ 0,42 → LOS A</b></div>
+  </div>
+
+  <div class="ex" id="ex5">
+    <header class="ex-h"><span class="tag">Exercício 5</span><h3>Faixa dupla com pedestres na entrada da esquerda</h3></header>
+    <div class="given">Faixa dupla, faixa da esquerda · v<sub>e,L</sub> = 350 ucp/h · V<sub>ped</sub> = 800 peds/h · v<sub>c</sub> = 300 ucp/h · T = 1 h</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Capacidade base da esquerda (A = 1350, B = 0,00105)</h5><div class="eq">c<sub>base</sub> = 1350 · e<sup>−0,00105·300</sup> = 1350 · e<sup>−0,315</sup> = 1350 · 0,7298 = <b class="res">985,2 ucp/h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Fator de pedestres (V<sub>ped</sub> = 800 &gt; 100)</h5><div class="eq">f<sub>ped</sub> = 1 − (0,00013 · 800) · e<sup>−0,001·300</sup> = 1 − 0,104 · 0,7408 = 1 − 0,0770 = <b class="res">0,9230</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Capacidade ajustada</h5><div class="eq">c<sub>adj</sub> = 985,2 · 0,9230 = <b class="res">909,3 ucp/h</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Volume/capacidade</h5><div class="eq">x<sub>L</sub> = 350 / 909,3 = <b class="res">0,385</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Atraso</h5><div class="eq">3600/c = 3,959 · (x−1) = −0,6151 · (x−1)² = 0,3783<br>(3,959 · 0,385)/450 = 0,00339 · √(0,3783 + 0,00339) = 0,6178<br>d = 3,959 + 900 · 0,00275 = 3,959 + 2,47 = <b class="res">6,4 s/veíc</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>c<sub>adj</sub> ≈ 909 ucp/h · d ≈ 6,4 s/veíc → LOS A</b></div>
+    <p class="tip">Mesmo com 800 peds/h, a capacidade cai só ≈8%, porque o fluxo circulante (300) é baixo. O pedestre pesa mais quando o fluxo veicular conflitante também é baixo, já que e<sup>−0,001·v</sup> fica perto de 1.</p>
+  </div>
+
+  <div class="ex" id="ex6">
+    <header class="ex-h"><span class="tag">Exercício 6</span><h3>Bypass com parada e pedestres</h3></header>
+    <div class="given">Bypass com parada · v<sub>b</sub> = 500 ucp/h · V<sub>ped</sub> = 600 peds/h · v<sub>ex</sub> = 500 ucp/h · T = 1 h</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Capacidade base do bypass (A = 1420, B = 0,00085, com v<sub>ex</sub>)</h5><div class="eq">c<sub>b</sub> = 1420 · e<sup>−0,00085·500</sup> = 1420 · e<sup>−0,425</sup> = 1420 · 0,6538 = <b class="res">928,4 ucp/h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Fator de pedestres (V<sub>ped</sub> = 600 &gt; 100)</h5><div class="eq">f<sub>ped</sub> = 1 − (0,00013 · 600) · e<sup>−0,001·500</sup> = 1 − 0,078 · 0,6065 = 1 − 0,0473 = <b class="res">0,9527</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Capacidade ajustada</h5><div class="eq">c<sub>adj</sub> = 928,4 · 0,9527 = <b class="res">884,4 ucp/h</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Volume/capacidade</h5><div class="eq">x<sub>b</sub> = 500 / 884,4 = <b class="res">0,565</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Atraso</h5><div class="eq">3600/c = 4,070 · (x−1) = −0,4347 · (x−1)² = 0,1889<br>(4,070 · 0,565)/450 = 0,00511 · √(0,1889 + 0,00511) = 0,4405<br>d<sub>b</sub> = 4,070 + 900 · 0,00584 = 4,070 + 5,26 = <b class="res">9,3 s/veíc</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>c<sub>adj</sub> ≈ 884 ucp/h · x ≈ 0,57 · d ≈ 9,3 s/veíc → LOS A</b></div>
+  </div>
+
+  <div class="card yellow">
+    <h4>Atenção: o termo +5 do HCM</h4>
+    <p>No HCM original, a fórmula de atraso de rotatória termina com <b>+ 5 · min(x, 1)</b>. Os slides não trazem esse termo, por isso as resoluções acima seguem o material da aula. Se o professor cobrar a versão completa, some 5·x a cada atraso. Por exemplo, no Ex. 6 o atraso vai a ≈12,2 s e o nível vira B. No Ex. 1 nada muda, porque x &gt; 1 já dá F.</p>
+  </div>
+</section>
+
+<div class="foot">
+  <p>Resumo preparado a partir dos slides do Prof. Helry Dias (EMB 5936, UFSC Joinville), Aula 7. Todos os cálculos foram conferidos numericamente antes da publicação. Ainda assim, confira sempre as fórmulas nos slides oficiais antes da prova.</p>
+</div>
+
+</div>
+
+</body>
+</html>
