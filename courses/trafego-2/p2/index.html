@@ -7,35 +7,39 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 <style>
+
 :root{
-  --bg:#FDFBF8; --surface:#FFFFFF; --ink:#2C2833; --muted:#6B6574; --line:#E7E1E9;
-  --accent:#8A4462; --accent-soft:#F8DFE7; --accent-line:#E7B0C3;
-  --blue:#DCE7F6; --blue-ink:#2B4C73;
-  --mint:#DDF0E6; --mint-ink:#2F7355;
-  --yellow:#FBF1CF; --yellow-ink:#87671A;
-  --lav:#F2F0F4; --lav-line:#DAD5E0;
-  --res:#8A4462; --ok:#2F7355; --bad:#B0413F;
+  --bg:#FFF9FB; --surface:#FFFFFF; --ink:#40303F; --muted:#7D6A7C; --line:#F3DFE8;
+  --accent:#B8487C; --accent-soft:#FDE3EE; --accent-line:#F4B6D0;
+  --blue:#E0EFFD; --blue-ink:#376A9C;
+  --mint:#DDF5E9; --mint-ink:#2C7D5C;
+  --yellow:#FFF3C9; --yellow-ink:#8A6A12;
+  --lav:#F1EAFB; --lav-line:#DFD1F3; --lav-ink:#6B4FA3;
+  --peach:#FFE7D8; --peach-ink:#A85A2A;
+  --res:#B8487C; --ok:#2C7D5C; --bad:#BF4B4B;
   --f-head:'Lora',Georgia,serif; --f-mono:'JetBrains Mono',ui-monospace,'Courier New',monospace;
   color-scheme: light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#1B1620; --surface:#251E2C; --ink:#F1EAF1; --muted:#BBA9C0; --line:#3A3140;
-  --accent:#E7A9C0; --accent-soft:#3B2530; --accent-line:#5C3548;
-  --blue:#243447; --blue-ink:#B9D3F0;
-  --mint:#1E3830; --mint-ink:#8FD9BC;
-  --yellow:#3A3320; --yellow-ink:#E7CE8C;
-  --lav:#2C2732; --lav-line:#443B4C;
-  --res:#E7A9C0; --ok:#8FD9BC; --bad:#E79A97;
+  --bg:#1F1824; --surface:#2A2130; --ink:#F6ECF3; --muted:#C6B3C4; --line:#413447;
+  --accent:#F4A9C9; --accent-soft:#472A3A; --accent-line:#6D4259;
+  --blue:#25384C; --blue-ink:#B5D7F7;
+  --mint:#1F3D33; --mint-ink:#9BE3C5;
+  --yellow:#40371E; --yellow-ink:#F2D98E;
+  --lav:#332A40; --lav-line:#4C3F5E; --lav-ink:#CDB9F2;
+  --peach:#46302A; --peach-ink:#F5C3A3;
+  --res:#F4A9C9; --ok:#9BE3C5; --bad:#F0A3A0;
   color-scheme: dark;
 }}
 :root[data-theme="dark"]{
-  --bg:#1B1620; --surface:#251E2C; --ink:#F1EAF1; --muted:#BBA9C0; --line:#3A3140;
-  --accent:#E7A9C0; --accent-soft:#3B2530; --accent-line:#5C3548;
-  --blue:#243447; --blue-ink:#B9D3F0;
-  --mint:#1E3830; --mint-ink:#8FD9BC;
-  --yellow:#3A3320; --yellow-ink:#E7CE8C;
-  --lav:#2C2732; --lav-line:#443B4C;
-  --res:#E7A9C0; --ok:#8FD9BC; --bad:#E79A97;
+  --bg:#1F1824; --surface:#2A2130; --ink:#F6ECF3; --muted:#C6B3C4; --line:#413447;
+  --accent:#F4A9C9; --accent-soft:#472A3A; --accent-line:#6D4259;
+  --blue:#25384C; --blue-ink:#B5D7F7;
+  --mint:#1F3D33; --mint-ink:#9BE3C5;
+  --yellow:#40371E; --yellow-ink:#F2D98E;
+  --lav:#332A40; --lav-line:#4C3F5E; --lav-ink:#CDB9F2;
+  --peach:#46302A; --peach-ink:#F5C3A3;
+  --res:#F4A9C9; --ok:#9BE3C5; --bad:#F0A3A0;
   color-scheme: dark;
 }
 *{box-sizing:border-box}
@@ -125,28 +129,265 @@ tr:last-child td{border-bottom:none}
   .aula-h{flex-direction:column; gap:6px}
   .ex{padding:18px}
 }
+
+body{margin:0}
+a{color:var(--accent)}
+.page{max-width:1000px}
+.hero{background:linear-gradient(135deg,var(--accent-soft),var(--lav) 55%,var(--blue));border:0;border-radius:28px;padding:34px 34px 30px;margin-top:0}
+.hero .lead{color:var(--ink);opacity:.82}
+.nav a{border-radius:999px}
+.nav a.hd{background:var(--surface);border-color:var(--accent-line);color:var(--accent);font-weight:600}
+.card,.formula-box,.ex,.qa{border-radius:20px}
+.card.peach{background:var(--peach)} .card.peach h4{color:var(--peach-ink)}
+.card.lav h4{color:var(--lav-ink)} .card.blue h4{color:var(--blue-ink)}
+.chapter{border-radius:26px;padding:26px 28px;margin:70px 0 10px;background:var(--c1);color:var(--ink)}
+.chapter .kick{font-family:var(--f-mono);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--c2)}
+.chapter h2{font-size:clamp(28px,5vw,40px);font-weight:700;margin:8px 0 10px}
+.chapter p{margin:0;font-size:17px;max-width:68ch}
+.chapter.pink{--c1:var(--accent-soft);--c2:var(--accent)}
+.chapter.lav{--c1:var(--lav);--c2:var(--lav-ink)}
+.chapter.mint{--c1:var(--mint);--c2:var(--mint-ink)}
+.chapter.yellow{--c1:var(--yellow);--c2:var(--yellow-ink)}
+.chapter.blue{--c1:var(--blue);--c2:var(--blue-ink)}
+.chapter.peach{--c1:var(--peach);--c2:var(--peach-ink)}
+section.aula{margin-block:38px}
+.aula-h{border-top:2px dashed var(--accent-line)}
+.aula-h .num{font-size:34px}
+h4.sub{margin:26px 0 10px;font-size:19px}
+ul.clean{margin:.3em 0 .8em;padding-left:20px} ul.clean li{margin-bottom:.35em}
+details.sol{margin-top:6px}
+details.sol>summary{cursor:pointer;list-style:none;font-family:var(--f-mono);font-size:14px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:10px 18px;display:inline-block}
+details.sol>summary::-webkit-details-marker{display:none}
+details.sol[open]>summary{margin-bottom:18px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 20px}
+.toolbar button{font-family:var(--f-mono);font-size:13px;font-weight:600;border:1px solid var(--accent-line);background:var(--surface);color:var(--accent);padding:9px 16px;border-radius:999px;cursor:pointer}
+.ex-h .tag{border-radius:999px}
+.step h5{display:block}
+.step h5 .n{margin-right:10px}
+.step p{font-size:16px}
+.leigo{background:var(--yellow);border-radius:14px;padding:10px 14px;font-size:15px;margin-top:8px}
+.alerta{background:var(--peach);border-radius:18px;padding:18px 20px;margin:16px 0}
+.alerta h4{color:var(--peach-ink);margin-bottom:8px;font-size:17px}
+.alerta p:last-child{margin-bottom:0}
+.tbl{overflow-x:auto;margin-bottom:18px} .tbl table{margin-bottom:0;min-width:520px}
+.cyc{display:flex;border-radius:12px;overflow:hidden;font-family:var(--f-mono);font-size:12px;font-weight:700;margin:8px 0 2px;color:#40303F}
+.cyc span{display:grid;place-items:center;min-height:38px;white-space:nowrap;overflow:hidden}
+.cyc .g{background:#BFEBD3}.cyc .y{background:#FFE9A3}.cyc .r{background:#F7B9C4}
+.cyc-l{font-family:var(--f-mono);font-size:13px;color:var(--muted);margin-top:12px}
+.pts{display:inline-block;font-family:var(--f-mono);font-size:13px;font-weight:700;color:var(--lav-ink);background:var(--lav);border-radius:999px;padding:3px 12px}
+.provahead{background:linear-gradient(135deg,var(--accent-soft),var(--lav));color:var(--ink);border-radius:24px}
+.provahead p{color:var(--ink)}
+.resposta p{font-size:16px}
+svg text{font-family:var(--f-mono);font-size:12px;fill:var(--muted)}
+@media (max-width:760px){.hero{padding:24px 20px}.chapter{padding:20px}}
+
 </style>
 </head>
 <body>
 <div class="page">
-
 <header class="hero">
   <p class="eyebrow">UFSC Joinville · EMB 5936 · Prof. Helry Dias</p>
-  <h1 class="title">Engenharia de Tráfego II — revisão da P2</h1>
-  <p class="lead">Conteúdo da P2, aula por aula. Por enquanto: Aula 7, com interseções, rotatórias (método do HCM), canalizações e sistemas de controle de tráfego rodoviário. No fim, os seis exercícios de rotatória dos slides resolvidos passo a passo.</p>
-  <p class="byline">Companheiro dos slides "Interseções, Rotatórias e Canalizações / Controle de Tráfego Rodoviário (atualizado HCM)" · Outubro de 2026 · <a href="../">← Engenharia de Tráfego II</a></p>
+  <h1 class="title">Revisão da P2, sem medo 🌷</h1>
+  <p class="lead">A matéria inteira explicada do zero, todos os exercícios das aulas passo a passo e a prova antiga resolvida com o nível de detalhe que o professor pede.</p>
+  <p class="byline"><a href="../">← Engenharia de Tráfego II</a> · Aulas 6 a 10 · Novembro de 2026</p>
   <nav class="nav">
-    <a class="hd" href="#intersecoes">1 · Interseções</a>
-    <a class="hd" href="#rotatorias">2 · Rotatórias (HCM)</a>
-    <a class="hd" href="#canalizacoes">3 · Canalizações e desnível</a>
-    <a class="hd" href="#controle">4 · Controle de tráfego</a>
-    <a href="#exercicios">Exercícios 1–6 resolvidos</a>
-    <a href="exercicio06-rotatoria.pdf" download>PDF · Exercício 6 (LaTeX) ↓</a>
+    <a class="hd" href="#comeca">🌱 Comece aqui</a>
+    <a class="hd" href="#a6">6 · Caminhões</a>
+    <a class="hd" href="#a7">7 · Rotatórias</a>
+    <a class="hd" href="#a8">8 · Semáforos</a>
+    <a class="hd" href="#a9">9 · Dados e faixas</a>
+    <a class="hd" href="#a10">10 · Fluxo e modelos</a>
+    <a class="hd" href="#perfil">🔍 Como ele cobra</a>
+    <a class="hd" href="#prova">📝 Prova resolvida</a>
   </nav>
 </header>
+<section class="aula" id="comeca">
+  <div class="aula-h"><span class="num">🌱</span><div><h2>Comece aqui: dá para virar o jogo</h2><p>A prova antiga mostra um caminho bem claro.</p></div></div>
+  <div class="cards">
+    <div class="card wide mint"><h4>A boa notícia</h4><p>As quatro questões de conta da prova antiga são <b>os exercícios das aulas com outros números</b>. Quem sabe fazer os exercícios desta página sabe fazer 5,5 dos 10 pontos daquela prova. Os outros 4,5 são teoria, e a teoria dele tem roteiro previsível.</p></div>
+    <div class="card lav"><h4>Por onde estudar</h4><p><b>1.</b> Aula 8 (semáforos): a conta mais mecânica.<br><b>2.</b> Aula 10 (fluxo e modelos): conta curta e 2 pontos de teoria.<br><b>3.</b> Aula 6 (caminhões): a conta mais longa.<br><b>4.</b> Aula 7 (rotatórias) e Aula 9 (HOV, HOT e VSL).<br><b>5.</b> Prova antiga, de cronômetro na mão.</p></div>
+    <div class="card blue"><h4>Como usar esta página</h4><p>Cada exercício vem com a resolução escondida. <b>Tente no papel antes de abrir.</b> Errar aqui não custa nada, e é errando que a conta fica na cabeça. Depois compare passo a passo.</p></div>
+    <div class="card peach"><h4>O erro que tira nota com ele</h4><p>Parar no número. O cabeçalho da prova exige <b>interpretação dos dados e comentários</b> em todas as questões. Sempre feche com uma ou duas frases: o que o valor significa e por quê.</p></div>
+  </div>
+  <div class="toolbar"><button type="button" id="abrir">Abrir todas as resoluções</button><button type="button" id="fechar">Fechar todas</button></div>
 
+</section>
+<div class="chapter peach" id="a6"><div class="kick">Aula 6 · Física do caminhão</div><h2>O que faz um caminhão andar, frear e não tombar</h2><p>É um cabo de guerra: de um lado a força que o motor entrega, do outro tudo que segura o veículo. Estudamos o caminhão porque ele é o veículo crítico em rampas, frenagem e curvas.</p></div>
+<section class="aula">
+  <div class="aula-h"><span class="num">6.1</span><div><h2>Do motor até a roda</h2><p>Velocidade e força que chegam ao chão.</p></div></div>
+  <div class="cards">
+    <div class="card wide yellow"><h4>Pense numa bicicleta</h4><p>Marcha leve: pedala muito, anda pouco, mas sobe ladeira com força. Marcha pesada: anda rápido, com pouca força. No caminhão é igual. O motor gira rápido demais, então a <b>caixa de câmbio (g<sub>t</sub>)</b> e o <b>diferencial (g<sub>d</sub>)</b> reduzem a rotação e multiplicam a força.</p></div>
+  </div>
+  <div class="formula-box"><div class="lbl">Velocidade a partir da rotação</div><div class="eq">V = 60 · N · π · D / (1000 · g<sub>t</sub> · g<sub>d</sub>)</div><div class="key">V em km/h · N = rotação do motor (rpm) · D = diâmetro do pneu (m) · g<sub>t</sub> = redução da marcha usada · g<sub>d</sub> = redução do diferencial</div></div>
+  <div class="formula-box"><div class="lbl">Força motriz (o que o motor entrega)</div><div class="eq">F<sub>t</sub> = η · 3600 · P / V</div><div class="key">F<sub>t</sub> em N · η ≈ 0,82 (eficiência da transmissão) · P em kW · V em km/h. Como P = força × velocidade, quanto menor a velocidade, maior a força.</div></div>
+  <div class="formula-box"><div class="lbl">Limite do atrito (o que o chão aguenta)</div><div class="eq">F<sub>t máx</sub> = f · T<sub>d</sub></div><div class="key">f = aderência · T<sub>d</sub> = peso sobre o eixo motriz (N). Passou disso, a roda patina.</div></div>
+  <p class="tip">Os dois limites valem ao mesmo tempo: o desempenho real é dado pela <b>menor</b> das duas forças.</p>
+  <div class="tbl"><table><tr><th>Superfície</th><th>Aderência f</th><th>Superfície</th><th>Aderência f</th></tr><tr><td>Asfalto ou concreto seco</td><td>0,80–0,90</td><td>Terra solta seca</td><td>0,45</td></tr><tr><td>Concreto molhado</td><td>0,80</td><td>Terra firme úmida</td><td>0,55</td></tr><tr><td>Asfalto molhado</td><td>0,50–0,70</td><td>Areia seca</td><td>0,20</td></tr><tr><td>Pedrisco</td><td>0,60</td><td>Areia úmida</td><td>0,40</td></tr><tr><td>Terra firme seca</td><td>0,70</td><td>Neve / gelo</td><td>0,20 / 0,10</td></tr></table></div>
+  <div class="cards">
+    <div class="card wide lav"><h4>Motores</h4><p>O ideal é potência constante: muita força em baixa velocidade. O motor a combustão não faz isso sozinho, por isso precisa de transmissão. Ainda assim é muito usado pela boa relação potência/peso, economia e custo. O <b>diesel</b> se inflama por compressão, sem vela, e consome cerca de 25% menos que um motor a gasolina equivalente.</p></div>
+  </div>
+
+</section>
+<section class="aula">
+  <div class="aula-h"><span class="num">6.2</span><div><h2>As três forças que seguram</h2><p>R = R<sub>r</sub> + R<sub>a</sub> + R<sub>g</sub>, tudo em newtons.</p></div></div>
+  <div class="cards">
+    <div class="card blue"><h4>R<sub>r</sub> · Rolamento</h4><p>O pneu e o chão se deformam. É como andar na areia: cansa mesmo no plano. Depende muito da superfície.</p></div>
+    <div class="card mint"><h4>R<sub>a</sub> · Ar</h4><p>Colocar a mão para fora do carro. Cresce com <b>V²</b>: dobrar a velocidade quadruplica o arrasto.</p></div>
+    <div class="card peach"><h4>R<sub>g</sub> · Rampa</h4><p>Subir ladeira de mochila pesada. Só existe com greide, e depende do peso.</p></div>
+  </div>
+  <div class="formula-box"><div class="lbl">Rolamento</div><div class="eq">R<sub>r</sub> = (c<sub>1</sub> + c<sub>2</sub> · V) · G</div><div class="key">c<sub>2</sub> ≈ 0,056 · G em <b>kN</b> · V em km/h · c<sub>1</sub>: asfalto 7,6 · terra firme seca 30 · terra solta seca 40 · areia solta seca 100 · terra mole úmida 160</div></div>
+  <div class="formula-box"><div class="lbl">Aerodinâmica</div><div class="eq">R<sub>a</sub> = c<sub>a</sub> · A · V²</div><div class="key">A em m² · V em km/h · c<sub>a</sub>: automóveis 0,020–0,025 · ônibus 0,035–0,040 · caminhões 0,028–0,040</div></div>
+  <div class="formula-box"><div class="lbl">Rampa</div><div class="eq">R<sub>g</sub> = 10 · G · i</div><div class="key">G em kN · i em % (positivo subindo)</div></div>
+  <div class="alerta"><h4>Pegadinha de unidade</h4><p>O enunciado costuma dar <b>massa em kg</b>, e a fórmula pede <b>peso em kN</b>. Faça G = massa × 9,806 / 1000. O enunciado também não dá c<sub>a</sub>: escolha um valor da faixa e <b>escreva qual escolheu</b>. Aqui usei a média, 0,034, e mostro quanto o resultado muda nos extremos.</p></div>
+
+</section>
+<section class="aula">
+  <div class="aula-h"><span class="num">✎</span><div><h2>Exercícios de força e resistência</h2><p>Exemplos 1 e 2 dos slides.</p></div></div>
+  <div class="ex" id="a6ex1">
+    <header class="ex-h"><span class="tag">Exemplo 1</span><h3>Caminhão no asfalto</h3></header>
+    <div class="given">6300 kg · 110 kW a 2800 rpm · asfalto · marchas 6,36 / 3,31 / 2,14 / 1,41 / 1 · pneu 0,73 m · diferencial 3,9 · A = 9 m². Plano: 2664 rpm em 5ª. Aclive de 5%: 4ª a 2518 rpm. Relação entre resistências e força tratora?</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Passar massa para peso</h5><div class="eq">G = 6300 · 9,806 / 1000 = <b class="res">61,78 kN</b></div><div class="leigo">💡 A fórmula de rolamento só aceita kN.</div></li>
+      <li class="step"><h5><span class="n">2</span>Velocidade no plano (5ª: g<sub>t</sub> = 1)</h5><div class="eq">V = 60 · 2664 · π · 0,73 / (1000 · 1 · 3,9) = <b class="res">93,99 km/h</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Resistências no plano (c<sub>1</sub> = 7,6; c<sub>a</sub> = 0,034)</h5><div class="eq">R<sub>r</sub> = (7,6 + 0,056 · 93,99) · 61,78 = 12,864 · 61,78 = 794,7 N<br>R<sub>a</sub> = 0,034 · 9 · 93,99² = 2703,4 N<br>R<sub>g</sub> = 0 (trecho plano)<br>R = <b class="res">3498 N</b></div><p>Com c<sub>a</sub> entre 0,028 e 0,040, R fica entre 3021 e 3975 N.</p></li>
+      <li class="step"><h5><span class="n">4</span>Velocidade no aclive (4ª: g<sub>t</sub> = 1,41)</h5><div class="eq">V = 60 · 2518 · π · 0,73 / (1000 · 1,41 · 3,9) = <b class="res">63,01 km/h</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Resistências no aclive</h5><div class="eq">R<sub>r</sub> = (7,6 + 0,056 · 63,01) · 61,78 = 687,5 N<br>R<sub>a</sub> = 0,034 · 9 · 63,01² = 1214,8 N<br>R<sub>g</sub> = 10 · 61,78 · 5 = 3088,9 N<br>R = <b class="res">4991 N</b></div></li>
+      <li class="step"><h5><span class="n">6</span>Força tratora (com a potência máxima)</h5><div class="eq">Plano: F<sub>t</sub> = 0,82 · 3600 · 110 / 93,99 = <b class="res">3455 N</b><br>Aclive: F<sub>t</sub> = 0,82 · 3600 · 110 / 63,01 = <b class="res">5154 N</b></div><p>Usei 110 kW, o máximo. Fora de 2800 rpm o motor entrega um pouco menos, então F<sub>t</sub> é um teto.</p></li>
+    </ol>
+    <div class="result"><span>Resposta</span><b>Plano: R ≈ 3498 N · Aclive: R ≈ 4991 N (+43%)</b></div>
+    <p class="tip"><b>Interpretação:</b> nos dois trechos F<sub>t</sub> e R ficam muito próximos, ou seja, o caminhão está perto da <b>velocidade de equilíbrio</b>. No aclive, a rampa vira a maior parcela (62%), e o motorista reduz a marcha para ter mais força.</p>
+    </details>
+  </div>
+  <div class="ex" id="a6ex2">
+    <header class="ex-h"><span class="tag">Exemplo 2</span><h3>Caminhão na terra firme seca</h3></header>
+    <div class="given">8500 kg · 150 kW a 2800 rpm · terra firme seca · marchas 6,5 / 3,5 / 2,3 / 1,51 / 1 · pneu 0,76 m · diferencial 4,2 · A = 6 m². Plano: 2687 rpm em 5ª. Aclive de 7%: 3ª a 2430 rpm.</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Peso</h5><div class="eq">G = 8500 · 9,806 / 1000 = <b class="res">83,35 kN</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Velocidades</h5><div class="eq">Plano: V = 60 · 2687 · π · 0,76 / (1000 · 1 · 4,2) = <b class="res">91,65 km/h</b><br>Aclive: V = 60 · 2430 · π · 0,76 / (1000 · 2,3 · 4,2) = <b class="res">36,04 km/h</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Plano (c<sub>1</sub> = 30; c<sub>a</sub> = 0,034)</h5><div class="eq">R<sub>r</sub> = (30 + 0,056 · 91,65) · 83,35 = 2928,3 N<br>R<sub>a</sub> = 0,034 · 6 · 91,65² = 1713,5 N<br>R = <b class="res">4642 N</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Aclive</h5><div class="eq">R<sub>r</sub> = (30 + 0,056 · 36,04) · 83,35 = 2668,7 N<br>R<sub>a</sub> = 0,034 · 6 · 36,04² = 264,9 N<br>R<sub>g</sub> = 10 · 83,35 · 7 = 5834,6 N<br>R = <b class="res">8768 N</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Força tratora (teto)</h5><div class="eq">Plano: F<sub>t</sub> = 0,82 · 3600 · 150 / 91,65 = <b class="res">4831 N</b><br>Aclive: F<sub>t</sub> = 0,82 · 3600 · 150 / 36,04 = <b class="res">12.288 N</b></div></li>
+    </ol>
+    <div class="result"><span>Resposta</span><b>Plano: R ≈ 4642 N · Aclive: R ≈ 8768 N (quase o dobro)</b></div>
+    <p class="tip"><b>Interpretação:</b> no plano, a folga é pequena (F<sub>t</sub> ≈ R). No aclive, a 3ª marcha mais que dobra a força disponível e sobra margem de ≈3,5 kN. Reduzir a marcha troca velocidade por força.</p>
+    </details>
+  </div>
+
+</section>
+<section class="aula">
+  <div class="aula-h"><span class="num">6.3</span><div><h2>Frenagem</h2><p>Quanto o caminhão precisa de chão para parar.</p></div></div>
+  <div class="cards">
+    <div class="card wide blue"><h4>A ideia</h4><p>Frear é trocar velocidade por atrito. Quanto mais aderência, mais rápido para. Subida ajuda, porque a gravidade também segura. Descida atrapalha.</p></div>
+  </div>
+  <div class="formula-box"><div class="lbl">Distância teórica de frenagem</div><div class="eq">D = V<sub>0</sub>² / [254 · (f ± 0,01 · m)]</div><div class="key">D em m · V<sub>0</sub> em km/h · m = rampa em % · <b>+ aclive, − declive</b></div></div>
+  <div class="formula-box"><div class="lbl">Força e desaceleração máxima</div><div class="eq">F<sub>b máx</sub> = G · f &nbsp;→&nbsp; a<sub>máx</sub> = g · f</div><div class="key">Em rampa: a<sub>máx</sub> = g · (f + 0,01m) no aclive e g · (f − 0,01m) no declive · g = 9,806 m/s²</div></div>
+  <div class="tbl"><table><tr><th>V (km/h)</th><th>35</th><th>40</th><th>50</th><th>55</th><th>65</th><th>70</th><th>80</th><th>90</th><th>95</th><th>105</th><th>110</th></tr><tr><td>f</td><td>0,40</td><td>0,38</td><td>0,34</td><td>0,32</td><td>0,31</td><td>0,30</td><td>0,30</td><td>0,29</td><td>0,29</td><td>0,29</td><td>0,28</td></tr></table></div>
+  <h4 class="sub">Modelo detalhado: o que acontece na roda</h4>
+  <div class="tbl"><table><tr><th>Situação</th><th>O que significa</th></tr><tr><td>B·f<sub>b</sub>·r = F<sub>z</sub>·f·R</td><td>Ideal: o torque do freio iguala o do atrito pneu-pavimento e todo o atrito é aproveitado.</td></tr><tr><td>B·f<sub>b</sub>·r &lt; F<sub>z</sub>·f·R</td><td>A roda nunca trava, mas sobra atrito sem uso. Ocorre em veículos com carga muito pesada e densa, como brita.</td></tr><tr><td>B·f<sub>b</sub>·r &gt; F<sub>z</sub>·f·R</td><td>A roda <b>trava</b> e o motorista perde o controle direcional. O ABS ajuda no controle, mas não reduz muito a distância.</td></tr></table></div>
+  <div class="formula-box"><div class="lbl">Veículo unitário: transferência de carga</div><div class="eq">F<sub>z2</sub> = (G · b<sub>f</sub> − M · a · h) / b &nbsp;·&nbsp; F<sub>z1</sub> = G − F<sub>z2</sub></div><div class="key">Ao frear, o peso "vai para a frente". h = altura do CG · b<sub>f</sub> = posição horizontal do CG · b = entre-eixos. Aderência por eixo: f<sub>1</sub> = F<sub>f1</sub>/F<sub>z1</sub> e f<sub>2</sub> = F<sub>f2</sub>/F<sub>z2</sub>.</div></div>
+  <div class="formula-box"><div class="lbl">Distância mínima e eficiência</div><div class="eq">d = V<sub>0</sub>² / (25,92 · a<sub>máx</sub>) &nbsp;·&nbsp; η<sub>f</sub> = a<sub>real</sub> / (g·f) = D / d</div><div class="key">η<sub>f</sub> mede quanto do atrito teórico é realmente aproveitado.</div></div>
+  <div class="ex" id="a6ex3">
+    <header class="ex-h"><span class="tag">Exemplo 3</span><h3>Caminhão a 100 km/h</h3></header>
+    <div class="given">Distância de frenagem no plano, em declive de 3% e em aclive de 5%.</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Achar f na tabela</h5><div class="eq">95 km/h → 0,29 e 105 km/h → 0,29, logo <b class="res">f = 0,29</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Plano (m = 0)</h5><div class="eq">D = 100² / (254 · 0,29) = <b class="res">135,8 m</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Declive de 3% (sinal −)</h5><div class="eq">D = 100² / [254 · (0,29 − 0,03)] = <b class="res">151,4 m</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Aclive de 5% (sinal +)</h5><div class="eq">D = 100² / [254 · (0,29 + 0,05)] = <b class="res">115,8 m</b></div></li>
+    </ol>
+    <div class="result"><span>Resposta</span><b>135,8 m · 151,4 m · 115,8 m</b></div>
+    <p class="tip"><b>Interpretação:</b> o declive aumenta a distância em 11,5%, porque a gravidade empurra o veículo. O aclive reduz em 14,7%, porque a gravidade ajuda a frear.</p>
+    </details>
+  </div>
+  <div class="ex" id="a6ex4">
+    <header class="ex-h"><span class="tag">Exemplo 4</span><h3>Caminhão a 45 km/h</h3></header>
+    <div class="given">Plano, declive de 5% e aclive de 8%.</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Interpolar f (45 fica no meio de 40 e 50)</h5><div class="eq">f = (0,38 + 0,34) / 2 = <b class="res">0,36</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Plano</h5><div class="eq">D = 45² / (254 · 0,36) = <b class="res">22,15 m</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Declive de 5%</h5><div class="eq">D = 45² / [254 · (0,36 − 0,05)] = <b class="res">25,72 m</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Aclive de 8%</h5><div class="eq">D = 45² / [254 · (0,36 + 0,08)] = <b class="res">18,12 m</b></div></li>
+    </ol>
+    <div class="result"><span>Resposta</span><b>22,15 m · 25,72 m · 18,12 m</b></div>
+    <p class="tip"><b>Interpretação:</b> como a distância depende de V², a 45 km/h o caminhão para em cerca de 1/6 da distância necessária a 100 km/h.</p>
+    </details>
+  </div>
+
+</section>
+<section class="aula">
+  <div class="aula-h"><span class="num">6.4</span><div><h2>Curvas: escorregar ou tombar</h2><p>Dois perigos diferentes numa curva.</p></div></div>
+  <div class="cards">
+    <div class="card blue"><h4>Escorregar</h4><p>O pneu perde o atrito lateral e o veículo sai de lado. Evita-se com <b>raio grande</b>, usando a <b>superelevação e</b> (a pista inclinada para dentro, como numa pista de corrida).</p></div>
+    <div class="card peach"><h4>Tombar</h4><p>O veículo gira sobre as rodas de fora. Quanto mais alto o centro de gravidade, mais fácil. Cada tipo de caminhão tem seu limite.</p></div>
+  </div>
+  <div class="formula-box"><div class="lbl">Raio mínimo (contra o escorregamento)</div><div class="eq">R<sub>mín</sub> = V² / [127 · (e + f)]</div><div class="key">V em km/h · e em decimal (6% = 0,06) · f = atrito lateral</div></div>
+  <div class="tbl"><table><tr><th>V (km/h)</th><th>40</th><th>50</th><th>60</th><th>70</th><th>80</th><th>90</th><th>100</th><th>110</th><th>120</th><th>130</th></tr><tr><td>f lateral</td><td>0,17</td><td>0,16</td><td>0,15</td><td>0,15</td><td>0,14</td><td>0,13</td><td>0,13</td><td>0,12</td><td>0,12</td><td>0,11</td></tr></table></div>
+  <div class="formula-box"><div class="lbl">Aceleração centrífuga</div><div class="eq">a<sub>c</sub> = v² / R = g · (e + f)</div><div class="key">v em m/s. Uma parte de a<sub>c</sub> é absorvida pela inclinação da pista (g·e), e o resto, pelo atrito lateral (g·f).</div></div>
+  <div class="tbl"><table><tr><th>Caminhão</th><th>Altura do CG</th><th>Limite de tombamento</th></tr><tr><td>Baú (meia carga)</td><td>2,12 m</td><td>0,34 g</td></tr><tr><td>Baú (carga total)</td><td>2,67 m</td><td>0,24 g</td></tr><tr><td>Tanque (seção elíptica)</td><td>2,25 m</td><td>0,32 g</td></tr><tr><td>Tanque (seção circular)</td><td>2,54 m</td><td>0,26 g</td></tr></table></div>
+  <div class="alerta"><h4>⚠️ Atenção: duas leituras possíveis no tombamento</h4><p>Os slides dão a tabela e a fórmula, mas <b>não trazem resolução</b>, e não consegui achar a do livro-base. O ponto em aberto: comparar o limite com a parcela lateral que o caminhão sente (<b>f</b>), ou com o total (<b>e + f</b>)?</p><p><b>Leitura A (a que adoto):</b> a inclinação da pista compensa g·e, então só a parte lateral restante tenta tombar. Compara-se f com 0,24, e V<sub>tomb</sub> = √[127·R·(e + 0,24)]. É a leitura coerente com a<sub>c</sub> = g(e + f) e com a física.</p><p><b>Leitura B (mais conservadora):</b> compara-se a<sub>c</sub>/g com 0,24, e V<sub>tomb</sub> = √(127·R·0,24).</p><p>Vale <b>perguntar ao professor qual ele usa</b>. Na prova, declare a hipótese por escrito. Mostro os dois resultados abaixo.</p></div>
+  <div class="ex" id="a6ex5">
+    <header class="ex-h"><span class="tag">Exemplo 5</span><h3>Raio mínimo a 110 km/h</h3></header>
+    <div class="given">V = 110 km/h · e = 6%.</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>f na tabela</h5><div class="eq">110 km/h → <b class="res">f = 0,12</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Aplicar a fórmula</h5><div class="eq">R<sub>mín</sub> = 110² / [127 · (0,06 + 0,12)] = 12.100 / 22,86 = <b class="res">529,3 m</b></div><p>O slide do Exemplo 7 confirma esse valor.</p></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>R<sub>mín</sub> ≈ 529,3 m</b></div>
+    </details>
+  </div>
+  <div class="ex" id="a6ex6">
+    <header class="ex-h"><span class="tag">Exemplo 6</span><h3>Raio mínimo a 90 km/h</h3></header>
+    <div class="given">V = 90 km/h · e = 2%.</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>f na tabela</h5><div class="eq">90 km/h → <b class="res">f = 0,13</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Aplicar a fórmula</h5><div class="eq">R<sub>mín</sub> = 90² / [127 · (0,02 + 0,13)] = 8100 / 19,05 = <b class="res">425,2 m</b></div></li>
+    </ol>
+    <div class="result"><span>Resposta</span><b>R<sub>mín</sub> ≈ 425,2 m</b></div>
+    <p class="tip"><b>Interpretação:</b> mesmo com velocidade menor que a do Exemplo 5, o raio não caiu tanto, porque a superelevação é pequena (2%) e a curva depende mais do atrito.</p>
+    </details>
+  </div>
+  <div class="ex" id="a6ex7">
+    <header class="ex-h"><span class="tag">Exemplo 7</span><h3>Baú carregado a 110 km/h</h3></header>
+    <div class="given">R = 529,3 m · e = 6% · baú com carga total (limite 0,24 g).</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Converter a velocidade</h5><div class="eq">v = 110 / 3,6 = <b class="res">30,56 m/s</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Aceleração na curva</h5><div class="eq">a<sub>c</sub> = 30,56² / 529,3 = 1,764 m/s² = <b class="res">0,18 g</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Tirar o que a inclinação absorve</h5><div class="eq">a<sub>lateral</sub> / g = 0,18 − 0,06 = <b class="res">0,12</b></div><p>É exatamente o f = 0,12 usado no projeto.</p></li>
+      <li class="step"><h5><span class="n">4</span>Comparar com o limite</h5><div class="eq">0,12 &lt; 0,24 → <b class="res">não tomba</b></div><p>Na leitura B: 0,18 &lt; 0,24, e a conclusão é a mesma.</p></li>
+      <li class="step"><h5><span class="n">5</span>Velocidade de tombamento</h5><div class="eq">V = √[127 · 529,3 · (0,06 + 0,24)] = <b class="res">142,0 km/h</b></div><p>Na leitura B: √(127 · 529,3 · 0,24) = 127,0 km/h.</p></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>Não tomba a 110 km/h · V<sub>tomb</sub> ≈ 142 km/h (B: 127 km/h)</b></div>
+    </details>
+  </div>
+  <div class="ex" id="a6ex8">
+    <header class="ex-h"><span class="tag">Exemplo 8</span><h3>Baú carregado a 90 km/h</h3></header>
+    <div class="given">R = 425,2 m (Exemplo 6) · e = 2% · limite 0,24 g.</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Aceleração na curva</h5><div class="eq">v = 25 m/s → a<sub>c</sub> = 25² / 425,2 = 1,470 m/s² = <b class="res">0,15 g</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Parte lateral</h5><div class="eq">0,15 − 0,02 = <b class="res">0,13</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Comparar</h5><div class="eq">0,13 &lt; 0,24 → <b class="res">não tomba</b></div><p>Na leitura B: 0,15 &lt; 0,24, e a conclusão é a mesma.</p></li>
+      <li class="step"><h5><span class="n">4</span>Velocidade de tombamento</h5><div class="eq">V = √[127 · 425,2 · (0,02 + 0,24)] = <b class="res">118,5 km/h</b></div><p>Na leitura B: √(127 · 425,2 · 0,24) = 113,8 km/h.</p></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>Não tomba a 90 km/h · V<sub>tomb</sub> ≈ 118,5 km/h (B: 113,8 km/h)</b></div>
+    </details>
+  </div>
+
+</section>
+<div class="chapter pink" id="a7"><div class="kick">Aula 7 · Onde as vias se encontram</div><h2>Interseções, rotatórias e controle de tráfego</h2><p>Toda vez que dois fluxos querem o mesmo pedaço de asfalto, nasce um conflito. Esta aula é sobre organizar isso.</p></div>
+  <div class="cards">
+    <div class="card lav"><h4>Rotatória, sem fórmula</h4><p>Imagine entrar numa roda de pular corda. Você espera uma brecha, entra e segue. Essa é a <b>aceitação de brechas</b>. Quanto mais gente girando (<b>fluxo conflitante</b>), mais rara a brecha e menos carros entram por hora (<b>capacidade c</b>).</p></div>
+    <div class="card mint"><h4>As três perguntas do método</h4><p><b>1.</b> Quantos carros cabem por hora? → <b>c</b><br><b>2.</b> Que fração disso está sendo usada? → <b>x = v/c</b><br><b>3.</b> Quanto cada um espera? → <b>d</b>, e a tabela dá a letra A a F.</p></div>
+  </div>
 <section class="aula" id="intersecoes">
-  <div class="aula-h"><span class="num">1</span><div><h2>Interseções</h2><p>Onde as vias se cruzam e os acidentes se concentram.</p></div></div>
+  <div class="aula-h"><span class="num">7.1</span><div><h2>Interseções</h2><p>Onde as vias se cruzam e os acidentes se concentram.</p></div></div>
 
   <div class="cards">
     <div class="card wide">
@@ -179,9 +420,8 @@ tr:last-child td{border-bottom:none}
     <div class="card blue"><h4>Em desnível (interconexão)</h4><p>Uma ou mais rampas ligam as vias que se cruzam. Com volumes muito altos, pode ser a única solução viável.</p></div>
   </div>
 </section>
-
 <section class="aula" id="rotatorias">
-  <div class="aula-h"><span class="num">2</span><div><h2>Rotatórias — metodologia do HCM</h2><p>Capacidade por aceitação de brechas, atraso de controle e nível de serviço.</p></div></div>
+  <div class="aula-h"><span class="num">7.2</span><div><h2>Rotatórias — metodologia do HCM</h2><p>Capacidade por aceitação de brechas, atraso de controle e nível de serviço.</p></div></div>
 
   <div class="cards">
     <div class="card wide">
@@ -250,9 +490,8 @@ tr:last-child td{border-bottom:none}
   </table>
   <p class="tip"><b>Regra de ouro:</b> se x &gt; 1,0, o nível de serviço é <b>F automaticamente</b>, seja qual for o atraso. Confira o x antes de olhar a tabela.</p>
 </section>
-
 <section class="aula" id="canalizacoes">
-  <div class="aula-h"><span class="num">3</span><div><h2>Canalizações, faixas de mudança de velocidade e interseções em desnível</h2><p>Como a geometria organiza os movimentos.</p></div></div>
+  <div class="aula-h"><span class="num">7.3</span><div><h2>Canalizações, faixas de mudança de velocidade e interseções em desnível</h2><p>Como a geometria organiza os movimentos.</p></div></div>
 
   <div class="card wide" style="margin-bottom:18px">
     <h4>Canalização de tráfego</h4>
@@ -293,9 +532,8 @@ tr:last-child td{border-bottom:none}
     <tr><td><b>Expressa</b></td><td>Direcional (desejável)</td><td>Direcional (desejável)</td></tr>
   </table>
 </section>
-
 <section class="aula" id="controle">
-  <div class="aula-h"><span class="num">4</span><div><h2>Sistemas de controle de tráfego rodoviário</h2><p>Monitorar, informar e agir: do semáforo ao guincho.</p></div></div>
+  <div class="aula-h"><span class="num">7.4</span><div><h2>Sistemas de controle de tráfego rodoviário</h2><p>Monitorar, informar e agir: do semáforo ao guincho.</p></div></div>
 
   <div class="cards">
     <div class="card wide">
@@ -327,13 +565,13 @@ tr:last-child td{border-bottom:none}
     <tr><td><b>SCA</b> — Serviço de Controle Ambiental</td><td>Mede CO, CO₂, NO, NO₂ e H₂S, além de temperatura, umidade, chuva, vento, visibilidade e pressão. Gera alarmes de visibilidade e chuva e apoia a análise de acidentes. Em túneis, comanda os jato-ventiladores.</td></tr>
   </table>
 </section>
+<section class="aula" id="a7ex">
+  <div class="aula-h"><span class="num">✎</span><div><h2>Exercícios de rotatória — resolvidos</h2><p>Os seis exercícios dos slides, todos com T = 1 h e as fórmulas da seção 2.</p></div></div>
 
-<section class="aula" id="exercicios">
-  <div class="aula-h"><span class="num">Ex</span><div><h2>Exercícios de rotatória — resolvidos</h2><p>Os seis exercícios dos slides, todos com T = 1 h e as fórmulas da seção 2.</p></div></div>
-
-  <div class="ex" id="ex1">
+  <div class="ex" id="a7ex1">
     <header class="ex-h"><span class="tag">Exercício 1</span><h3>Faixa única — rotatória saturada</h3></header>
     <div class="given">Faixa única · v<sub>e</sub> = 800 ucp/h · v<sub>c</sub> = 600 ucp/h · T = 1 h</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
       <li class="step"><h5><span class="n">1</span>Capacidade — c = A·e<sup>−B·v<sub>c</sub></sup> (A = 1380, B = 0,00102)</h5><div class="eq">c<sub>e</sub> = 1380 · e<sup>−0,00102·600</sup> = 1380 · e<sup>−0,612</sup> = 1380 · 0,5423 = <b class="res">748,3 ucp/h</b></div></li>
       <li class="step"><h5><span class="n">2</span>Volume/capacidade — x = v/c</h5><div class="eq">x = 800 / 748,3 = <b class="res">1,069</b></div><p>x &gt; 1,0: a entrada recebe mais carros do que consegue escoar, e a fila cresce sem parar.</p></li>
@@ -341,22 +579,26 @@ tr:last-child td{border-bottom:none}
     </ol>
     <div class="result bad"><span>Resposta</span><b>x ≈ 1,07 &gt; 1,0 → LOS F</b></div>
     <p class="tip">Com x &gt; 1, o nível F sai direto, nem precisava do atraso. Os 181,5 s confirmam: muito acima de 50 s.</p>
+    </details>
   </div>
 
-  <div class="ex" id="ex2">
+  <div class="ex" id="a7ex2">
     <header class="ex-h"><span class="tag">Exercício 2</span><h3>Faixa única — volumes menores</h3></header>
     <div class="given">Faixa única · v<sub>e</sub> = 500 ucp/h · v<sub>c</sub> = 400 ucp/h · T = 1 h</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
       <li class="step"><h5><span class="n">1</span>Capacidade — c = A·e<sup>−B·v<sub>c</sub></sup></h5><div class="eq">c<sub>e</sub> = 1380 · e<sup>−0,00102·400</sup> = 1380 · e<sup>−0,408</sup> = 1380 · 0,6650 = <b class="res">917,7 ucp/h</b></div></li>
       <li class="step"><h5><span class="n">2</span>Volume/capacidade</h5><div class="eq">x = 500 / 917,7 = <b class="res">0,545</b></div></li>
       <li class="step"><h5><span class="n">3</span>Atraso</h5><div class="eq">3600/c = 3,923 · (x−1) = −0,4551 · (x−1)² = 0,2072<br>(3,923 · 0,545)/450 = 0,00475 · √(0,2072 + 0,00475) = 0,4603<br>d = 3,923 + 900 · (−0,4551 + 0,4603) = 3,923 + 4,67 = <b class="res">8,6 s/veíc</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>d ≈ 8,6 s/veíc · x ≈ 0,54 → LOS A</b></div>
+    </details>
   </div>
 
-  <div class="ex" id="ex3">
+  <div class="ex" id="a7ex3">
     <header class="ex-h"><span class="tag">Exercício 3</span><h3>Faixa dupla — uma conta por faixa</h3></header>
     <div class="given">Faixa dupla · v<sub>e,L</sub> = 450 ucp/h · v<sub>e,R</sub> = 550 ucp/h · v<sub>c</sub> = 700 ucp/h · T = 1 h</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
       <li class="step"><h5><span class="n">1</span>Capacidade da esquerda (A = 1350, B = 0,00105)</h5><div class="eq">c<sub>e,L</sub> = 1350 · e<sup>−0,00105·700</sup> = 1350 · e<sup>−0,735</sup> = 1350 · 0,4795 = <b class="res">647,3 ucp/h</b></div></li>
       <li class="step"><h5><span class="n">2</span>Capacidade da direita (A = 1420, B = 0,00085)</h5><div class="eq">c<sub>e,R</sub> = 1420 · e<sup>−0,00085·700</sup> = 1420 · e<sup>−0,595</sup> = 1420 · 0,5516 = <b class="res">783,2 ucp/h</b></div></li>
@@ -366,22 +608,26 @@ tr:last-child td{border-bottom:none}
       <li class="step"><h5><span class="n">6</span>Aproximação inteira (média ponderada pelo volume)</h5><div class="eq">d = (450 · 17,96 + 550 · 15,23) / (450 + 550) = <b class="res">16,5 s/veíc</b></div><p>Os slides param no atraso por faixa. Essa média é como o HCM combina as faixas numa aproximação.</p></li>
     </ol>
     <div class="result"><span>Resposta</span><b>Esquerda 18,0 s (C) · Direita 15,2 s (C) · Aproximação 16,5 s → LOS C</b></div>
+    </details>
   </div>
 
-  <div class="ex" id="ex4">
+  <div class="ex" id="a7ex4">
     <header class="ex-h"><span class="tag">Exercício 4</span><h3>Bypass com parada</h3></header>
     <div class="given">Bypass à direita · v<sub>b</sub> = 300 ucp/h · v<sub>ex</sub> (saída conflitante) = 800 ucp/h · T = 1 h</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
       <li class="step"><h5><span class="n">1</span>Capacidade do bypass (A = 1420, B = 0,00085, com v<sub>ex</sub>)</h5><div class="eq">c<sub>b</sub> = 1420 · e<sup>−0,00085·800</sup> = 1420 · e<sup>−0,68</sup> = 1420 · 0,5066 = <b class="res">719,4 ucp/h</b></div><p>No bypass, quem atrapalha é o fluxo que <b>sai</b> da rotatória, não o que circula.</p></li>
       <li class="step"><h5><span class="n">2</span>Volume/capacidade</h5><div class="eq">x<sub>b</sub> = 300 / 719,4 = <b class="res">0,417</b></div></li>
       <li class="step"><h5><span class="n">3</span>Atraso</h5><div class="eq">3600/c = 5,004 · (x−1) = −0,5830 · (x−1)² = 0,3399<br>(5,004 · 0,417)/450 = 0,00464 · √(0,3399 + 0,00464) = 0,5869<br>d<sub>b</sub> = 5,004 + 900 · 0,00396 = 5,004 + 3,57 = <b class="res">8,6 s/veíc</b></div></li>
     </ol>
     <div class="result ok"><span>Resposta</span><b>d ≈ 8,6 s/veíc · x ≈ 0,42 → LOS A</b></div>
+    </details>
   </div>
 
-  <div class="ex" id="ex5">
+  <div class="ex" id="a7ex5">
     <header class="ex-h"><span class="tag">Exercício 5</span><h3>Faixa dupla com pedestres na entrada da esquerda</h3></header>
     <div class="given">Faixa dupla, faixa da esquerda · v<sub>e,L</sub> = 350 ucp/h · V<sub>ped</sub> = 800 peds/h · v<sub>c</sub> = 300 ucp/h · T = 1 h</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
       <li class="step"><h5><span class="n">1</span>Capacidade base da esquerda (A = 1350, B = 0,00105)</h5><div class="eq">c<sub>base</sub> = 1350 · e<sup>−0,00105·300</sup> = 1350 · e<sup>−0,315</sup> = 1350 · 0,7298 = <b class="res">985,2 ucp/h</b></div></li>
       <li class="step"><h5><span class="n">2</span>Fator de pedestres (V<sub>ped</sub> = 800 &gt; 100)</h5><div class="eq">f<sub>ped</sub> = 1 − (0,00013 · 800) · e<sup>−0,001·300</sup> = 1 − 0,104 · 0,7408 = 1 − 0,0770 = <b class="res">0,9230</b></div></li>
@@ -391,11 +637,13 @@ tr:last-child td{border-bottom:none}
     </ol>
     <div class="result ok"><span>Resposta</span><b>c<sub>adj</sub> ≈ 909 ucp/h · d ≈ 6,4 s/veíc → LOS A</b></div>
     <p class="tip">Mesmo com 800 peds/h, a capacidade cai só ≈8%, porque o fluxo circulante (300) é baixo. O pedestre pesa mais quando o fluxo veicular conflitante também é baixo, já que e<sup>−0,001·v</sup> fica perto de 1.</p>
+    </details>
   </div>
 
-  <div class="ex" id="ex6">
+  <div class="ex" id="a7ex6">
     <header class="ex-h"><span class="tag">Exercício 6</span><h3>Bypass com parada e pedestres</h3></header>
     <div class="given">Bypass com parada · v<sub>b</sub> = 500 ucp/h · V<sub>ped</sub> = 600 peds/h · v<sub>ex</sub> = 500 ucp/h · T = 1 h</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
       <li class="step"><h5><span class="n">1</span>Capacidade base do bypass (A = 1420, B = 0,00085, com v<sub>ex</sub>)</h5><div class="eq">c<sub>b</sub> = 1420 · e<sup>−0,00085·500</sup> = 1420 · e<sup>−0,425</sup> = 1420 · 0,6538 = <b class="res">928,4 ucp/h</b></div></li>
       <li class="step"><h5><span class="n">2</span>Fator de pedestres (V<sub>ped</sub> = 600 &gt; 100)</h5><div class="eq">f<sub>ped</sub> = 1 − (0,00013 · 600) · e<sup>−0,001·500</sup> = 1 − 0,078 · 0,6065 = 1 − 0,0473 = <b class="res">0,9527</b></div></li>
@@ -405,6 +653,7 @@ tr:last-child td{border-bottom:none}
     </ol>
     <div class="result ok"><span>Resposta</span><b>c<sub>adj</sub> ≈ 884 ucp/h · x ≈ 0,57 · d ≈ 9,3 s/veíc → LOS A</b></div>
     <p class="tip">Versão em PDF desta resolução, feita em LaTeX: <a href="exercicio06-rotatoria.pdf" download style="color:var(--accent)">baixar exercicio06-rotatoria.pdf</a>.</p>
+    </details>
   </div>
 
   <div class="card yellow">
@@ -412,12 +661,361 @@ tr:last-child td{border-bottom:none}
     <p>No HCM original, a fórmula de atraso de rotatória termina com <b>+ 5 · min(x, 1)</b>. Os slides não trazem esse termo, por isso as resoluções acima seguem o material da aula. Se o professor cobrar a versão completa, some 5·x a cada atraso. Por exemplo, no Ex. 6 o atraso vai a ≈12,2 s e o nível vira B. No Ex. 1 nada muda, porque x &gt; 1 já dá F.</p>
   </div>
 </section>
+<div class="chapter mint" id="a8"><div class="kick">Aula 8 · Semáforos</div><h2>Dividir o tempo de forma justa</h2><p>Um cruzamento é uma fatia de tempo. O semáforo decide quanto cada rua recebe. O método de Webster resolve isso com 3 contas.</p></div>
+<section class="aula">
+  <div class="aula-h"><span class="num">8.1</span><div><h2>O vocabulário</h2><p>Metade da nota teórica vem de saber o nome certo.</p></div></div>
+  <div class="tbl"><table><tr><th>Termo</th><th>O que é</th></tr><tr><td><b>Foco / grupo focal</b></td><td>Foco é cada luz; grupo focal é o conjunto de dois ou mais focos.</td></tr><tr><td><b>Controlador</b></td><td>Equipamento que comanda a sequência de cores.</td></tr><tr><td><b>Ciclo</b></td><td>Sequência completa em que todos os estágios são atendidos ao menos uma vez.</td></tr><tr><td><b>Estágio</b></td><td>Intervalo em que certos movimentos compatíveis têm o direito de passagem, sem mudança de cores.</td></tr><tr><td><b>Grupo semafórico (Gn)</b></td><td>Grupos focais que sempre começam e terminam o verde juntos.</td></tr><tr><td><b>Entreverdes</b></td><td>Do fim de um verde ao início do próximo: <b>E = T<sub>a</sub> + T<sub>vs</sub></b> (amarelo + vermelho de segurança).</td></tr><tr><td><b>Aproximação</b></td><td>Seção de entrada na interseção, delimitada pela linha de retenção.</td></tr><tr><td><b>Movimentos conflitantes</b></td><td>Não podem ocorrer juntos com segurança.</td></tr><tr><td><b>Diagramas</b></td><td>De <b>estágios</b>: quais movimentos andam em cada intervalo. De <b>tempos (barras)</b>: as cores em escala ao longo do ciclo.</td></tr></table></div>
+  <div class="cards">
+    <div class="card yellow"><h4>Advertência</h4><p>Uma ou duas luzes amarelas <b>intermitentes</b>. Avisa perigo: reduza e tenha cuidado.</p></div>
+    <div class="card blue"><h4>Regulamentação</h4><p>Controla o direito de passagem. Veículos: vermelho → verde → amarelo → vermelho. Pedestres: vermelho → verde → vermelho piscante → vermelho.</p></div>
+  </div>
+  <div class="tbl"><table><tr><th>Estratégia</th><th>Como funciona</th></tr><tr><td><b>Isolado</b></td><td>Elementos distantes entre si e em pequeno número.</td></tr><tr><td><b>Coordenado</b></td><td>Sistema mais complexo, com interação entre os elementos.</td></tr><tr><td><b>Programado</b></td><td>Planos prévios baseados em perfis históricos (hora, tipo de dia).</td></tr><tr><td><b>Responsivo</b></td><td>Usa dados medidos por detectores. Inclui: <b>atuado</b> (estende ou encerra o estágio a cada chegada), <b>adaptativo</b> (revisa a cada ciclo) e <b>tempo real</b> (adaptativo em toda a área, com ações incrementais).</td></tr></table></div>
+  <div class="tbl"><table><tr><th>Velocidade (km/h)</th><th>≤ 40</th><th>50</th><th>60</th><th>70</th><th>80</th></tr><tr><td>Amarelo (s), via sem rampa</td><td>3</td><td>4</td><td>4</td><td>5</td><td>5</td></tr></table></div>
 
+</section>
+<section class="aula">
+  <div class="aula-h"><span class="num">8.2</span><div><h2>O cálculo de Webster</h2><p>Sempre a mesma receita.</p></div></div>
+  <div class="cards">
+    <div class="card wide lav"><h4>A ideia em português</h4><p>Se a rua A precisa de 40% do tempo e a rua B de 50%, sobram 10% para folga e para os momentos em que ninguém anda (amarelos). O semáforo não pode dar mais tempo do que a hora tem. Quanto mais perto de 100%, maior o ciclo necessário.</p></div>
+  </div>
+  <div class="formula-box"><div class="lbl">Passo 1 · Taxa de ocupação de cada grupo</div><div class="eq">Y<sub>i</sub> = F<sub>i</sub> / FS<sub>i</sub></div><div class="key">F = fluxo que quer passar · FS = fluxo de saturação, o máximo que pode passar · Em cada estágio, vale o <b>maior Y</b> (o movimento crítico)</div></div>
+  <div class="formula-box"><div class="lbl">Passo 2 · Tempo perdido</div><div class="eq">T<sub>p</sub> = soma dos entreverdes do ciclo</div><div class="key">2 estágios, 3 s de amarelo e 1 s de vermelho geral → T<sub>p</sub> = 2 · (3 + 1) = 8 s</div></div>
+  <div class="formula-box"><div class="lbl">Passo 3 · Ciclo mínimo (teórico, não operacional)</div><div class="eq">TC<sub>mín</sub> = T<sub>p</sub> / (1 − ΣY)</div><div class="key">Não tem folga para a aleatoriedade do trânsito.</div></div>
+  <div class="formula-box"><div class="lbl">Passo 4 · Ciclo ótimo de Webster</div><div class="eq">TC<sub>ót</sub> = (1,5 · T<sub>p</sub> + 5) / (1 − ΣY)</div><div class="key">Essa é a versão aplicável na prática.</div></div>
+  <div class="formula-box"><div class="lbl">Passo 5 · Verde de cada estágio</div><div class="eq">T<sub>verde,i</sub> = (TC<sub>ót</sub> − T<sub>p</sub>) · Y<sub>i</sub> / ΣY</div><div class="key">O tempo útil é repartido em proporção à necessidade.</div></div>
+  <div class="alerta"><h4>Confira sempre</h4><p>A soma dos verdes com o tempo perdido tem de dar o ciclo: <b>Σverdes + T<sub>p</sub> = TC<sub>ót</sub></b>. Se não bater, há erro.</p></div>
+  <div class="tbl"><table><tr><th>Ciclo</th><th>Ciclos por hora</th><th>Entreverdes (ex.)</th><th>Tempo perdido por hora</th></tr><tr><td>36 s</td><td>100</td><td>6 s</td><td>600 s (16%)</td></tr><tr><td>50 s</td><td>72</td><td>6 s</td><td>432 s (12%)</td></tr><tr><td>120 s</td><td>30</td><td>6 s</td><td>180 s (5%)</td></tr></table></div>
+  <p class="tip">Ciclos curtos perdem mais tempo por hora; ciclos longos fazem cada motorista esperar mais. O fluxo de saturação é medido em campo: contam-se os veículos a cada 5 s desde o início do verde, em pelo menos 10 ciclos válidos, monta-se o histograma e faz-se a média dos patamares.</p>
+
+</section>
+<section class="aula">
+  <div class="aula-h"><span class="num">✎</span><div><h2>Exercícios de semáforo</h2><p>Todos os da aula.</p></div></div>
+  <div class="ex" id="a8ex0">
+    <header class="ex-h"><span class="tag">Grupos</span><h3>Quantos grupos semafóricos?</h3></header>
+    <div class="given">Três estágios: 1 (avenida), 2 (só pedestres, por botoeira) e 3 (transversal).</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Regra</h5><div class="eq">Mesmo grupo = começa e termina o verde junto</div><p>Separamos o que abre e fecha em momentos diferentes.</p></li>
+      <li class="step"><h5><span class="n">2</span>Contar no diagrama do slide</h5><div class="eq">G1 e G3 (veículos) · G2, G4, G5 (pedestres, com verdes em momentos distintos)</div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>5 grupos semafóricos</b></div>
+    <p class="tip">O G2 é demandado por pedestres: se ninguém aciona a botoeira, o estágio 2 é saltado (vai do 1 para o 3).</p>
+    </details>
+  </div>
+  <div class="ex" id="a8ex00">
+    <header class="ex-h"><span class="tag">Barras</span><h3>Qual o tempo de ciclo?</h3></header>
+    <div class="given">Verdes: G1 = 58 s, G2 = 26 s, G3 = 64 s · amarelos de 4 s · três estágios sem simultaneidade.</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Somar tudo em sequência</h5><div class="eq">TC = 58 + 4 + 26 + 4 + 64 + 4 = <b class="res">160 s</b></div><p>Como nenhum grupo roda junto, cada verde e cada amarelo entram na soma. O vermelho de um grupo é o tempo em que os outros estão abertos.</p></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>TC = 160 s</b></div>
+    </details>
+  </div>
+  <div class="ex" id="a8ex1">
+    <header class="ex-h"><span class="tag">Exercício 1</span><h3>Ciclo mínimo e ótimo</h3></header>
+    <div class="given">F<sub>a</sub> = 1000 · FS<sub>a</sub> = 3600 · F<sub>b</sub> = 2000 · FS<sub>b</sub> = 5400 · T<sub>p</sub> = 6 s.</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Taxas</h5><div class="eq">Y<sub>a</sub> = 1000/3600 = 0,2778 · Y<sub>b</sub> = 2000/5400 = 0,3704<br>ΣY = <b class="res">0,6481</b></div><div class="leigo">💡 A interseção usa cerca de 65% da hora; sobra folga.</div></li>
+      <li class="step"><h5><span class="n">2</span>Ciclo mínimo</h5><div class="eq">TC<sub>mín</sub> = 6 / (1 − 0,6481) = <b class="res">17,05 s</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Ciclo ótimo</h5><div class="eq">TC<sub>ót</sub> = (1,5 · 6 + 5) / 0,3519 = 14 / 0,3519 = <b class="res">39,79 s</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>TC<sub>mín</sub> ≈ 17 s · TC<sub>ót</sub> ≈ 40 s</b></div>
+    </details>
+  </div>
+  <div class="ex" id="a8ex2">
+    <header class="ex-h"><span class="tag">Exercício 2</span><h3>Quatro movimentos, dois estágios</h3></header>
+    <div class="given">F1 = 600/1800 · F2 = 720/1800 · F3 = 2000/5000 · F4 = 500/1000 · amarelo de 3 s · estágio A: movimentos 1 e 2 · estágio B: movimentos 3 e 4.</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Y de cada movimento</h5><div class="eq">Y1 = 0,333 · Y2 = 0,400 · Y3 = 0,400 · Y4 = 0,500</div></li>
+      <li class="step"><h5><span class="n">2</span>Pegar o crítico de cada estágio</h5><div class="eq">Estágio A: máx(0,333; 0,400) = <b class="res">0,40</b><br>Estágio B: máx(0,400; 0,500) = <b class="res">0,50</b><br>ΣY = 0,90</div><p>Somar os quatro daria 1,63, um absurdo. Só somam os movimentos críticos, um por estágio.</p><div class="leigo">💡 Movimentos do mesmo estágio andam juntos. O verde precisa atender o mais apertado; o outro aproveita.</div></li>
+      <li class="step"><h5><span class="n">3</span>Tempo perdido</h5><div class="eq">T<sub>p</sub> = 3 + 3 = <b class="res">6 s</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Ciclo ótimo</h5><div class="eq">TC<sub>ót</sub> = (1,5 · 6 + 5) / (1 − 0,90) = 14 / 0,10 = <b class="res">140 s</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Verdes</h5><div class="eq">T<sub>A</sub> = (140 − 6) · 0,40 / 0,90 = <b class="res">59,6 s</b> (≈ 60)<br>T<sub>B</sub> = (140 − 6) · 0,50 / 0,90 = <b class="res">74,4 s</b> (≈ 74)</div><p>O diagrama do slide usa 60 e 74.</p></li>
+      <li class="step"><h5><span class="n">6</span>Conferir</h5><div class="eq">60 + 3 + 74 + 3 = 140 ✓</div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>TC<sub>ót</sub> = 140 s · verdes de 60 s e 74 s</b></div>
+    <p class="tip"><b>Interpretação:</b> com ΣY = 0,90 a interseção está quase no limite, por isso o ciclo fica longo.</p>
+    </details>
+  </div>
+  <div class="cyc-l">Ciclo do Exercício 2: estágio A e depois estágio B (140 s)</div><div class="cyc" role="img" aria-label="Ciclo do Exercício 2: estágio A e depois estágio B (140 s)"><span class="g" style="flex:60" title="60 s">verde A 60</span><span class="y" style="flex:3" title="3 s"></span><span class="g" style="flex:74" title="74 s">verde B 74</span><span class="y" style="flex:3" title="3 s"></span></div>
+  <div class="ex" id="a8ex3">
+    <header class="ex-h"><span class="tag">Exercício 3</span><h3>O mesmo, com 1 s de vermelho geral</h3></header>
+    <div class="given">Dados do Exercício 2, com vermelho geral de 1 s por estágio.</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Novo tempo perdido</h5><div class="eq">T<sub>p</sub> = 2 · (3 + 1) = <b class="res">8 s</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Ciclo ótimo</h5><div class="eq">TC<sub>ót</sub> = (1,5 · 8 + 5) / 0,10 = 17 / 0,10 = <b class="res">170 s</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Verdes</h5><div class="eq">T<sub>A</sub> = (170 − 8) · 0,40 / 0,90 = <b class="res">72 s</b><br>T<sub>B</sub> = (170 − 8) · 0,50 / 0,90 = <b class="res">90 s</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Conferir</h5><div class="eq">72 + 4 + 90 + 4 = 170 ✓</div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>TC<sub>ót</sub> = 170 s · verdes de 72 s e 90 s</b></div>
+    <p class="tip"><b>Interpretação:</b> 2 s a mais de tempo perdido aumentaram o ciclo em 30 s (21%). Com ΣY alto, pequenas perdas custam caro, pois o divisor (1 − ΣY) é pequeno.</p>
+    </details>
+  </div>
+
+</section>
+<div class="chapter blue" id="a9"><div class="kick">Aula 9 · Dados e gestão de faixas</div><h2>Medir a via e usar melhor o asfalto que já existe</h2><p>Sem dado, não há projeto. E nem sempre a solução é construir mais: às vezes é mudar as regras de uso.</p></div>
+<section class="aula">
+  <div class="aula-h"><span class="num">9.1</span><div><h2>Coleta de dados</h2><p>O que se mede, como e para quê.</p></div></div>
+  <p>O tráfego é aleatório, pois reflete as decisões das pessoas. Por isso os dados são requisito para planejamento, projeto, manutenção, segurança, controle e redução de impactos ambientais.</p>
+  <div class="tbl"><table><tr><th>Contagem</th><th>Registra</th><th>Serve para</th></tr><tr><td><b>Global</b></td><td>Total no trecho, sem separar sentido</td><td>Volumes diários, mapas de fluxo, tendências</td></tr><tr><td><b>Direcional</b></td><td>Por sentido</td><td>Capacidade, semáforos, acidentes, faixas adicionais em rampas</td></tr><tr><td><b>Classificatória</b></td><td>Por tipo de veículo</td><td>Pavimento, projeto geométrico, capacidade, fatores de correção</td></tr></table></div>
+  <div class="cards">
+    <div class="card mint"><h4>Manual</h4><p>Pesquisadores com fichas. Ideal para classificar veículos, movimentos em interseções e vias com muitas faixas.</p></div>
+    <div class="card mint"><h4>Automática</h4><p>Tubos pneumáticos, sensores magnéticos, radar, células fotoelétricas. Registro permanente.</p></div>
+    <div class="card mint"><h4>Filmagem</h4><p>Também funciona, mas a instalação pode tomar mais tempo que o levantamento manual.</p></div>
+  </div>
+  <div class="cards">
+    <div class="card yellow"><h4>Hora pico</h4><p>Os <b>4 intervalos consecutivos de 15 minutos</b> com maior volume somado. Soma-se 8:00–9:00, depois 8:15–9:15, e assim por diante, procurando a hora de maior total.</p></div>
+    <div class="card yellow"><h4>Ocupação veicular</h4><p>Pessoas por veículo. Exemplo do slide: 9000 viagens de carro ÷ 1,5 ocupante/veículo = <b>6000 carros</b>. Coleta em locais de baixa velocidade: semáforos, pedágios, postos, pontos de ônibus.</p></div>
+    <div class="card yellow"><h4>Velocidade pontual</h4><p>A velocidade ao passar num ponto. Sua média aritmética é a <b>velocidade média no tempo</b>. Serve para segurança, projeto geométrico, estudos antes/depois, fiscalização, amarelo do semáforo e sinalização.</p></div>
+  </div>
+  <p class="tip">Cinco fatores influenciam a velocidade: <b>condutor, veículo, via, tráfego e ambiente</b>.</p>
+
+</section>
+<section class="aula">
+  <div class="aula-h"><span class="num">9.2</span><div><h2>VSL: limite de velocidade que muda</h2><p>Variable Speed Limits.</p></div></div>
+  <div class="cards">
+    <div class="card wide lav"><h4>Por que existem</h4><p>O limite fixo só considera condições <b>normais</b>. Se chove, há acidente ou congestionamento, a velocidade segura é menor. O VSL ajusta o limite <b>em tempo real</b>, trecho a trecho, com base em volume, clima e estado do pavimento. Fica dentro dos Sistemas Inteligentes de Transportes (ITS).</p></div>
+  </div>
+  <div class="tbl"><table><tr><th>Tipo</th><th>Ativação</th><th>Exemplos</th></tr><tr><td><b>SVSL</b> (pré-definido)</td><td>Critérios gerais, fixados em regulamento</td><td>VSL horários (escola, ruído noturno), sazonais e climáticos</td></tr><tr><td><b>DSL</b> (dinâmico)</td><td>Condições do momento, via painéis de mensagem variável (VMS)</td><td>Baseados em clima, informação do tráfego ou níveis de emissões</td></tr></table></div>
+  <div class="cards">
+    <div class="card blue"><h4>3 componentes</h4><p><b>1.</b> Detecção e coleta (estações de veículos e meteorológicas).<br><b>2.</b> Centro de controle (regras manuais a algoritmos complexos).<br><b>3.</b> Transmissão na via (VMS).</p></div>
+    <div class="card blue"><h4>2 objetivos dos algoritmos</h4><p><b>Homogeneização:</b> reduzir a diferença de velocidade entre veículos.<br><b>Prevenção de congestionamento:</b> evitar ou adiar densidade alta num ponto crítico.</p></div>
+  </div>
+  <p class="tip">A avaliação do impacto dos VSL costuma ser feita por <b>simulação</b>.</p>
+
+</section>
+<section class="aula">
+  <div class="aula-h"><span class="num">9.3</span><div><h2>HOV e HOT lanes</h2><p>Faixas para quem anda acompanhado.</p></div></div>
+  <div class="tbl"><table><tr><th></th><th>HOV (VAO)</th><th>HOT (PAO)</th></tr><tr><td><b>O que é</b></td><td>Faixa reservada a veículos com condutor + passageiros, vans, transporte público</td><td>Faixa HOV que também aceita veículos com só o condutor, mediante pedágio</td></tr><tr><td><b>Quem paga</b></td><td>Ninguém (em geral)</td><td>Alta ocupação e isentos não pagam; os demais pagam</td></tr><tr><td><b>Preço</b></td><td>Não se aplica</td><td><b>Variável, ajustado à demanda</b>, para garantir velocidade mínima e nível de serviço</td></tr><tr><td><b>Objetivo</b></td><td>Aumentar a ocupação média; reduzir congestionamento e poluição</td><td>O mesmo, aproveitando capacidade ociosa</td></tr><tr><td><b>Operação</b></td><td>Faixa marcada, faixa separada ou em desnível; pode ser reversível</td><td>Cobrança eletrônica, leitura de placas ou cabines; transponders; pode ser reversível</td></tr></table></div>
+  <div class="cards">
+    <div class="card peach"><h4>Riscos e problemas</h4><p>Sem barreira física, a diferença de velocidade elevou em <b>50%</b> os acidentes com vítimas nos estudos citados. Pode haver <b>subutilização</b>, dúvida se compensa o atraso nas outras faixas e os "jóqueis de carros", pessoas que cobram para completar a ocupação.</p></div>
+    <div class="card mint"><h4>Fiscalização e eficiência</h4><p>Multas e câmeras com eficiência parcial; há fraudes com bonecos infláveis. HOV subutilizadas foram convertidas em HOT. Também se mostraram úteis após desastres naturais, reduzindo carros em pontes e túneis.</p></div>
+  </div>
+
+</section>
+<section class="aula">
+  <div class="aula-h"><span class="num">9.4</span><div><h2>Acostamento</h2><p>A parte da estrada que salva quando algo dá errado.</p></div></div>
+  <p>Área lateral para parada de emergência e, quando não há local próprio, para pedestres e bicicletas. Acomoda veículos parados, oferece escape, afasta o tráfego de sinais e barreiras, amplia a visibilidade e serve à manutenção.</p>
+  <div class="tbl"><table><tr><th>Classe de projeto</th><th>Plano (m)</th><th>Ondulado (m)</th><th>Montanhoso (m)</th></tr><tr><td>0</td><td>3,50</td><td>3,00</td><td>3,00</td></tr><tr><td>I</td><td>3,00</td><td>2,50</td><td>2,50</td></tr><tr><td>II</td><td>2,50</td><td>2,50</td><td>2,00</td></tr><tr><td>III</td><td>2,50</td><td>2,00</td><td>1,50</td></tr><tr><td>IV-A</td><td>1,30</td><td>1,30</td><td>0,80</td></tr><tr><td>IV-B</td><td>1,00</td><td>1,00</td><td>0,50</td></tr></table></div>
+  <div class="cards">
+    <div class="card blue"><h4>Características</h4><p>Delimitação nítida da pista · inclinação para drenagem · largura suficiente · transição suave com a pista.</p></div>
+    <div class="card lav"><h4>Capacidade (HCM)</h4><p>Faixas e acostamentos mais estreitos que a condição base <b>reduzem a capacidade</b>.</p></div>
+    <div class="card peach"><h4>Acidentes</h4><p>Afetam colisões frontais e saídas de pista, mas não colisões traseiras e laterais. Índices caem com pistas e faixas mais largas; alargar a pista reduz mais do que alargar o acostamento. Acostamentos não pavimentados têm índices maiores.</p></div>
+  </div>
+  <p class="tip">O slide diz que a diferença de declividade entre pista e acostamento "não deve ser menor ou igual 7%". A redação é confusa: confirme com o professor antes de citar.</p>
+
+</section>
+<div class="chapter yellow" id="a10"><div class="kick">Aula 10 · Teoria do fluxo</div><h2>Três jeitos de olhar o mesmo trânsito</h2><p>De um avião, o trânsito parece um rio. Andando de moto no meio dele, você vê os carros um a um. Cada olhar responde a perguntas diferentes.</p></div>
+<section class="aula">
+  <div class="aula-h"><span class="num">10.1</span><div><h2>As três abordagens</h2><p>A tabela que responde a Questão 6.</p></div></div>
+  <div class="tbl"><table><tr><th></th><th>Macroscópica</th><th>Mesoscópica</th><th>Microscópica</th></tr><tr><td><b>Analogia</b></td><td>Rio (fluido contínuo)</td><td>Grupos de carros (pelotões)</td><td>Cada carro e sua interação</td></tr><tr><td><b>Unidade</b></td><td>Corrente de tráfego</td><td>Pelotão, cluster, perfil de fluxo</td><td>Par líder–seguidor</td></tr><tr><td><b>Variáveis</b></td><td>q, k, v</td><td>Agregadas + algum detalhe individual</td><td>Posição, velocidade, aceleração, brecha</td></tr><tr><td><b>Modelos</b></td><td>Greenshields, Greenberg, Underwood; continuidade; ondas</td><td>Clusters, distribuição de headways, cinética dos gases; TRANSYT</td><td>Car-following, lane-changing, gap-acceptance</td></tr><tr><td><b>Bom para</b></td><td>Tráfego denso, grandes redes, capacidade, filas, tempo médio, consumo e emissões</td><td>Coordenação semafórica, redes médias</td><td>Interseções, fluxos heterogêneos, detalhes da operação</td></tr><tr><td><b>Limite</b></td><td>Ruim em tráfego rarefeito, com grande variação entre condutores</td><td>Definição difusa; para alguns autores não é uma categoria à parte</td><td>Alto custo computacional e muita necessidade de dados</td></tr></table></div>
+  <div class="cards">
+    <div class="card wide lav"><h4>Para que serve a teoria</h4><p><b>Previsão:</b> dada a demanda e a oferta, qual a operação? <b>Projeto:</b> que oferta atende a demanda, ou que demanda a oferta suporta? As variáveis são de <b>demanda</b>, <b>oferta</b> e <b>serviço/operação</b>.</p></div>
+  </div>
+
+</section>
+<section class="aula">
+  <div class="aula-h"><span class="num">10.2</span><div><h2>Macroscópica: q, k e v</h2><p>As três grandezas e a relação fundamental.</p></div></div>
+  <div class="cards">
+    <div class="card blue"><h4>q · Fluxo</h4><p>Escolha um ponto da via (uma <b>seção</b>) e conte quantos carros passam por hora. É como a vazão de um cano.</p></div>
+    <div class="card mint"><h4>k · Densidade</h4><p>Tire uma <b>foto</b> de 1 km de via e conte os carros. veíc/km.</p></div>
+    <div class="card peach"><h4>v · Velocidade</h4><p>Pode ser média no <b>tempo</b> (aritmética, num ponto) ou no <b>espaço</b> (harmônica, no trecho). A do espaço é menor ou igual.</p></div>
+  </div>
+  <div class="formula-box"><div class="lbl">Relação fundamental</div><div class="eq">q = k · v</div><div class="key">Volume = velocidade × densidade. Vale em regime permanente.</div></div>
+  <div class="formula-box"><div class="lbl">Espaçamento e intervalo</div><div class="eq">D = 1 / E</div><div class="key">E = espaçamento (m/veíc), distância entre frentes de veículos, medida num instante. Intervalo (headway) = tempo entre passagens num ponto.</div></div>
+  <div class="formula-box"><div class="lbl">Fluxo de demanda: 1ª aproximação</div><div class="eq">Q ≈ (N<sub>T</sub> + Δn<sub>T</sub>) / T</div><div class="key">N<sub>T</sub> = veículos que passaram · Δn<sub>T</sub> = n<sub>T</sub> − n<sub>0</sub> = crescimento da fila</div></div>
+  <div class="formula-box"><div class="lbl">Fluxo de demanda: 2ª aproximação</div><div class="eq">Q = (N<sub>T</sub> + Δn<sub>T</sub>) / [ T + (Δn<sub>T</sub>/m) · (l<sub>v</sub>/V) ]</div><div class="key">m = nº de faixas · l<sub>v</sub> = espaço por veículo na fila (m) · V em m/s. Considera que a fila tem comprimento físico.</div></div>
+  <div class="cards">
+    <div class="card wide yellow"><h4>Por que somar a fila?</h4><p>Quem passou é só parte de quem queria passar. Quem ficou esperando também é demanda. Na segunda aproximação, a cauda da fila cresce em direção aos carros que chegam, e por isso eles "chegam" à fila um pouco antes. O denominador aumenta e Q fica um pouco menor.</p></div>
+  </div>
+  <div class="card" style="margin-bottom:18px"><h4>O diagrama que resume tudo (Greenshields)</h4>
+  <svg viewBox="0 0 420 210" width="100%" style="max-width:520px" role="img" aria-label="Parábola de fluxo em função da densidade, com máximo em k igual a kj sobre 2">
+   <line x1="40" y1="175" x2="400" y2="175" stroke="var(--muted)"/><line x1="40" y1="175" x2="40" y2="15" stroke="var(--muted)"/>
+   <path d="M40 175 Q 210 -125 380 175" fill="none" stroke="var(--accent)" stroke-width="3"/>
+   <line x1="210" y1="175" x2="210" y2="25" stroke="var(--muted)" stroke-dasharray="4 4"/>
+   <text x="218" y="22">q máx</text><text x="202" y="195">kj/2</text><text x="372" y="195">kj</text><text x="394" y="170">k</text><text x="18" y="24">q</text>
+   <text x="62" y="110">livre</text><text x="306" y="110">congestionado</text>
+  </svg>
+  <p>Poucos carros: fluxo baixo porque a via está vazia. Carros demais: fluxo baixo porque ninguém anda. O máximo fica no meio.</p></div>
+  <div class="formula-box"><div class="lbl">Greenshields (linear)</div><div class="eq">v = v<sub>f</sub> · (1 − k/k<sub>j</sub>)</div><div class="key">v<sub>f</sub> = velocidade de fluxo livre · k<sub>j</sub> = densidade de congestionamento total. Simples, mas só é bom nas faixas intermediárias.</div></div>
+  <div class="formula-box"><div class="lbl">Ponto ótimo</div><div class="eq">q = v<sub>f</sub>(k − k²/k<sub>j</sub>) → k<sub>o</sub> = k<sub>j</sub>/2 · v<sub>o</sub> = v<sub>f</sub>/2 · q<sub>máx</sub> = v<sub>f</sub> · k<sub>j</sub> / 4</div><div class="key">Exemplo meu: v<sub>f</sub> = 80 km/h e k<sub>j</sub> = 120 veíc/km → q<sub>máx</sub> = 80 · 120 / 4 = 2400 veíc/h, a 40 km/h.</div></div>
+  <div class="formula-box"><div class="lbl">Fluxo–velocidade</div><div class="eq">q = k<sub>j</sub> · (v − v²/v<sub>f</sub>)</div><div class="key">Parábola "deitada": para o mesmo fluxo existem duas velocidades, uma livre e outra congestionada.</div></div>
+  <div class="tbl"><table><tr><th>Modelo</th><th>Fórmula</th><th>Bom em</th><th>Falha em</th></tr><tr><td>Greenshields (1935)</td><td>v = v<sub>f</sub>(1 − k/k<sub>j</sub>)</td><td>Faixas intermediárias</td><td>Extremos</td></tr><tr><td>Greenberg (1959)</td><td>v = v<sub>o</sub> · ln(k<sub>j</sub>/k)</td><td>Fluxo congestionado</td><td>Baixas densidades</td></tr><tr><td>Underwood (1961)</td><td>v = v<sub>f</sub> · e<sup>−k/k<sub>o</sub></sup></td><td>Baixas densidades</td><td>Altas densidades (não dá v = 0 em k<sub>j</sub>)</td></tr></table></div>
+  <p class="tip">Da apostila: uma perturbação se propaga como <b>onda de choque</b> com velocidade U<sub>w</sub> = (q<sub>1</sub> − q<sub>2</sub>)/(k<sub>1</sub> − k<sub>2</sub>). É a fila que "anda para trás".</p>
+
+</section>
+<section class="aula">
+  <div class="aula-h"><span class="num">10.3</span><div><h2>Microscópica e mesoscópica</h2><p>Do par de carros ao pelotão.</p></div></div>
+  <div class="tbl"><table><tr><th>Modelo micro</th><th>Pergunta que responde</th><th>Detalhes</th></tr><tr><td><b>Car-following</b></td><td>Como o seguidor reage ao líder?</td><td>GHR (resposta à velocidade relativa), distância de segurança e psicofísicos (limiares de percepção)</td></tr><tr><td><b>Lane-changing</b></td><td>Quando e como trocar de faixa?</td><td>Estímulo → faixa-alvo → condições. Tipos: desejada, obrigatória e de cortesia</td></tr><tr><td><b>Gap-acceptance</b></td><td>Essa brecha serve?</td><td>Brecha crítica; depende de aceleração, brecha crítica máxima e distância de visibilidade</td></tr></table></div>
+  <div class="cards">
+    <div class="card mint"><h4>Meso em clusters</h4><p>Agrupa veículos próximos por uma característica (como a velocidade) e os trata como pacotes ou pelotões.</p></div>
+    <div class="card mint"><h4>Distribuição de headways</h4><p>Foca nas probabilidades dos intervalos (semi-Poisson de Buckley, filas generalizadas de Branston). Menos usada e assume fluxo homogêneo.</p></div>
+    <div class="card mint"><h4>Cinética dos gases</h4><p>A principal: liga o comportamento individual ao agregado e reproduz dinâmicas não lineares.</p></div>
+  </div>
+  <div class="tbl"><table><tr><th>Outra forma de classificar</th><th>Opções</th></tr><tr><td><b>Flexibilidade</b></td><td><b>Ininterrupto</b> (freeways, rodovias rurais) × <b>interrompido</b> (interseções, semáforos, redes urbanas)</td></tr><tr><td><b>Aleatoriedade</b></td><td><b>Determinístico</b> (mesma entrada, mesma saída) × <b>estocástico</b> (variáveis aleatórias)</td></tr><tr><td><b>Tempo</b></td><td><b>Estático</b> (condição fixa ou média) × <b>dinâmico</b> (tempo como variável)</td></tr></table></div>
+
+</section>
+<section class="aula">
+  <div class="aula-h"><span class="num">✎</span><div><h2>Exercícios de fluxo</h2><p>Exemplos 1 e 2.</p></div></div>
+  <div class="ex" id="a10ex1">
+    <header class="ex-h"><span class="tag">Exemplo 1</span><h3>500 veículos em 15 minutos</h3></header>
+    <div class="given">N = 500 · T = 15 min · fila de 15 para 70 · 2 faixas · V = 50 km/h · l<sub>v</sub> = 8 m.</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Crescimento da fila</h5><div class="eq">Δn = 70 − 15 = <b class="res">55 veículos</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Primeira aproximação</h5><div class="eq">Q = (500 + 55) / 0,25 h = <b class="res">2220 veíc/h</b></div><p>O fluxo que realmente passou foi 500 / 0,25 = 2000 veíc/h.</p></li>
+      <li class="step"><h5><span class="n">3</span>Converter V</h5><div class="eq">V = 50 / 3,6 = <b class="res">13,89 m/s</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Efeito físico da fila</h5><div class="eq">(55 / 2) · (8 / 13,89) = 27,5 · 0,576 = <b class="res">15,84 s</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Segunda aproximação</h5><div class="eq">Q = 555 / (900 + 15,84) s · 3600 = <b class="res">2181,6 veíc/h</b></div><p>T precisa estar em segundos para somar com a parcela da fila.</p></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>Q₁ = 2220 veíc/h · Q₂ ≈ 2182 veíc/h (−1,7%)</b></div>
+    </details>
+  </div>
+  <div class="ex" id="a10ex2">
+    <header class="ex-h"><span class="tag">Exemplo 2</span><h3>1100 veículos em 20 minutos</h3></header>
+    <div class="given">N = 1100 · T = 20 min · fila de 40 para 110 · 3 faixas · V = 60 km/h · l<sub>v</sub> = 10 m.</div>
+    <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Crescimento da fila</h5><div class="eq">Δn = 110 − 40 = <b class="res">70 veículos</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Primeira aproximação</h5><div class="eq">Q = (1100 + 70) / (1/3 h) = <b class="res">3510 veíc/h</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Efeito físico</h5><div class="eq">V = 16,67 m/s → (70 / 3) · (10 / 16,67) = <b class="res">14,0 s</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Segunda aproximação</h5><div class="eq">Q = 1170 / (1200 + 14) · 3600 = <b class="res">3469,5 veíc/h</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>Q₁ = 3510 veíc/h · Q₂ ≈ 3470 veíc/h (−1,2%)</b></div>
+    </details>
+  </div>
+
+</section>
+<div class="chapter lav" id="perfil"><div class="kick">Raio-x da prova</div><h2>Como o professor cobra</h2><p>Analisei a Avaliação Parcial 02, aplicada em 02/12/2020. É uma única prova, então isto mostra um padrão provável, não uma garantia.</p></div>
+<section class="aula">
+  <div class="aula-h"><span class="num">🔍</span><div><h2>De onde saiu cada questão</h2><p>Compare com os exercícios da aula.</p></div></div>
+  <div class="tbl"><table><tr><th>Q</th><th>Pontos</th><th>Tipo</th><th>Veio de</th><th>O que mudou</th></tr><tr><td>1</td><td>1,5</td><td>Conta + análise</td><td>Aula 6, Exemplos 1 e 2</td><td>Números e tipo de solo</td></tr><tr><td>2</td><td>1,0</td><td>Conta + explicação</td><td>Aula 6, Exemplos 5 e 7</td><td>Velocidade e superelevação</td></tr><tr><td>3</td><td>2,5</td><td>Teoria</td><td>Aulas 7, 9 e 10</td><td>Pede ligar interseções ao nível microscópico</td></tr><tr><td>4</td><td>2,0</td><td>Conta + conclusões</td><td>Aula 8, Exercícios 2 e 3</td><td>Compara com e sem vermelho geral</td></tr><tr><td>5</td><td>1,0</td><td>Conta + explicação</td><td>Aula 10, Exemplos 1 e 2</td><td>Fila mais longa, veículos maiores</td></tr><tr><td>6</td><td>2,0</td><td>Teoria</td><td>Aula 10</td><td>Discussão das três abordagens</td></tr></table></div>
+  <div class="cards">
+    <div class="card mint"><h4>55% conta, 45% teoria</h4><p>As contas são os exercícios dos slides com novos valores. As fórmulas e tabelas podiam ser consultadas nos slides naquela prova, feita em casa pelo Moodle. <b>Confirme se a sua será com consulta.</b></p></div>
+    <div class="card blue"><h4>Sempre tem uma comparação</h4><p>Plano × aclive, com × sem vermelho geral, 1ª × 2ª aproximação. Ele quer que você <b>explique a diferença</b>, não só calcule os dois casos.</p></div>
+    <div class="card lav"><h4>Verbos que valem nota</h4><p>"Analise", "explique", "descreva as conclusões", "identificando", "descrevendo a importância e influência". Em teoria, ele pede <b>relações entre conceitos</b>, não uma lista.</p></div>
+    <div class="card peach"><h4>Provável novidade</h4><p>Em 2020 não havia conta de rotatória, e os slides de agora foram "atualizados com HCM", com 6 exercícios. É minha inferência, mas <b>treine rotatória</b>: conta com nível de serviço pode aparecer.</p></div>
+  </div>
+  <div class="alerta"><h4>Receita para toda questão de conta</h4><p><b>1.</b> Anote os dados e as unidades. <b>2.</b> Declare as hipóteses (c<sub>a</sub>, g, f da tabela). <b>3.</b> Escreva a fórmula antes de substituir. <b>4.</b> Mostre todos os passos. <b>5.</b> Dê o resultado com unidade. <b>6.</b> Interprete: o que significa, qual parcela domina e por quê.</p></div>
+  <div class="alerta"><h4>Receita para toda questão de teoria</h4><p><b>1.</b> Defina. <b>2.</b> Cite os elementos. <b>3.</b> Explique como cada um <b>afeta</b> o que foi perguntado. <b>4.</b> Compare. <b>5.</b> Dê um exemplo ou uma limitação.</p></div>
+
+</section>
+<div class="chapter pink" id="prova"><div class="kick">Avaliação Parcial 02 · 2020</div><h2>Prova antiga resolvida</h2><p>Primeiro tente num papel, de cronômetro na mão, antes de ler as resoluções. A prova original durou 3h30 e era feita em casa.</p></div>
+<section class="aula">
+  <div class="ex open" id="q1">
+    <header class="ex-h"><span class="tag">Questão 1 · 1,5 pt</span><h3>Caminhão na terra solta: plano × aclive</h3></header>
+    <div class="given">8000 kg · 140 kW a 2800 rpm · terra solta seca · marchas 6,5 / 3,5 / 2,3 / 1,51 / 1 · pneu 0,75 m · diferencial 4,1 · A = 9 m². Plano: 2518 rpm em 4ª. Aclive de 7%: 3ª a 2430 rpm. Analisar o efeito do greide e as razões da discrepância.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Hipóteses (declare na prova)</h5><div class="eq">g = 9,806 m/s² · c<sub>1</sub> = 40 (terra solta seca) · c<sub>2</sub> = 0,056 · c<sub>a</sub> = 0,034 (média da faixa de caminhões) · η = 0,82</div><p>O enunciado não fornece c<sub>a</sub>, e o aluno precisa assumir um valor da tabela.</p></li>
+      <li class="step"><h5><span class="n">2</span>Peso</h5><div class="eq">G = 8000 · 9,806 / 1000 = <b class="res">78,45 kN</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Velocidade no plano (4ª: g<sub>t</sub> = 1,51)</h5><div class="eq">V = 60 · 2518 · π · 0,75 / (1000 · 1,51 · 4,1) = <b class="res">57,50 km/h</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Resistências no plano</h5><div class="eq">R<sub>r</sub> = (40 + 0,056 · 57,50) · 78,45 = 43,22 · 78,45 = 3390,5 N<br>R<sub>a</sub> = 0,034 · 9 · 57,50² = 1011,7 N<br>R<sub>g</sub> = 0<br>R = <b class="res">4402 N</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Velocidade no aclive (3ª: g<sub>t</sub> = 2,3)</h5><div class="eq">V = 60 · 2430 · π · 0,75 / (1000 · 2,3 · 4,1) = <b class="res">36,43 km/h</b></div></li>
+      <li class="step"><h5><span class="n">6</span>Resistências no aclive</h5><div class="eq">R<sub>r</sub> = (40 + 0,056 · 36,43) · 78,45 = 3298,0 N<br>R<sub>a</sub> = 0,034 · 9 · 36,43² = 406,1 N<br>R<sub>g</sub> = 10 · 78,45 · 7 = 5491,4 N<br>R = <b class="res">9195 N</b></div></li>
+      <li class="step"><h5><span class="n">7</span>Comparar com a força tratora (teto, a 140 kW)</h5><div class="eq">Plano: F<sub>t</sub> = 0,82 · 3600 · 140 / 57,50 = 7188 N &gt; 4402 N<br>Aclive: F<sub>t</sub> = 0,82 · 3600 · 140 / 36,43 = 11.345 N &gt; 9195 N</div><p>Aderência: 0,45 · T<sub>d</sub>. Mesmo com só metade do peso no eixo motriz (39,2 kN), o limite seria ≈17,7 kN, acima de F<sub>t</sub>. Portanto, o motor limita antes do solo.</p></li>
+    </ol>
+    <div class="result"><span>Resposta</span><b>R<sub>plano</sub> ≈ 4402 N · R<sub>aclive</sub> ≈ 9195 N (2,09 vezes)</b></div>
+  </div>
+  <div class="card lav resposta" style="margin:-14px 0 28px"><h4>Análise para escrever na prova</h4>
+  <p>A resistência total sobe de ≈4402 N para ≈9195 N, um aumento de 109%. O motivo é a <b>resistência de rampa, de 5491 N, que corresponde a 60% do total no aclive</b> e não existe no plano. O greide faz o caminhão erguer seu peso, e essa parcela só depende do peso e da inclinação.</p>
+  <p>As outras parcelas caem no aclive porque o veículo anda mais devagar: R<sub>a</sub> cai 60% (de 1012 N para 406 N), pois depende de V², e R<sub>r</sub> cai só 2,7%. No plano, R<sub>r</sub> domina (77%), resultado do solo: c<sub>1</sub> = 40 em terra solta, contra 7,6 no asfalto.</p>
+  <p>A redução para a 3ª marcha diminui a velocidade e aumenta a força disponível, o que permite vencer a rampa. Com c<sub>a</sub> entre 0,028 e 0,040, R varia de 4224 a 4581 N no plano e de 9124 a 9267 N no aclive: a conclusão não muda. O valor de F<sub>t</sub> usa a potência máxima, e por isso é um teto, já que o motor não está a 2800 rpm.</p></div>
+  <div class="ex open" id="q2">
+    <header class="ex-h"><span class="tag">Questão 2 · 1,0 pt</span><h3>Raio mínimo, tombamento e velocidade máxima</h3></header>
+    <div class="given">V = 70 km/h · e<sub>máx</sub> = 10% · caminhão baú totalmente carregado.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>f na tabela</h5><div class="eq">70 km/h → <b class="res">f = 0,15</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Raio mínimo</h5><div class="eq">R<sub>mín</sub> = 70² / [127 · (0,10 + 0,15)] = 4900 / 31,75 = <b class="res">154,3 m</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Aceleração na curva</h5><div class="eq">v = 70 / 3,6 = 19,44 m/s<br>a<sub>c</sub> = 19,44² / 154,3 = 2,45 m/s² = <b class="res">0,25 g</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Parte lateral sentida pelo caminhão</h5><div class="eq">a<sub>c</sub>/g − e = 0,25 − 0,10 = <b class="res">0,15</b></div><p>A pista inclinada absorve 0,10 g.</p></li>
+      <li class="step"><h5><span class="n">5</span>Comparar com o limite do baú cheio</h5><div class="eq">0,15 &lt; 0,24 → <b class="res">não tomba</b></div></li>
+      <li class="step"><h5><span class="n">6</span>Velocidade máxima sem tombar</h5><div class="eq">V = √[127 · 154,3 · (0,10 + 0,24)] = √6664 = <b class="res">81,6 km/h</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>R<sub>mín</sub> ≈ 154,3 m · não tomba · V<sub>tomb</sub> ≈ 81,6 km/h</b></div>
+    <p class="tip"><b>Explicação:</b> a 70 km/h a solicitação lateral (0,15 g) fica abaixo do limite do baú (0,24 g), porque a superelevação de 10% absorve parte da força centrífuga. Em 81,6 km/h o caminhão atinge o limite. Esse valor é o limite físico, não uma velocidade recomendada: acima da velocidade de projeto, o atrito lateral admitido em norma já é excedido.</p>
+  </div>
+  <div class="alerta"><h4>⚠️ Aqui as duas leituras mudam a conclusão</h4><p>Se o professor comparar o total a<sub>c</sub> = 0,25 g diretamente com 0,24 g (<b>leitura B</b>), a resposta vira: <b>tomba</b> por margem pequena, e V<sub>máx</sub> = √(127 · 154,3 · 0,24) = <b>68,6 km/h</b>, abaixo da velocidade de projeto. Não encontrei a resolução oficial. Pergunte a ele qual comparação usa e, na prova, escreva a hipótese. Esta é a questão com maior risco de divergência.</p></div>
+  <div class="ex open" id="q3">
+    <header class="ex-h"><span class="tag">Questão 3 · 2,5 pts</span><h3>Interseções, rotatórias, canalizações, HOV/HOT e VSL</h3></header>
+    <div class="given">Caracterizar conceitualmente, identificar os principais elementos e como afetam uma análise microscópica. Características de HOV e HOT e razões para VSL.</div>
+    <div class="resposta">
+    <p><b>Interseções</b> são áreas em que duas ou mais vias se cruzam ou se unificam, com dispositivos que ordenam os movimentos. Classificam-se em nível ou em desnível, pelo número de ramos e pelo controle. Seus elementos são aproximações, faixas, movimentos, pontos de conflito (32 num cruzamento comum: 16 de cruzamento e 16 de convergência ou divergência), sinalização e distância de visibilidade. Concentram acidentes: 53% em 4% da área das rodovias e 78% em 19% da área urbana.</p>
+    <p><b>Rotatórias</b> são interseções em círculo, em que quem entra cede a vez a quem circula. Limitam a velocidade, reduzem conflitos e permitem todas as conversões, mas podem incomodar passageiros de ônibus e dificultar a travessia de pedestres. Elementos: entradas, faixas circulatórias, ilha central, saídas, bypass e travessias. Pelo HCM, a capacidade cai exponencialmente com o fluxo conflitante, e o atraso define o nível de serviço.</p>
+    <p><b>Canalizações</b> usam sinalização horizontal, alinhamento, ilhas e barreiras para definir a trajetória de cada movimento. Elementos e regras: separar e reduzir conflitos, cruzar em ângulo reto, convergir em ângulo pequeno, afunilar gradualmente, oferecer refúgio, desencorajar movimentos proibidos e abrir espaço para a sinalização.</p>
+    <p><b>Efeito na análise microscópica.</b> Nesse nível, cada veículo é representado e esses elementos mudam diretamente seu comportamento:</p>
+    <ul class="clean">
+      <li><b>Gap-acceptance:</b> entrada em rotatória e conversões dependem da brecha crítica, da aceleração, do tempo de espera e da visibilidade. O fluxo conflitante define quantas brechas surgem e, portanto, a capacidade.</li>
+      <li><b>Car-following:</b> semáforos, filas e afunilamentos alteram a interação líder–seguidor, gerando desaceleração e formação de filas.</li>
+      <li><b>Lane-changing:</b> a canalização e o número de faixas tornam mudanças <b>obrigatórias</b> antes da conversão, com efeito sobre as trajetórias e o entrelaçamento.</li>
+      <li><b>Geometria e velocidade:</b> raios, tapers e ilhas impõem velocidades e rotas por movimento, e pedestres criam interrupções adicionais.</li>
+    </ul>
+    <p>Por isso esses locais exigem dados detalhados (movimentos, composição, brechas) e calibração, e um modelo macro os representaria apenas como capacidade agregada.</p>
+    <p><b>HOV lanes</b> são faixas reservadas a veículos com condutor e passageiros, incluindo vans e transporte público, para aumentar a ocupação média e reduzir congestionamento e poluição. <b>HOT lanes</b> mantêm a isenção para alta ocupação e permitem que os demais usem a faixa pagando <b>tarifa variável conforme a demanda</b>, que regula o volume para garantir velocidade e nível de serviço, enquanto as faixas gerais continuam gratuitas. Ambas podem ser reversíveis e dependem de fiscalização. Sem barreira física, a diferença de velocidade aumenta o risco (+50% de acidentes com vítimas nos estudos citados), e há o problema da subutilização.</p>
+    <p><b>VSL</b> são implementados porque o limite fixo só reflete condições normais. Incidentes, congestionamento e clima adverso exigem velocidade menor para manter o risco controlado. Em tempo real, os VSL ainda <b>homogeneízam as velocidades</b> e <b>previnem ou adiam o congestionamento</b> em pontos críticos, além de permitirem objetivos ambientais, como reduzir ruído e emissões. Dividem-se em pré-definidos (SVSL) e dinâmicos (DSL), compostos por detecção, centro de controle e VMS.</p>
+    </div>
+  </div>
+  <div class="ex open" id="q4">
+    <header class="ex-h"><span class="tag">Questão 4 · 2,0 pts</span><h3>Semáforo com e sem vermelho geral</h3></header>
+    <div class="given">Dois estágios, fluxo unidirecional · F<sub>1</sub> = 700, FS<sub>1</sub> = 1500 · F<sub>2</sub> = 600, FS<sub>2</sub> = 2000 (veíc/h) · amarelo de 3 s · vermelho geral de 1 s após cada amarelo.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Taxas de ocupação</h5><div class="eq">Y<sub>1</sub> = 700/1500 = <b class="res">0,4667</b> · Y<sub>2</sub> = 600/2000 = <b class="res">0,3000</b><br>ΣY = <b class="res">0,7667</b> → 1 − ΣY = 0,2333</div></li>
+      <li class="step"><h5><span class="n">2</span>Caso A: com vermelho geral, tempo perdido</h5><div class="eq">T<sub>p</sub> = 2 · (3 + 1) = <b class="res">8 s</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Caso A: ciclos</h5><div class="eq">TC<sub>mín</sub> = 8 / 0,2333 = <b class="res">34,29 s</b><br>TC<sub>ót</sub> = (1,5 · 8 + 5) / 0,2333 = 17 / 0,2333 = <b class="res">72,86 s</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Caso A: verdes</h5><div class="eq">T<sub>v1</sub> = (72,86 − 8) · 0,4667 / 0,7667 = <b class="res">39,48 s</b><br>T<sub>v2</sub> = (72,86 − 8) · 0,3000 / 0,7667 = <b class="res">25,38 s</b><br>Conferência: 39,48 + 25,38 + 8 = 72,86 ✓</div></li>
+      <li class="step"><h5><span class="n">5</span>Caso B: sem vermelho geral, tempo perdido</h5><div class="eq">T<sub>p</sub> = 2 · 3 = <b class="res">6 s</b></div></li>
+      <li class="step"><h5><span class="n">6</span>Caso B: ciclos</h5><div class="eq">TC<sub>mín</sub> = 6 / 0,2333 = <b class="res">25,71 s</b><br>TC<sub>ót</sub> = (1,5 · 6 + 5) / 0,2333 = 14 / 0,2333 = <b class="res">60,00 s</b></div></li>
+      <li class="step"><h5><span class="n">7</span>Caso B: verdes</h5><div class="eq">T<sub>v1</sub> = (60 − 6) · 0,4667 / 0,7667 = <b class="res">32,87 s</b><br>T<sub>v2</sub> = (60 − 6) · 0,3000 / 0,7667 = <b class="res">21,13 s</b><br>Conferência: 32,87 + 21,13 + 6 = 60,00 ✓</div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>Com VG: 34,3 / 72,9 / 39,5 e 25,4 s · Sem VG: 25,7 / 60 / 32,9 e 21,1 s</b></div>
+  </div>
+  <div class="cyc-l">Com vermelho geral (72,9 s)</div><div class="cyc" role="img" aria-label="Com vermelho geral (72,9 s)"><span class="g" style="flex:39.48" title="39.48 s">verde 1 · 39,5</span><span class="y" style="flex:3" title="3 s"></span><span class="r" style="flex:1" title="1 s"></span><span class="g" style="flex:25.38" title="25.38 s">verde 2 · 25,4</span><span class="y" style="flex:3" title="3 s"></span><span class="r" style="flex:1" title="1 s"></span></div>
+  <div class="cyc-l">Sem vermelho geral (60 s)</div><div class="cyc" role="img" aria-label="Sem vermelho geral (60 s)"><span class="g" style="flex:32.87" title="32.87 s">verde 1 · 32,9</span><span class="y" style="flex:3" title="3 s"></span><span class="g" style="flex:21.13" title="21.13 s">verde 2 · 21,1</span><span class="y" style="flex:3" title="3 s"></span></div>
+  <div class="card lav resposta" style="margin:14px 0 28px"><h4>Conclusões para escrever na prova</h4>
+  <p>Acrescentar 1 s de vermelho geral por estágio eleva o tempo perdido em 33% (de 6 para 8 s) e o ciclo ótimo em 21% (de 60 para 72,9 s). O efeito é ampliado por 1/(1 − ΣY) = 4,29: cada segundo de T<sub>p</sub> soma 6,4 s ao ciclo ótimo.</p>
+  <p>Os verdes ficam mais longos para compensar a perda, mas a proporção de tempo útil quase não muda (89% contra 90%). Em contrapartida, o número de ciclos cai de 60 para 49 por hora, e o tempo perdido sobe de 360 para ≈395 s/h. A proporção entre os verdes é a mesma nos dois casos, porque depende só das taxas Y (61% e 39%).</p>
+  <p>O ciclo mínimo não é operacional, pois não tem folga para a aleatoriedade do tráfego, e deve-se adotar o de Webster. <b>A retirada do vermelho geral melhora um pouco a eficiência, mas elimina o tempo de limpeza do cruzamento.</b> A decisão deve considerar a segurança e as dimensões da interseção, não só o atraso. O grau de saturação, ≈0,85 a 0,86 nos dois casos, indica operação sem saturação.</p></div>
+  <div class="ex open" id="q5">
+    <header class="ex-h"><span class="tag">Questão 5 · 1,0 pt</span><h3>Fluxo de demanda com fila</h3></header>
+    <div class="given">N = 1300 · T = 35 min · fila de 25 para 85 · 2 faixas · segunda aproximação: V = 40 km/h e l<sub>v</sub> = 23 m.</div>
+    <ol class="steps">
+      <li class="step"><h5><span class="n">1</span>Fluxo observado (referência)</h5><div class="eq">q = 1300 / (35/60) = <b class="res">2228,6 veíc/h</b></div></li>
+      <li class="step"><h5><span class="n">2</span>Crescimento da fila</h5><div class="eq">Δn = 85 − 25 = <b class="res">60 veículos</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Primeira aproximação</h5><div class="eq">Q = (1300 + 60) / (35/60 h) = <b class="res">2331,4 veíc/h</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Unidades da segunda aproximação</h5><div class="eq">T = 35 · 60 = 2100 s · V = 40 / 3,6 = 11,11 m/s</div></li>
+      <li class="step"><h5><span class="n">5</span>Efeito físico da fila</h5><div class="eq">(60 / 2) · (23 / 11,11) = 30 · 2,07 = <b class="res">62,1 s</b></div></li>
+      <li class="step"><h5><span class="n">6</span>Segunda aproximação</h5><div class="eq">Q = 1360 / (2100 + 62,1) · 3600 = <b class="res">2264,5 veíc/h</b></div></li>
+    </ol>
+    <div class="result ok"><span>Resposta</span><b>Q₁ ≈ 2331 veíc/h · Q₂ ≈ 2265 veíc/h (−2,9%)</b></div>
+    <p class="tip"><b>Conclusões:</b> a primeira aproximação considera a fila um ponto, sem comprimento. A segunda reconhece que a fila ocupa espaço: 60 veículos em 2 faixas, com 23 m cada, estendem a cauda em 690 m. Os veículos alcançam essa cauda antes de chegar à seção, e o período efetivo aumenta em 62,1 s, reduzindo a demanda estimada em 67 veíc/h. A diferença é maior que nos exemplos da aula (1,7% e 1,2%) porque o veículo ocupa muito espaço e a velocidade é baixa. Nos dois casos, a demanda é maior do que o fluxo escoado (2229 veíc/h), o que indica gargalo e fila crescente.</p>
+  </div>
+  <div class="ex open" id="q6">
+    <header class="ex-h"><span class="tag">Questão 6 · 2,0 pts</span><h3>Macro, meso e micro</h3></header>
+    <div class="given">Discussão conceitual dos principais componentes e relações de cada abordagem, com a importância e influência de cada componente.</div>
+    <div class="resposta">
+    <p>A teoria do fluxo aplica matemática, probabilidade e física ao tráfego, relacionando demanda, oferta e operação. Não há uma teoria única: a abordagem depende do objetivo do estudo.</p>
+    <p><b>Macroscópica.</b> Trata a corrente como meio contínuo (analogia hidrodinâmica). Componentes: <b>fluxo q</b>, variável temporal medida numa seção, análoga à vazão e que expressa a demanda atendida; <b>densidade k</b>, variável espacial medida num instante, que indica a ocupação da via e o grau de congestionamento; e <b>velocidade v</b>, a medida de qualidade operacional, em média no tempo ou no espaço. Estão ligadas por <b>q = k·v</b> e pela equação da continuidade (conservação de veículos). Em Greenshields, v cai linearmente com k, e q é uma parábola com máximo em k<sub>j</sub>/2 e v<sub>f</sub>/2. Esse ponto separa o regime livre do congestionado e define a capacidade. Greenberg representa melhor o regime congestionado e Underwood, as baixas densidades. A abordagem funciona bem em tráfego denso e em grandes redes, tem baixo custo computacional e estima filas, ondas, tempos médios, consumo e emissões. Mas perde validade em fluxos rarefeitos, em que há muita variação entre condutores.</p>
+    <p><b>Microscópica.</b> Representa cada veículo e suas interações. Componentes: <b>car-following</b>, em que o seguidor ajusta a aceleração ao líder (modelos GHR, distância de segurança e psicofísicos) e que determina headways, estabilidade e formação de filas; <b>lane-changing</b>, com estímulo, faixa-alvo e condição mínima, em mudanças desejadas, obrigatórias ou de cortesia, e que influencia a distribuição entre faixas e o entrelaçamento; e <b>gap-acceptance</b>, com brecha crítica, aceleração, brecha crítica máxima e visibilidade, e que determina a capacidade de entradas e conversões. Permite analisar fluxos heterogêneos e interrompidos, como interseções, mas exige mais dados, calibração e processamento.</p>
+    <p><b>Mesoscópica.</b> Nível intermediário, que mantém detalhe nas entidades ou nas interações. Seus componentes são os <b>pelotões ou clusters</b>, as <b>distribuições de headways</b> e os modelos de <b>cinética dos gases</b>, que ligam o comportamento individual ao agregado. Permite, por exemplo, representar decisões individuais de troca de faixa baseadas em densidades agregadas. É útil na coordenação semafórica (TRANSYT trata perfis de fluxo cíclicos). Alguns autores a incluem na abordagem macro, o que mostra sua definição difusa.</p>
+    <p><b>Relação entre elas.</b> Há um compromisso entre detalhe e custo. As relações macro (q, k, v) resultam, em agregado, dos comportamentos individuais descritos no nível micro, e o meso faz a ponte. A escolha depende do problema: macro para capacidade e redes extensas, meso para corredores e coordenação, micro para a operação detalhada de interseções e faixas. Cada uma ainda pode ser de fluxo ininterrupto ou interrompido, determinística ou estocástica, estática ou dinâmica.</p>
+    </div>
+  </div>
+</section>
 <div class="foot">
-  <p>Resumo preparado a partir dos slides do Prof. Helry Dias (EMB 5936, UFSC Joinville), Aula 7. Todos os cálculos foram conferidos numericamente antes da publicação. Ainda assim, confira sempre as fórmulas nos slides oficiais antes da prova.</p>
+  <p>Preparado a partir dos slides do Prof. Helry Dias (EMB 5936, UFSC Joinville), da apostila de Teoria do Fluxo de Tráfego (UnB) e da Avaliação Parcial 02. Todas as contas foram conferidas numericamente. Onde o enunciado não fixa um valor (como c<sub>a</sub>) ou os slides não dizem como proceder (como o tombamento), a hipótese está indicada no texto. Confira sempre nos slides oficiais.</p>
+  <p><a href="../p1/">Revisão da P1</a> · <a href="exercicio06-rotatoria.pdf" download>PDF do Exercício 6 de rotatórias</a></p>
 </div>
 
 </div>
-
+<script>
+const all=()=>document.querySelectorAll('details.sol');
+document.getElementById('abrir').onclick=()=>all().forEach(d=>d.open=true);
+document.getElementById('fechar').onclick=()=>all().forEach(d=>d.open=false);
+const abrirHash=()=>{const e=location.hash&&document.querySelector(location.hash);if(e){const d=e.querySelector&&e.querySelector('details.sol');if(d)d.open=true;}};
+addEventListener('hashchange',abrirHash);abrirHash();
+</script>
 </body>
 </html>
