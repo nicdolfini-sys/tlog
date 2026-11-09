@@ -236,9 +236,9 @@ svg text{font-family:var(--f-mono);font-size:12px;fill:var(--muted)}
     <div class="card peach"><h4>R<sub>g</sub> · Rampa</h4><p>Subir ladeira de mochila pesada. Só existe com greide, e depende do peso.</p></div>
   </div>
   <div class="formula-box"><div class="lbl">Rolamento</div><div class="eq">R<sub>r</sub> = (c<sub>1</sub> + c<sub>2</sub> · V) · G</div><div class="key">c<sub>2</sub> ≈ 0,056 · G em <b>kN</b> · V em km/h · c<sub>1</sub>: asfalto 7,6 · terra firme seca 30 · terra solta seca 40 · areia solta seca 100 · terra mole úmida 160</div></div>
-  <div class="formula-box"><div class="lbl">Aerodinâmica</div><div class="eq">R<sub>a</sub> = c<sub>a</sub> · A · V²</div><div class="key">A em m² · V em km/h · c<sub>a</sub>: automóveis 0,020–0,025 · ônibus 0,035–0,040 · caminhões 0,028–0,040</div></div>
+  <div class="formula-box"><div class="lbl">Aerodinâmica</div><div class="eq">R<sub>a</sub> = c<sub>a</sub> · A · V²</div><div class="key">A em m² · V em km/h · c<sub>a</sub>: automóveis 0,020–0,025 · ônibus 0,035–0,040 · caminhões 0,028–0,040 (A de 6 a 9 m²): interpole pela área</div></div>
   <div class="formula-box"><div class="lbl">Rampa</div><div class="eq">R<sub>g</sub> = 10 · G · i</div><div class="key">G em kN · i em % (positivo subindo)</div></div>
-  <div class="alerta"><h4>Pegadinha de unidade</h4><p>O enunciado costuma dar <b>massa em kg</b>, e a fórmula pede <b>peso em kN</b>. Faça G = massa × 9,806 / 1000. O enunciado também não dá c<sub>a</sub>: escolha um valor da faixa e <b>escreva qual escolheu</b>. Aqui usei a média, 0,034, e mostro quanto o resultado muda nos extremos.</p></div>
+  <div class="alerta"><h4>Pegadinha de unidade</h4><p>O enunciado costuma dar <b>massa em kg</b>, e a fórmula pede <b>peso em kN</b>. Faça G = massa × 9,806 / 1000. O enunciado não dá c<sub>a</sub>, mas dá a área frontal: <b>interpole na tabela</b>. Para caminhões, a área vai de 6 a 9 m² e c<sub>a</sub> de 0,028 a 0,040, então c<sub>a</sub> = 0,028 + 0,004 · (A − 6). Com A = 6, dá 0,028; com A = 7,5, dá 0,034; com A = 9, dá 0,040.</p></div>
 
 </section>
 <section class="aula">
@@ -250,13 +250,13 @@ svg text{font-family:var(--f-mono);font-size:12px;fill:var(--muted)}
     <ol class="steps">
       <li class="step"><h5><span class="n">1</span>Passar massa para peso</h5><div class="eq">G = 6300 · 9,806 / 1000 = <b class="res">61,78 kN</b></div><div class="leigo">💡 A fórmula de rolamento só aceita kN.</div></li>
       <li class="step"><h5><span class="n">2</span>Velocidade no plano (5ª: g<sub>t</sub> = 1)</h5><div class="eq">V = 60 · 2664 · π · 0,73 / (1000 · 1 · 3,9) = <b class="res">93,99 km/h</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Resistências no plano (c<sub>1</sub> = 7,6; c<sub>a</sub> = 0,034)</h5><div class="eq">R<sub>r</sub> = (7,6 + 0,056 · 93,99) · 61,78 = 12,864 · 61,78 = 794,7 N<br>R<sub>a</sub> = 0,034 · 9 · 93,99² = 2703,4 N<br>R<sub>g</sub> = 0 (trecho plano)<br>R = <b class="res">3498 N</b></div><p>Com c<sub>a</sub> entre 0,028 e 0,040, R fica entre 3021 e 3975 N.</p></li>
+      <li class="step"><h5><span class="n">3</span>Resistências no plano (c<sub>1</sub> = 7,6; A = 9 m² → c<sub>a</sub> = 0,040)</h5><div class="eq">R<sub>r</sub> = (7,6 + 0,056 · 93,99) · 61,78 = 12,864 · 61,78 = 794,7 N<br>R<sub>a</sub> = 0,040 · 9 · 93,99² = 3180,3 N<br>R<sub>g</sub> = 0 (trecho plano)<br>R = <b class="res">3975 N</b></div><p>A = 9 m² é o topo da faixa de área da tabela, por isso c<sub>a</sub> é o topo da faixa: 0,040.</p></li>
       <li class="step"><h5><span class="n">4</span>Velocidade no aclive (4ª: g<sub>t</sub> = 1,41)</h5><div class="eq">V = 60 · 2518 · π · 0,73 / (1000 · 1,41 · 3,9) = <b class="res">63,01 km/h</b></div></li>
-      <li class="step"><h5><span class="n">5</span>Resistências no aclive</h5><div class="eq">R<sub>r</sub> = (7,6 + 0,056 · 63,01) · 61,78 = 687,5 N<br>R<sub>a</sub> = 0,034 · 9 · 63,01² = 1214,8 N<br>R<sub>g</sub> = 10 · 61,78 · 5 = 3088,9 N<br>R = <b class="res">4991 N</b></div></li>
+      <li class="step"><h5><span class="n">5</span>Resistências no aclive</h5><div class="eq">R<sub>r</sub> = (7,6 + 0,056 · 63,01) · 61,78 = 687,5 N<br>R<sub>a</sub> = 0,040 · 9 · 63,01² = 1429,3 N<br>R<sub>g</sub> = 10 · 61,78 · 5 = 3088,9 N<br>R = <b class="res">5206 N</b></div></li>
       <li class="step"><h5><span class="n">6</span>Força tratora (com a potência máxima)</h5><div class="eq">Plano: F<sub>t</sub> = 0,82 · 3600 · 110 / 93,99 = <b class="res">3455 N</b><br>Aclive: F<sub>t</sub> = 0,82 · 3600 · 110 / 63,01 = <b class="res">5154 N</b></div><p>Usei 110 kW, o máximo. Fora de 2800 rpm o motor entrega um pouco menos, então F<sub>t</sub> é um teto.</p></li>
     </ol>
-    <div class="result"><span>Resposta</span><b>Plano: R ≈ 3498 N · Aclive: R ≈ 4991 N (+43%)</b></div>
-    <p class="tip"><b>Interpretação:</b> nos dois trechos F<sub>t</sub> e R ficam muito próximos, ou seja, o caminhão está perto da <b>velocidade de equilíbrio</b>. No aclive, a rampa vira a maior parcela (62%), e o motorista reduz a marcha para ter mais força.</p>
+    <div class="result"><span>Resposta</span><b>Plano: R ≈ 3975 N · Aclive: R ≈ 5206 N (+31%)</b></div>
+    <p class="tip"><b>Interpretação:</b> no plano, R (3975 N) supera a F<sub>t</sub> máxima (3455 N), e o ar responde por 80% da resistência. O motor não sustentaria 94 km/h e o caminhão tenderia a desacelerar até a <b>velocidade de equilíbrio</b>. No aclive, R (5206 N) praticamente iguala F<sub>t</sub> (5154 N): o caminhão está no limite. Ali a rampa vira a maior parcela (59%), e o motorista reduz a marcha para ter mais força.</p>
     </details>
   </div>
   <div class="ex" id="a6ex2">
@@ -266,12 +266,12 @@ svg text{font-family:var(--f-mono);font-size:12px;fill:var(--muted)}
     <ol class="steps">
       <li class="step"><h5><span class="n">1</span>Peso</h5><div class="eq">G = 8500 · 9,806 / 1000 = <b class="res">83,35 kN</b></div></li>
       <li class="step"><h5><span class="n">2</span>Velocidades</h5><div class="eq">Plano: V = 60 · 2687 · π · 0,76 / (1000 · 1 · 4,2) = <b class="res">91,65 km/h</b><br>Aclive: V = 60 · 2430 · π · 0,76 / (1000 · 2,3 · 4,2) = <b class="res">36,04 km/h</b></div></li>
-      <li class="step"><h5><span class="n">3</span>Plano (c<sub>1</sub> = 30; c<sub>a</sub> = 0,034)</h5><div class="eq">R<sub>r</sub> = (30 + 0,056 · 91,65) · 83,35 = 2928,3 N<br>R<sub>a</sub> = 0,034 · 6 · 91,65² = 1713,5 N<br>R = <b class="res">4642 N</b></div></li>
-      <li class="step"><h5><span class="n">4</span>Aclive</h5><div class="eq">R<sub>r</sub> = (30 + 0,056 · 36,04) · 83,35 = 2668,7 N<br>R<sub>a</sub> = 0,034 · 6 · 36,04² = 264,9 N<br>R<sub>g</sub> = 10 · 83,35 · 7 = 5834,6 N<br>R = <b class="res">8768 N</b></div></li>
+      <li class="step"><h5><span class="n">3</span>Plano (c<sub>1</sub> = 30; A = 6 m² → c<sub>a</sub> = 0,028)</h5><div class="eq">R<sub>r</sub> = (30 + 0,056 · 91,65) · 83,35 = 2928,3 N<br>R<sub>a</sub> = 0,028 · 6 · 91,65² = 1411,2 N<br>R = <b class="res">4339 N</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Aclive</h5><div class="eq">R<sub>r</sub> = (30 + 0,056 · 36,04) · 83,35 = 2668,7 N<br>R<sub>a</sub> = 0,028 · 6 · 36,04² = 218,2 N<br>R<sub>g</sub> = 10 · 83,35 · 7 = 5834,6 N<br>R = <b class="res">8722 N</b></div></li>
       <li class="step"><h5><span class="n">5</span>Força tratora (teto)</h5><div class="eq">Plano: F<sub>t</sub> = 0,82 · 3600 · 150 / 91,65 = <b class="res">4831 N</b><br>Aclive: F<sub>t</sub> = 0,82 · 3600 · 150 / 36,04 = <b class="res">12.288 N</b></div></li>
     </ol>
-    <div class="result"><span>Resposta</span><b>Plano: R ≈ 4642 N · Aclive: R ≈ 8768 N (quase o dobro)</b></div>
-    <p class="tip"><b>Interpretação:</b> no plano, a folga é pequena (F<sub>t</sub> ≈ R). No aclive, a 3ª marcha mais que dobra a força disponível e sobra margem de ≈3,5 kN. Reduzir a marcha troca velocidade por força.</p>
+    <div class="result"><span>Resposta</span><b>Plano: R ≈ 4339 N · Aclive: R ≈ 8722 N (o dobro)</b></div>
+    <p class="tip"><b>Interpretação:</b> no plano, a folga é pequena (≈0,5 kN entre F<sub>t</sub> e R). No aclive, a 3ª marcha mais que dobra a força disponível e sobra margem de ≈3,6 kN. Reduzir a marcha troca velocidade por força.</p>
     </details>
   </div>
 
@@ -895,7 +895,7 @@ svg text{font-family:var(--f-mono);font-size:12px;fill:var(--muted)}
   <div class="aula-h"><span class="num">🔍</span><div><h2>De onde saiu cada questão</h2><p>Compare com os exercícios da aula.</p></div></div>
   <div class="tbl"><table><tr><th>Q</th><th>Pontos</th><th>Tipo</th><th>Veio de</th><th>O que mudou</th></tr><tr><td>1</td><td>1,5</td><td>Conta + análise</td><td>Aula 6, Exemplos 1 e 2</td><td>Números e tipo de solo</td></tr><tr><td>2</td><td>1,0</td><td>Conta + explicação</td><td>Aula 6, Exemplos 5 e 7</td><td>Velocidade e superelevação</td></tr><tr><td>3</td><td>2,5</td><td>Teoria</td><td>Aulas 7, 9 e 10</td><td>Pede ligar interseções ao nível microscópico</td></tr><tr><td>4</td><td>2,0</td><td>Conta + conclusões</td><td>Aula 8, Exercícios 2 e 3</td><td>Compara com e sem vermelho geral</td></tr><tr><td>5</td><td>1,0</td><td>Conta + explicação</td><td>Aula 10, Exemplos 1 e 2</td><td>Fila mais longa, veículos maiores</td></tr><tr><td>6</td><td>2,0</td><td>Teoria</td><td>Aula 10</td><td>Discussão das três abordagens</td></tr></table></div>
   <div class="cards">
-    <div class="card mint"><h4>55% conta, 45% teoria</h4><p>As contas são os exercícios dos slides com novos valores. As fórmulas e tabelas podiam ser consultadas nos slides naquela prova, feita em casa pelo Moodle. <b>Confirme se a sua será com consulta.</b></p></div>
+    <div class="card mint"><h4>55% conta, 45% teoria</h4><p>As contas são os exercícios dos slides com novos valores. A prova de 2020 foi feita em casa, com consulta aos slides. <b>Na sua P2 haverá formulário e constantes</b>: não gaste tempo decorando. Treine reconhecer qual fórmula cada situação pede, usar as unidades certas e explicar o resultado. O c<sub>a</sub> sai da tabela, interpolando pela área frontal: mostre essa conta na prova.</p></div>
     <div class="card blue"><h4>Sempre tem uma comparação</h4><p>Plano × aclive, com × sem vermelho geral, 1ª × 2ª aproximação. Ele quer que você <b>explique a diferença</b>, não só calcule os dois casos.</p></div>
     <div class="card lav"><h4>Verbos que valem nota</h4><p>"Analise", "explique", "descreva as conclusões", "identificando", "descrevendo a importância e influência". Em teoria, ele pede <b>relações entre conceitos</b>, não uma lista.</p></div>
     <div class="card peach"><h4>Provável novidade</h4><p>Em 2020 não havia conta de rotatória, e os slides de agora foram "atualizados com HCM", com 6 exercícios. É minha inferência, mas <b>treine rotatória</b>: conta com nível de serviço pode aparecer.</p></div>
@@ -910,20 +910,20 @@ svg text{font-family:var(--f-mono);font-size:12px;fill:var(--muted)}
     <header class="ex-h"><span class="tag">Questão 1 · 1,5 pt</span><h3>Caminhão na terra solta: plano × aclive</h3></header>
     <div class="given">8000 kg · 140 kW a 2800 rpm · terra solta seca · marchas 6,5 / 3,5 / 2,3 / 1,51 / 1 · pneu 0,75 m · diferencial 4,1 · A = 9 m². Plano: 2518 rpm em 4ª. Aclive de 7%: 3ª a 2430 rpm. Analisar o efeito do greide e as razões da discrepância.</div>
     <ol class="steps">
-      <li class="step"><h5><span class="n">1</span>Hipóteses (declare na prova)</h5><div class="eq">g = 9,806 m/s² · c<sub>1</sub> = 40 (terra solta seca) · c<sub>2</sub> = 0,056 · c<sub>a</sub> = 0,034 (média da faixa de caminhões) · η = 0,82</div><p>O enunciado não fornece c<sub>a</sub>, e o aluno precisa assumir um valor da tabela.</p></li>
+      <li class="step"><h5><span class="n">1</span>Hipóteses (declare na prova)</h5><div class="eq">g = 9,806 m/s² · c<sub>1</sub> = 40 (terra solta seca) · c<sub>2</sub> = 0,056 · c<sub>a</sub> = 0,040 (A = 9 m², interpolando na tabela de caminhões) · η = 0,82</div><p>O enunciado não fornece c<sub>a</sub>, mas a área de 9 m² corresponde ao topo da faixa da tabela (6 a 9 m² → 0,028 a 0,040).</p></li>
       <li class="step"><h5><span class="n">2</span>Peso</h5><div class="eq">G = 8000 · 9,806 / 1000 = <b class="res">78,45 kN</b></div></li>
       <li class="step"><h5><span class="n">3</span>Velocidade no plano (4ª: g<sub>t</sub> = 1,51)</h5><div class="eq">V = 60 · 2518 · π · 0,75 / (1000 · 1,51 · 4,1) = <b class="res">57,50 km/h</b></div></li>
-      <li class="step"><h5><span class="n">4</span>Resistências no plano</h5><div class="eq">R<sub>r</sub> = (40 + 0,056 · 57,50) · 78,45 = 43,22 · 78,45 = 3390,5 N<br>R<sub>a</sub> = 0,034 · 9 · 57,50² = 1011,7 N<br>R<sub>g</sub> = 0<br>R = <b class="res">4402 N</b></div></li>
+      <li class="step"><h5><span class="n">4</span>Resistências no plano</h5><div class="eq">R<sub>r</sub> = (40 + 0,056 · 57,50) · 78,45 = 43,22 · 78,45 = 3390,5 N<br>R<sub>a</sub> = 0,040 · 9 · 57,50² = 1190,3 N<br>R<sub>g</sub> = 0<br>R = <b class="res">4581 N</b></div></li>
       <li class="step"><h5><span class="n">5</span>Velocidade no aclive (3ª: g<sub>t</sub> = 2,3)</h5><div class="eq">V = 60 · 2430 · π · 0,75 / (1000 · 2,3 · 4,1) = <b class="res">36,43 km/h</b></div></li>
-      <li class="step"><h5><span class="n">6</span>Resistências no aclive</h5><div class="eq">R<sub>r</sub> = (40 + 0,056 · 36,43) · 78,45 = 3298,0 N<br>R<sub>a</sub> = 0,034 · 9 · 36,43² = 406,1 N<br>R<sub>g</sub> = 10 · 78,45 · 7 = 5491,4 N<br>R = <b class="res">9195 N</b></div></li>
-      <li class="step"><h5><span class="n">7</span>Comparar com a força tratora (teto, a 140 kW)</h5><div class="eq">Plano: F<sub>t</sub> = 0,82 · 3600 · 140 / 57,50 = 7188 N &gt; 4402 N<br>Aclive: F<sub>t</sub> = 0,82 · 3600 · 140 / 36,43 = 11.345 N &gt; 9195 N</div><p>Aderência: 0,45 · T<sub>d</sub>. Mesmo com só metade do peso no eixo motriz (39,2 kN), o limite seria ≈17,7 kN, acima de F<sub>t</sub>. Portanto, o motor limita antes do solo.</p></li>
+      <li class="step"><h5><span class="n">6</span>Resistências no aclive</h5><div class="eq">R<sub>r</sub> = (40 + 0,056 · 36,43) · 78,45 = 3298,0 N<br>R<sub>a</sub> = 0,040 · 9 · 36,43² = 477,8 N<br>R<sub>g</sub> = 10 · 78,45 · 7 = 5491,4 N<br>R = <b class="res">9267 N</b></div></li>
+      <li class="step"><h5><span class="n">7</span>Comparar com a força tratora (teto, a 140 kW)</h5><div class="eq">Plano: F<sub>t</sub> = 0,82 · 3600 · 140 / 57,50 = 7188 N &gt; 4581 N<br>Aclive: F<sub>t</sub> = 0,82 · 3600 · 140 / 36,43 = 11.345 N &gt; 9267 N</div><p>Aderência: 0,45 · T<sub>d</sub>. Mesmo com só metade do peso no eixo motriz (39,2 kN), o limite seria ≈17,7 kN, acima de F<sub>t</sub>. Portanto, o motor limita antes do solo.</p></li>
     </ol>
-    <div class="result"><span>Resposta</span><b>R<sub>plano</sub> ≈ 4402 N · R<sub>aclive</sub> ≈ 9195 N (2,09 vezes)</b></div>
+    <div class="result"><span>Resposta</span><b>R<sub>plano</sub> ≈ 4581 N · R<sub>aclive</sub> ≈ 9267 N (2,02 vezes)</b></div>
   </div>
   <div class="card lav resposta" style="margin:-14px 0 28px"><h4>Análise para escrever na prova</h4>
-  <p>A resistência total sobe de ≈4402 N para ≈9195 N, um aumento de 109%. O motivo é a <b>resistência de rampa, de 5491 N, que corresponde a 60% do total no aclive</b> e não existe no plano. O greide faz o caminhão erguer seu peso, e essa parcela só depende do peso e da inclinação.</p>
-  <p>As outras parcelas caem no aclive porque o veículo anda mais devagar: R<sub>a</sub> cai 60% (de 1012 N para 406 N), pois depende de V², e R<sub>r</sub> cai só 2,7%. No plano, R<sub>r</sub> domina (77%), resultado do solo: c<sub>1</sub> = 40 em terra solta, contra 7,6 no asfalto.</p>
-  <p>A redução para a 3ª marcha diminui a velocidade e aumenta a força disponível, o que permite vencer a rampa. Com c<sub>a</sub> entre 0,028 e 0,040, R varia de 4224 a 4581 N no plano e de 9124 a 9267 N no aclive: a conclusão não muda. O valor de F<sub>t</sub> usa a potência máxima, e por isso é um teto, já que o motor não está a 2800 rpm.</p></div>
+  <p>A resistência total sobe de ≈4581 N para ≈9267 N, um aumento de 102%. O motivo é a <b>resistência de rampa, de 5491 N, que corresponde a 59% do total no aclive</b> e não existe no plano. O greide faz o caminhão erguer seu peso, e essa parcela só depende do peso e da inclinação.</p>
+  <p>As outras parcelas caem no aclive porque o veículo anda mais devagar: R<sub>a</sub> cai 60% (de 1190 N para 478 N), pois depende de V², e R<sub>r</sub> cai só 2,7%. No plano, R<sub>r</sub> domina (74%), resultado do solo: c<sub>1</sub> = 40 em terra solta, contra 7,6 no asfalto.</p>
+  <p>A redução para a 3ª marcha diminui a velocidade e aumenta a força disponível, o que permite vencer a rampa. O valor de F<sub>t</sub> usa a potência máxima, e por isso é um teto, já que o motor não está a 2800 rpm.</p></div>
   <div class="ex open" id="q2">
     <header class="ex-h"><span class="tag">Questão 2 · 1,0 pt</span><h3>Raio mínimo, tombamento e velocidade máxima</h3></header>
     <div class="given">V = 70 km/h · e<sub>máx</sub> = 10% · caminhão baú totalmente carregado.</div>
@@ -1005,7 +1005,7 @@ svg text{font-family:var(--f-mono);font-size:12px;fill:var(--muted)}
   </div>
 </section>
 <div class="foot">
-  <p>Preparado a partir dos slides do Prof. Helry Dias (EMB 5936, UFSC Joinville), da apostila de Teoria do Fluxo de Tráfego (UnB) e da Avaliação Parcial 02. Todas as contas foram conferidas numericamente. Onde o enunciado não fixa um valor (como c<sub>a</sub>) ou os slides não dizem como proceder (como o tombamento), a hipótese está indicada no texto. Confira sempre nos slides oficiais.</p>
+  <p>Preparado a partir dos slides do Prof. Helry Dias (EMB 5936, UFSC Joinville), da apostila de Teoria do Fluxo de Tráfego (UnB) e da Avaliação Parcial 02. Todas as contas foram conferidas numericamente. Onde os slides não dizem como proceder (como o tombamento), a hipótese está indicada no texto. Confira sempre nos slides oficiais.</p>
   <p><a href="../p1/">Revisão da P1</a> · <a href="exercicio06-rotatoria.pdf" download>PDF do Exercício 6 de rotatórias</a></p>
 </div>
 
