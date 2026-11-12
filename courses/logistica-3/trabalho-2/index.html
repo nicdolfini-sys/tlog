@@ -1,0 +1,523 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Simulador de Última Milha</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: bancada de trabalho. Mapa do bairro à esquerda, comandos à direita, comparação dos cenários embaixo. */
+:root{
+  --bg:#FFFBF8; --surface:#FFFFFF; --ink:#2F2A33; --ink-2:#5E5664; --muted:#857C8A; --line:#EADFE4; --grid:#F1E8EC; --rede:#DCCFD6;
+  --rosa:#F7D6E0; --rosa-e:#A84870; --menta:#D4EFDF; --lav:#E3DAF5; --lav-e:#6B55A3; --pes:#FCE3CF; --ceu:#D6E8F7;
+  --morro:#E7DDF4; --morro-e:#9C88C9; --hub:#B8693A; --hub-bg:#FCE3CF;
+  --van:#2F6DB5; --bike:#B57610; --pe:#B0408A;
+  --serif:"Lora", Georgia, "Times New Roman", serif;
+  --sans:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#211C24; --surface:#2A2430; --ink:#F2ECF2; --ink-2:#CFC5D2; --muted:#A79DAB; --line:#3D3443; --grid:#2F2935; --rede:#4A4050;
+  --rosa:#4A2F3B; --rosa-e:#E79BBC; --menta:#28423A; --lav:#352D4A; --lav-e:#B9A6EA; --pes:#4A3527; --ceu:#263A4F;
+  --morro:#3A3150; --morro-e:#8E7BC0; --hub:#E0A276; --hub-bg:#4A3527;
+  --van:#5585D0; --bike:#BE8420; --pe:#C8579B; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#211C24; --surface:#2A2430; --ink:#F2ECF2; --ink-2:#CFC5D2; --muted:#A79DAB; --line:#3D3443; --grid:#2F2935; --rede:#4A4050;
+  --rosa:#4A2F3B; --rosa-e:#E79BBC; --menta:#28423A; --lav:#352D4A; --lav-e:#B9A6EA; --pes:#4A3527; --ceu:#263A4F;
+  --morro:#3A3150; --morro-e:#8E7BC0; --hub:#E0A276; --hub-bg:#4A3527;
+  --van:#5585D0; --bike:#BE8420; --pe:#C8579B; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:20px}
+header{display:grid;gap:6px;padding-bottom:4px;border-bottom:2px solid var(--rosa)}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--rosa-e);font-weight:600}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4vw,38px);line-height:1.15;margin:0;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:600;font-size:21px;margin:0;text-wrap:balance}
+h3{font-family:var(--serif);font-weight:600;font-size:16px;margin:0}
+.lede{color:var(--ink-2);max-width:72ch;margin:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:860px){.top{grid-template-columns:minmax(0,1fr)}}
+
+/* cenários */
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+.tab[aria-pressed="true"]{background:var(--lav);border-color:var(--lav-e);color:var(--ink);font-weight:600}
+.tab:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--lav-e);outline-offset:2px}
+.mapbox{position:relative;margin-top:12px}
+canvas#mapa{width:100%;aspect-ratio:1/1;max-width:100%;display:block;border-radius:10px;background:var(--surface);border:1px solid var(--line)}
+.maprow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:10px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;display:inline-block}
+.sw.van{background:var(--van)} .sw.bike{background:var(--bike);border-radius:50%} .sw.pe{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid var(--pe)}
+.sw.hub{background:var(--hub-bg);border:2px solid var(--hub);border-radius:3px} .sw.morro{background:var(--morro);border:1px dashed var(--morro-e);border-radius:50%}
+.btn{font:inherit;font-weight:600;font-size:14px;border:none;border-radius:10px;padding:8px 14px;cursor:pointer;background:var(--rosa);color:var(--ink)}
+.btn.sec{background:var(--bg);border:1px solid var(--line);font-weight:500}
+.clock{font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink-2)}
+.desc{font-size:14px;color:var(--ink-2);margin:10px 0 0}
+
+/* comandos */
+.ctrls{display:grid;gap:14px}
+.ctrl{display:grid;gap:4px}
+.ctrl label{display:flex;justify-content:space-between;gap:10px;font-size:14px;font-weight:500}
+.ctrl output{font-variant-numeric:tabular-nums;color:var(--lav-e);font-weight:600;white-space:nowrap}
+.ctrl small{color:var(--muted);font-size:12px}
+input[type=range]{width:100%;accent-color:var(--lav-e)}
+details{border-top:1px solid var(--line);padding-top:12px}
+summary{cursor:pointer;font-weight:600;font-size:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+@media (max-width:460px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.num{display:grid;gap:3px;font-size:13px}
+.num input{font:inherit;font-variant-numeric:tabular-nums;width:100%;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:999px;margin-left:4px;vertical-align:1px}
+.tag.f{background:var(--menta);color:var(--ink)} .tag.s{background:var(--pes);color:var(--ink)}
+
+/* resultados */
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:980px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.cards{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:8px;align-content:start;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.card[aria-pressed="true"]{border-color:var(--lav-e);box-shadow:0 0 0 1px var(--lav-e)}
+.card .k{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.card dl{margin:0;display:grid;grid-template-columns:auto auto;gap:4px 10px;font-size:13.5px}
+.card dt{color:var(--ink-2)} .card dd{margin:0;text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.delta{font-weight:500;font-size:12px;color:var(--muted)}
+.charts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:980px){.charts{grid-template-columns:minmax(0,1fr)}}
+.chart{min-width:0}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.chart p{margin:2px 0 8px;font-size:13px;color:var(--muted)}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12.5px;padding:6px 9px;border-radius:8px;z-index:20;font-variant-numeric:tabular-nums;max-width:240px}
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;font-size:13.5px;color:var(--ink-2)}
+@media (max-width:760px){.notes{grid-template-columns:minmax(0,1fr)}}
+.notes ul{margin:6px 0 0;padding-left:18px;display:grid;gap:4px}
+table.tv{border-collapse:collapse;font-size:13px;width:100%;font-variant-numeric:tabular-nums}
+table.tv th,table.tv td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:right}
+table.tv th:first-child,table.tv td:first-child{text-align:left}
+.scroll{overflow-x:auto}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <a href="../" style="font-size:13px;color:var(--muted);text-decoration:none">&larr; Logística III</a>
+    <div class="eyebrow">Logística III · Logística Ativa na Última Milha</div>
+    <h1>Simulador de Última Milha</h1>
+    <p class="lede">Um bairro, um dia de entregas e quatro formas de fazer a última milha. Mexa na demanda, no peso das encomendas e no morro e compare quilômetros de van, CO₂ e horas de trabalho entre os cenários.</p>
+  </header>
+
+  <section class="top">
+    <div class="panel">
+      <div class="tabs" role="group" aria-label="Cenário mostrado no mapa">
+        <button class="tab" data-s="0" aria-pressed="true" id="tab0">A · Só van</button>
+        <button class="tab" data-s="1" aria-pressed="false" id="tab1">B · Micro-hub + cargobike</button>
+        <button class="tab" data-s="2" aria-pressed="false" id="tab2">C · Micro-hub + a pé</button>
+        <button class="tab" data-s="3" aria-pressed="false" id="tab3">D · Misto</button>
+      </div>
+      <p class="desc" id="desc"></p>
+      <div class="mapbox"><canvas id="mapa" width="800" height="800" aria-label="Mapa do bairro com as entregas e as rotas do cenário escolhido"></canvas></div>
+      <div class="maprow">
+        <div class="legend">
+          <span><i class="sw van"></i>Van</span><span><i class="sw bike"></i>Cargobike</span><span><i class="sw pe"></i>A pé</span>
+          <span><i class="sw hub"></i>Micro-hub</span><span><i class="sw morro"></i>Morro</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="clock" id="clock">Turno: 0h00</span>
+          <button class="btn" id="play">▶ Animar o turno</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel ctrls">
+      <h2>Cenário do bairro</h2>
+      <div class="ctrl"><label for="n">Entregas no dia <output id="n_o"></output></label><input type="range" id="n" min="20" max="400" step="10" value="150"></div>
+      <div class="ctrl"><label for="lado">Lado da área atendida <output id="lado_o"></output></label><input type="range" id="lado" min="1" max="4" step="0.5" value="2"><small>Micro-hub no centro. O KoMoDo operou num raio de até 3 km.</small></div>
+      <div class="ctrl"><label for="pesadas">Encomendas acima de 15 kg <output id="pesadas_o"></output></label><input type="range" id="pesadas" min="0" max="50" step="5" value="10"><small>Das demais, 70% pesam de 0,5 a 5 kg, a faixa mais comum no Brasil.</small></div>
+      <div class="ctrl"><label for="morro">Área no morro (declive acima de 8%) <output id="morro_o"></output></label><input type="range" id="morro" min="0" max="40" step="5" value="20"><small>Acima de 8% de declive, a bicicleta de carga não opera; a pé, sim, até 20%.</small></div>
+      <div class="ctrl"><label for="dist">Distância do centro de distribuição <output id="dist_o"></output></label><input type="range" id="dist" min="2" max="30" step="1" value="12"></div>
+      <div class="ctrl"><span style="font-size:14px;font-weight:500">Análises prontas</span>
+        <div class="tabs" role="group" aria-label="Análises prontas">
+          <button class="tab" id="pre1" data-p="1">Análise 1 · Centro denso</button>
+          <button class="tab" id="pre2" data-p="2">Análise 2 · Periferia espalhada</button>
+          <button class="tab" id="pre0" data-p="0">Valores iniciais</button>
+        </div>
+        <small id="pre_desc">Cada botão ajusta os controles e volta ao mesmo dia de entregas sorteado.</small>
+      </div>
+      <button class="btn sec" id="sortear">Sortear outro dia de entregas</button>
+
+      <details id="params">
+        <summary>Parâmetros de operação</summary>
+        <p class="desc" style="margin-top:6px"><span class="tag f">fonte</span> vem da literatura citada no trabalho. <span class="tag s">suposição</span> é um valor didático que vocês podem mudar.</p>
+        <div class="grid2">
+          <label class="num" for="efvan">CO₂ da van diesel (g/km) <span><span class="tag f">fonte</span></span><input id="efvan" type="number" step="0.1" value="245.3"></label>
+          <label class="num" for="efbike">CO₂ da cargobike (g/km) <span><span class="tag f">fonte</span></span><input id="efbike" type="number" step="0.1" value="22.6"></label>
+          <label class="num" for="pmaxpe">Peso máx. a pé (kg) <span><span class="tag f">fonte</span></span><input id="pmaxpe" type="number" step="1" value="8"></label>
+          <label class="num" for="pmaxbike">Peso máx. cargobike (kg) <span><span class="tag f">fonte</span></span><input id="pmaxbike" type="number" step="1" value="15"></label>
+          <label class="num" for="vvan">Velocidade da van no bairro (km/h) <span><span class="tag s">suposição</span></span><input id="vvan" type="number" step="1" value="12"></label>
+          <label class="num" for="pvan">Tempo por parada da van (min) <span><span class="tag s">suposição</span></span><input id="pvan" type="number" step="0.5" value="4"></label>
+          <label class="num" for="vbike">Velocidade da cargobike (km/h) <span><span class="tag s">suposição</span></span><input id="vbike" type="number" step="1" value="14"></label>
+          <label class="num" for="pbike">Tempo por parada da cargobike (min) <span><span class="tag s">suposição</span></span><input id="pbike" type="number" step="0.5" value="2"></label>
+          <label class="num" for="vpe">Velocidade a pé (km/h) <span><span class="tag s">suposição</span></span><input id="vpe" type="number" step="0.5" value="4.5"></label>
+          <label class="num" for="ppe">Tempo por parada a pé (min) <span><span class="tag s">suposição</span></span><input id="ppe" type="number" step="0.5" value="1.5"></label>
+          <label class="num" for="capbike">Encomendas por viagem de cargobike <span><span class="tag s">suposição</span></span><input id="capbike" type="number" step="1" value="20"></label>
+          <label class="num" for="cappe">Encomendas por viagem a pé <span><span class="tag s">suposição</span></span><input id="cappe" type="number" step="1" value="8"></label>
+          <label class="num" for="raiope">Raio de entrega a pé (km) <span><span class="tag s">suposição</span></span><input id="raiope" type="number" step="0.1" value="0.8"></label>
+          <label class="num" for="capvan">Encomendas por viagem de van <span><span class="tag s">suposição</span></span><input id="capvan" type="number" step="5" value="60"></label>
+          <label class="num" for="vline">Velocidade CD → bairro (km/h) <span><span class="tag s">suposição</span></span><input id="vline" type="number" step="1" value="30"></label>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section class="panel" style="display:grid;gap:16px">
+    <div style="display:grid;gap:4px">
+      <h2>Comparação dos quatro cenários</h2>
+      <p class="lede" style="font-size:14px">Mesmo dia de entregas nos quatro cenários. Clique num cartão para ver as rotas no mapa. A variação entre parênteses é em relação ao cenário A.</p>
+    </div>
+    <div class="cards" id="cards"></div>
+    <div class="charts">
+      <div class="chart"><h3>CO₂ emitido (kg)</h3><p>por modo, no dia</p><div id="ch1"></div></div>
+      <div class="chart"><h3>Quilômetros de van</h3><p>incluindo a viagem desde o centro de distribuição</p><div id="ch2"></div></div>
+      <div class="chart"><h3>Horas de trabalho</h3><p>por modo, soma de todos os entregadores</p><div id="ch3"></div></div>
+    </div>
+    <details>
+      <summary>Ver os números em tabela</summary>
+      <div class="scroll" style="margin-top:10px"><table class="tv" id="tabela"></table></div>
+    </details>
+  </section>
+
+  <section class="panel notes">
+    <div>
+      <h3>Como o modelo funciona</h3>
+      <ul>
+        <li>As entregas são sorteadas numa área quadrada. A rede de vias liga as entregas e o micro-hub pela triangulação de Delaunay (algoritmo de Bowyer–Watson), em que nenhuma via cruza outra.</li>
+        <li>As distâncias são os caminhos mínimos nessa rede, calculados pelo algoritmo de Dijkstra.</li>
+        <li>Cada veículo sai do micro-hub, visita sempre a entrega mais próxima ainda não feita e volta quando enche.</li>
+        <li>Tempo de cada viagem = distância ÷ velocidade + paradas × tempo por parada. A equipe é dimensionada para um turno de 8 horas.</li>
+        <li>Nos cenários B, C e D, a van só leva a carga até o micro-hub e entrega o que os modos ativos não podem levar.</li>
+        <li>No cenário D, o morro é atendido a pé (até 8 kg), o plano por cargobike (até 15 kg) e o restante pela van, como no estudo de Paraisópolis.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>De onde vêm os números</h3>
+      <ul>
+        <li>CO₂ da van diesel (245,3 g/km) e da cargobike (22,6 g/km, incluindo o alimento extra do ciclista): Verlinghieri et al. (2021).</li>
+        <li>Pesos e declives máximos a pé (8 kg, 20%) e de bicicleta de carga (15 kg, 8%): Silva et al. (2026), revista Transportes.</li>
+        <li>Raio de operação da cargobike de até 3 km: projeto KoMoDo, Berlim (Bicycle Network, 2019).</li>
+        <li>Faixa de peso mais comum (0,5 a 5 kg): Andrade, Guth e Kanitz (2021).</li>
+        <li>Velocidades, tempos de parada e capacidades por viagem são suposições didáticas. O simulador mostra tendências e não substitui um estudo com dados reais.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+(function(){
+const $ = id => document.getElementById(id);
+const NOMES = ['A · Só van','B · Micro-hub + cargobike','C · Micro-hub + a pé','D · Misto'];
+const CURTOS = ['A','B','C','D'];
+const DESCS = [
+  'A van sai do centro de distribuição e faz todas as entregas, parando em cada endereço.',
+  'A van deixa a carga no micro-hub. Cargobikes entregam o que pesa até 15 kg fora do morro; a van entrega o resto.',
+  'A van deixa a carga no micro-hub. Entregadores a pé levam o que pesa até 8 kg perto do hub; a van entrega o resto.',
+  'Cada entrega vai pelo modo possível: a pé no morro, cargobike no plano e van só para as pesadas.'
+];
+const MODOS = ['van','bike','pe'];
+const NOME_MODO = {van:'Van', bike:'Cargobike', pe:'A pé'};
+let seed = 20261112, estado = {cen:0}, res = null, anim = null;
+
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function num(id){const v=parseFloat($(id).value);return isFinite(v)&&v>0?v:parseFloat($(id).defaultValue)}
+function fmt(x,d=0){return x.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function hm(h){const t=Math.round(h*60);return Math.floor(t/60)+'h'+String(t%60).padStart(2,'0')}
+/* ---------- rede de vias: triangulação de Delaunay (Bowyer–Watson) + caminhos mínimos (Dijkstra) ---------- */
+let NET=null;
+function dist(a,b){return NET.dist[a.id*NET.M+b.id]}
+function delaunay(V){
+  const n=V.length; let x0=Infinity,y0=Infinity,x1=-Infinity,y1=-Infinity;
+  for(const v of V){x0=Math.min(x0,v.x);y0=Math.min(y0,v.y);x1=Math.max(x1,v.x);y1=Math.max(y1,v.y)}
+  const d=Math.max(x1-x0,y1-y0)||1, mx=(x0+x1)/2, my=(y0+y1)/2;
+  const P=V.map(v=>[v.x,v.y]); P.push([mx-20*d,my-d],[mx,my+20*d],[mx+20*d,my-d]);
+  function tri(a,b,c){const [ax,ay]=P[a],[bx,by]=P[b],[cx,cy]=P[c];
+    const D=2*(ax*(by-cy)+bx*(cy-ay)+cx*(ay-by));
+    if(Math.abs(D)<1e-12) return {a,b,c,x:0,y:0,r2:Infinity};
+    const a2=ax*ax+ay*ay,b2=bx*bx+by*by,c2=cx*cx+cy*cy;
+    const ux=(a2*(by-cy)+b2*(cy-ay)+c2*(ay-by))/D, uy=(a2*(cx-bx)+b2*(ax-cx)+c2*(bx-ax))/D;
+    return {a,b,c,x:ux,y:uy,r2:(ax-ux)**2+(ay-uy)**2}}
+  let T=[tri(n,n+1,n+2)];
+  for(let i=0;i<n;i++){
+    const [px,py]=P[i], ruins=[], fica=[];
+    for(const t of T) ((px-t.x)**2+(py-t.y)**2 < t.r2 ? ruins : fica).push(t);
+    const cont=new Map();
+    for(const t of ruins) for(const [u,v] of [[t.a,t.b],[t.b,t.c],[t.c,t.a]]){const k=u<v?u+','+v:v+','+u; cont.set(k,(cont.get(k)||0)+1)}
+    for(const [k,c] of cont) if(c===1){const [u,v]=k.split(',').map(Number); fica.push(tri(u,v,i))}
+    T=fica;
+  }
+  const E=new Map();
+  for(const t of T){ if(t.a>=n||t.b>=n||t.c>=n) continue;
+    for(const [u,v] of [[t.a,t.b],[t.b,t.c],[t.c,t.a]]){const k=u<v?u+','+v:v+','+u; if(!E.has(k)) E.set(k,[Math.min(u,v),Math.max(u,v)])} }
+  return [...E.values()];
+}
+function montarRede(V){
+  const M=V.length, arestas=delaunay(V), adj=Array.from({length:M},()=>[]);
+  for(const [u,v] of arestas){const w=Math.hypot(V[u].x-V[v].x,V[u].y-V[v].y); adj[u].push([v,w]); adj[v].push([u,w])}
+  const D=new Float64Array(M*M).fill(Infinity), PR=new Int32Array(M*M).fill(-1);
+  for(let s=0;s<M;s++){
+    const o=s*M; D[o+s]=0; const h=[[0,s]];
+    const push=e=>{h.push(e);let i=h.length-1;while(i>0){const p=(i-1)>>1;if(h[p][0]<=h[i][0])break;[h[p],h[i]]=[h[i],h[p]];i=p}};
+    const pop=()=>{const top=h[0],last=h.pop();if(h.length){h[0]=last;let i=0;for(;;){const l=2*i+1,r=l+1;let m=i;if(l<h.length&&h[l][0]<h[m][0])m=l;if(r<h.length&&h[r][0]<h[m][0])m=r;if(m===i)break;[h[m],h[i]]=[h[i],h[m]];i=m}}return top};
+    while(h.length){const [du,u]=pop(); if(du>D[o+u]) continue;
+      for(const [v,w] of adj[u]){const nd=du+w; if(nd<D[o+v]){D[o+v]=nd;PR[o+v]=u;push([nd,v])}}}
+  }
+  return {M,V,arestas,dist:D,prev:PR};
+}
+function caminho(a,b){const out=[b.id];let c=b.id;while(c!==a.id&&c>=0){c=NET.prev[a.id*NET.M+c];out.push(c)}return out.reverse().map(i=>NET.V[i])}
+
+function lerParams(){
+  return {N:+$('n').value, L:+$('lado').value, pes:+$('pesadas').value/100, morro:+$('morro').value/100, D:+$('dist').value,
+    efvan:num('efvan'), efbike:num('efbike'), pmaxpe:num('pmaxpe'), pmaxbike:num('pmaxbike'),
+    vvan:num('vvan'), pvan:num('pvan'), vbike:num('vbike'), pbike:num('pbike'), vpe:num('vpe'), ppe:num('ppe'),
+    capbike:Math.max(1,Math.round(num('capbike'))), cappe:Math.max(1,Math.round(num('cappe'))), raiope:num('raiope'), vline:num('vline'), capvan:Math.max(1,Math.round(num('capvan')))};
+}
+
+function gerar(P){
+  const r = rng(seed), L=P.L;
+  const hub = {x:L/2,y:L/2};
+  const mr = Math.sqrt(P.morro*L*L/Math.PI), mc = {x:L*0.80,y:L*0.80};
+  const pts=[];
+  for(let i=0;i<P.N;i++){
+    const x=r()*L, y=r()*L; let w;
+    const u=r(), v=r();
+    if(u<P.pes) w=15+v*15; else if(r()<0.7) w=0.5+v*4.5; else w=5+v*10;
+    const noMorro = P.morro>0 && Math.hypot(x-mc.x,y-mc.y)<=mr;
+    pts.push({x,y,w,noMorro,id:i+1});
+  }
+  hub.id=0; NET=montarRede([hub,...pts]);
+  return {hub,pts,mr,mc,net:NET};
+}
+
+function rotas(lista, cap, hub){
+  const rest=lista.slice(), tours=[];
+  while(rest.length){
+    let cur=hub, t=[hub], k=0;
+    while(rest.length && k<cap){
+      let bi=0,bd=Infinity; for(let i=0;i<rest.length;i++){const d=dist(cur,rest[i]); if(d<bd){bd=d;bi=i}}
+      cur=rest.splice(bi,1)[0]; t.push(cur); k++;
+    }
+    t.push(hub); tours.push(t);
+  }
+  return tours;
+}
+function kmTour(t){let s=0;for(let i=1;i<t.length;i++)s+=dist(t[i-1],t[i]);return s}
+
+function simular(P, G, cen){
+  const {hub,pts}=G;
+  NET=G.net; const pert = p => dist(hub,p)<=P.raiope;
+  const grupo = {van:[],bike:[],pe:[]};
+  for(const p of pts){
+    let m='van';
+    if(cen===1 && !p.noMorro && p.w<=P.pmaxbike) m='bike';
+    if(cen===2 && p.w<=P.pmaxpe && pert(p)) m='pe';
+    if(cen===3){ if(p.noMorro) m = p.w<=P.pmaxpe?'pe':'van'; else m = p.w<=P.pmaxbike?'bike':'van'; }
+    grupo[m].push(p);
+  }
+  const cfg = {van:{cap:P.capvan,v:P.vvan,par:P.pvan}, bike:{cap:P.capbike,v:P.vbike,par:P.pbike}, pe:{cap:P.cappe,v:P.vpe,par:P.ppe}};
+  const out = {modo:{}, cen, pts:grupo};
+  const linha = P.D/P.vline; // horas de uma perna CD -> bairro
+  for(const m of MODOS){
+    const c=cfg[m], tours=rotas(grupo[m],c.cap,hub);
+    const vt = tours.map(t=>({t, km:kmTour(t), n:t.length-2, h:kmTour(t)/c.v + (t.length-2)*c.par/60}));
+    let km = vt.reduce((s,x)=>s+x.km,0), horas = vt.reduce((s,x)=>s+x.h,0), parado=0;
+    if(m==='van'){
+      parado = grupo.van.length*P.pvan/60;
+      const viagens = Math.max(cen===0?vt.length:1, vt.length);
+      if(cen===0 && grupo.van.length===0){ /* nada */ }
+      km += viagens*2*P.D; horas += viagens*2*linha;
+      if(cen!==0 && vt.length===0) {/* van só abastece o hub */}
+    }
+    // equipe para um turno de 8h e distribuição das viagens (maior primeiro)
+    const equipe = horas>0 ? Math.max(1,Math.ceil(horas/8)) : 0;
+    const filas = Array.from({length:equipe},()=>({h:0,ts:[]}));
+    vt.slice().sort((a,b)=>b.h-a.h).forEach(x=>{filas.sort((a,b)=>a.h-b.h); filas[0].ts.push(x); filas[0].h+=x.h});
+    out.modo[m]={km,horas,equipe,parado,tours:vt,filas,co2: m==='van'?km*P.efvan/1000 : m==='bike'?km*P.efbike/1000 : 0, n:grupo[m].length, v:c.v, par:c.par};
+  }
+  out.co2 = MODOS.reduce((s,m)=>s+out.modo[m].co2,0);
+  out.horas = MODOS.reduce((s,m)=>s+out.modo[m].horas,0);
+  out.kmvan = out.modo.van.km;
+  return out;
+}
+
+/* ---------- desenho do mapa ---------- */
+const cv=$('mapa'), ctx=cv.getContext('2d');
+function cor(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function desenhar(t){
+  const P=estado.P, G=estado.G, R=res[estado.cen];
+  const dpr=Math.min(2,window.devicePixelRatio||1), S=cv.clientWidth||600;
+  if(cv.width!==Math.round(S*dpr)){cv.width=Math.round(S*dpr);cv.height=Math.round(S*dpr)}
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  const pad=14, esc=(S-2*pad)/P.L, X=x=>pad+x*esc, Y=y=>pad+y*esc;
+  ctx.fillStyle=cor('--surface'); ctx.fillRect(0,0,S,S);
+  // morro
+  if(P.morro>0){ctx.save();ctx.beginPath();ctx.rect(X(0),Y(0),P.L*esc,P.L*esc);ctx.clip();
+    ctx.fillStyle=cor('--morro');ctx.beginPath();ctx.arc(X(G.mc.x),Y(G.mc.y),G.mr*esc,0,7);ctx.fill();
+    ctx.setLineDash([5,4]);ctx.strokeStyle=cor('--morro-e');ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=cor('--ink-2');ctx.font='italic 13px Lora, Georgia, serif';ctx.textAlign='center';
+    const ly=Math.min(Y(P.L)-10, Y(G.mc.y)+4); ctx.fillText('morro', Math.min(X(P.L)-30,X(G.mc.x)), ly);ctx.restore()}
+  // rede de vias (triangulação de Delaunay: nenhuma aresta cruza outra)
+  NET=G.net; ctx.strokeStyle=cor('--rede'); ctx.lineWidth=1;
+  ctx.beginPath(); for(const [u,v] of NET.arestas){const a=NET.V[u],b=NET.V[v]; ctx.moveTo(X(a.x),Y(a.y)); ctx.lineTo(X(b.x),Y(b.y))} ctx.stroke();
+  // rotas (ordem: van por baixo)
+  const prog = t==null?Infinity:t;
+  for(const m of MODOS){
+    const M=R.modo[m]; ctx.strokeStyle=cor('--'+m); ctx.lineWidth=m==='van'?2:1.6; ctx.globalAlpha=t==null?.55:.35;
+    ctx.lineJoin='round'; ctx.lineCap='round';
+    for(const f of M.filas){ for(const x of f.ts){ ctx.beginPath(); ctx.moveTo(X(x.t[0].x),Y(x.t[0].y));
+      for(let i=1;i<x.t.length;i++){ for(const p of caminho(x.t[i-1],x.t[i]).slice(1)) ctx.lineTo(X(p.x),Y(p.y)); } ctx.stroke(); } }
+    ctx.globalAlpha=1;
+  }
+  // entregas: forma + cor por modo
+  const feitos = t==null?null:entreguesAte(R,t);
+  for(const m of MODOS){ for(const p of R.pts[m]){
+    const x=X(p.x), y=Y(p.y), done = !feitos || feitos.has(p);
+    ctx.fillStyle=cor('--'+m); ctx.strokeStyle=cor('--surface'); ctx.lineWidth=1.5; ctx.globalAlpha=done?1:.3;
+    ctx.beginPath();
+    if(m==='van') ctx.rect(x-4.5,y-4.5,9,9); else if(m==='bike') ctx.arc(x,y,5,0,7); else {ctx.moveTo(x,y-6);ctx.lineTo(x+5.5,y+4);ctx.lineTo(x-5.5,y+4);ctx.closePath()}
+    ctx.fill(); ctx.stroke(); ctx.globalAlpha=1;
+  }}
+  // hub
+  const hx=X(G.hub.x), hy=Y(G.hub.y);
+  ctx.fillStyle=cor('--hub-bg'); ctx.strokeStyle=cor('--hub'); ctx.lineWidth=2.5;
+  ctx.beginPath(); ctx.roundRect ? ctx.roundRect(hx-11,hy-11,22,22,4) : ctx.rect(hx-11,hy-11,22,22); ctx.fill(); ctx.stroke();
+  ctx.fillStyle=cor('--ink'); ctx.font='600 12px Inter, system-ui, sans-serif'; ctx.textAlign='left';
+  ctx.fillText(estado.cen===0?'entrada da van':'micro-hub', hx+15, hy-8);
+  // escala
+  ctx.strokeStyle=cor('--ink-2'); ctx.lineWidth=2; const sx=pad+8, sy=S-pad-10; ctx.beginPath(); ctx.moveTo(sx,sy); ctx.lineTo(sx+0.5*esc,sy); ctx.stroke();
+  ctx.fillStyle=cor('--ink-2'); ctx.font='12px Inter, system-ui, sans-serif'; ctx.fillText('500 m', sx, sy-6);
+  // veículos em movimento
+  if(t!=null){ for(const m of MODOS){ for(const f of R.modo[m].filas){ const pos=posicao(f,t,R.modo[m]); if(!pos) continue;
+    ctx.fillStyle=cor('--'+m); ctx.strokeStyle=cor('--surface'); ctx.lineWidth=2.5; ctx.beginPath(); ctx.arc(X(pos.x),Y(pos.y),m==='van'?8:6.5,0,7); ctx.fill(); ctx.stroke(); } } }
+}
+// posição de um entregador no instante t (h) seguindo suas viagens em sequência
+function linhaT(R){return estado.P.D/estado.P.vline}
+function segmentos(f,M,R){
+  if(f._seg) return f._seg; NET=estado.G.net;
+  const segs=[]; let t0 = (R.cen!==0 || true) ? 0 : 0;
+  for(const x of f.ts){
+    for(let i=1;i<x.t.length;i++){
+      const a=x.t[i-1], b=x.t[i], cam=caminho(a,b);
+      for(let j=1;j<cam.length;j++){const d=Math.hypot(cam[j].x-cam[j-1].x,cam[j].y-cam[j-1].y); segs.push({t0,t1:t0+d/M.v,a:cam[j-1],b:cam[j]}); t0+=d/M.v}
+      if(i<x.t.length-1){ segs.push({t0,t1:t0+M.par/60,a:b,b,stop:b}); t0+=M.par/60; }
+    }
+  }
+  f._seg=segs; f._fim=t0; return segs;
+}
+function posicao(f,t,M){const R=res[estado.cen]; const s=segmentos(f,M,R); if(!s.length||t>f._fim) return null;
+  for(const g of s){ if(t<=g.t1){ const u=g.t1>g.t0?(t-g.t0)/(g.t1-g.t0):1; return {x:g.a.x+(g.b.x-g.a.x)*u, y:g.a.y+(g.b.y-g.a.y)*u} } } return null}
+function entreguesAte(R,t){const set=new Set(); for(const m of MODOS){ for(const f of R.modo[m].filas){ for(const g of segmentos(f,R.modo[m],R)){ if(g.stop && g.t1<=t) set.add(g.stop) } } } return set}
+function duracao(R){let mx=0; for(const m of MODOS){ for(const f of R.modo[m].filas){ segmentos(f,R.modo[m],R); mx=Math.max(mx,f._fim||0) } } return mx}
+
+/* ---------- cartões, gráficos e tabela ---------- */
+function cartoes(){
+  const A=res[0];
+  const pct=(v,b)=> b>0 ? (v>=b?'+':'−')+fmt(Math.abs(v/b-1)*100)+'%' : '';
+  $('cards').innerHTML = res.map((R,i)=>{
+    const eq = MODOS.filter(m=>R.modo[m].equipe>0).map(m=>R.modo[m].equipe+' '+(m==='van'?(R.modo[m].equipe>1?'vans':'van'):m==='bike'?'cargobike'+(R.modo[m].equipe>1?'s':''):'a pé')).join(' + ');
+    return `<button class="card" data-s="${i}" aria-pressed="${i===estado.cen}" id="card${i}">
+      <span class="k">Cenário ${CURTOS[i]}</span><h3>${NOMES[i].slice(4)}</h3>
+      <dl>
+        <dt>CO₂</dt><dd>${fmt(R.co2,1)} kg ${i?`<span class="delta">(${pct(R.co2,A.co2)})</span>`:''}</dd>
+        <dt>Km de van</dt><dd>${fmt(R.kmvan,1)} ${i?`<span class="delta">(${pct(R.kmvan,A.kmvan)})</span>`:''}</dd>
+        <dt>Van parada</dt><dd>${hm(R.modo.van.parado)}</dd>
+        <dt>Horas de trabalho</dt><dd>${fmt(R.horas,1)} h</dd>
+        <dt>Equipe (turno de 8 h)</dt><dd style="font-weight:500">${eq}</dd>
+      </dl></button>`}).join('');
+  document.querySelectorAll('.card').forEach(b=>b.onclick=()=>escolher(+b.dataset.s));
+}
+
+const tip=$('tip');
+function mostrarTip(e,txt){tip.textContent=txt;tip.hidden=false;const x=Math.min(e.clientX+12,window.innerWidth-250);tip.style.left=x+'px';tip.style.top=(e.clientY+12)+'px'}
+function esconderTip(){tip.hidden=true}
+
+function barras(el, valores, unidade, casas){
+  // valores: [{rot, partes:[{m,v}]}]  (barras horizontais, um eixo, empilhadas por modo)
+  const W=360, rowH=30, gap=10, left=28, right=64, top=4, H=top+valores.length*(rowH+gap);
+  const max = Math.max(1e-9,...valores.map(r=>r.partes.reduce((s,p)=>s+p.v,0)));
+  const esc=(W-left-right)/max;
+  let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${el.previousElementSibling.previousElementSibling.textContent}">`;
+  valores.forEach((r,i)=>{
+    const y=top+i*(rowH+gap); let x=left; const tot=r.partes.reduce((s,p)=>s+p.v,0);
+    svg+=`<text x="0" y="${y+rowH/2+5}" fill="var(--ink-2)" font-size="13" font-family="Inter, system-ui, sans-serif" font-weight="600">${r.rot}</text>`;
+    svg+=`<line x1="${left}" x2="${left}" y1="${y-2}" y2="${y+rowH+2}" stroke="var(--line)" stroke-width="1"/>`;
+    const vis=r.partes.filter(p=>p.v>0);
+    vis.forEach((p,j)=>{ const w=Math.max(0,p.v*esc - (j<vis.length-1?2:0)); const last=j===vis.length-1;
+      const rx = last?4:0;
+      svg+= last ? `<path d="M${x},${y} h${Math.max(0,w-rx)} a${rx},${rx} 0 0 1 ${rx},${rx} v${rowH-2*rx} a${rx},${rx} 0 0 1 -${rx},${rx} h-${Math.max(0,w-rx)} z" fill="var(--${p.m})" data-t="${r.rot} · ${NOME_MODO[p.m]}: ${fmt(p.v,casas)} ${unidade}"/>`
+                  : `<rect x="${x}" y="${y}" width="${w}" height="${rowH}" fill="var(--${p.m})" data-t="${r.rot} · ${NOME_MODO[p.m]}: ${fmt(p.v,casas)} ${unidade}"/>`;
+      x+=p.v*esc; });
+    svg+=`<rect x="${left}" y="${y-3}" width="${W-left}" height="${rowH+6}" fill="transparent" data-t="${r.rot} · total: ${fmt(tot,casas)} ${unidade}${r.partes.length>1?' ('+r.partes.filter(p=>p.v>0).map(p=>NOME_MODO[p.m]+' '+fmt(p.v,casas)).join(', ')+')':''}"/>`;
+    svg+=`<text x="${left+tot*esc+6}" y="${y+rowH/2+5}" fill="var(--ink)" font-size="13" font-family="Inter, system-ui, sans-serif" style="font-variant-numeric:tabular-nums">${fmt(tot,casas)}</text>`;
+  });
+  svg+='</svg>';
+  el.innerHTML=svg;
+  el.querySelectorAll('[data-t]').forEach(n=>{n.addEventListener('mousemove',e=>mostrarTip(e,n.dataset.t));n.addEventListener('mouseleave',esconderTip)});
+}
+function graficos(){
+  barras($('ch1'), res.map((R,i)=>({rot:CURTOS[i], partes:MODOS.map(m=>({m,v:R.modo[m].co2}))})), 'kg', 1);
+  barras($('ch2'), res.map((R,i)=>({rot:CURTOS[i], partes:[{m:'van',v:R.kmvan}]})), 'km', 1);
+  barras($('ch3'), res.map((R,i)=>({rot:CURTOS[i], partes:MODOS.map(m=>({m,v:R.modo[m].horas}))})), 'h', 1);
+  const linhas=[['CO₂ total (kg)',R=>fmt(R.co2,1)],['Km de van',R=>fmt(R.kmvan,1)],['Km de cargobike',R=>fmt(R.modo.bike.km,1)],['Km a pé',R=>fmt(R.modo.pe.km,1)],
+    ['Entregas por van',R=>R.modo.van.n],['Entregas por cargobike',R=>R.modo.bike.n],['Entregas a pé',R=>R.modo.pe.n],
+    ['Horas de van',R=>fmt(R.modo.van.horas,1)],['Horas de cargobike',R=>fmt(R.modo.bike.horas,1)],['Horas a pé',R=>fmt(R.modo.pe.horas,1)],['Van parada no meio-fio',R=>hm(R.modo.van.parado)]];
+  $('tabela').innerHTML = `<thead><tr><th>Indicador</th>${CURTOS.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`+
+    linhas.map(([n,f])=>`<tr><td>${n}</td>${res.map(R=>`<td>${f(R)}</td>`).join('')}</tr>`).join('')+'</tbody>';
+}
+
+/* ---------- ciclo ---------- */
+function recalcular(){
+  pararAnim();
+  const P=lerParams(); estado.P=P; estado.G=gerar(P);
+  res=[0,1,2,3].map(c=>simular(P,estado.G,c));
+  $('n_o').textContent=P.N; $('lado_o').textContent=fmt(P.L,1)+' km'; $('pesadas_o').textContent=fmt(P.pes*100)+'%';
+  $('morro_o').textContent=fmt(P.morro*100)+'% da área'; $('dist_o').textContent=P.D+' km';
+  cartoes(); graficos(); escolher(estado.cen);
+}
+function escolher(c){
+  pararAnim(); estado.cen=c;
+  document.querySelectorAll('.tab[data-s]').forEach(b=>b.setAttribute('aria-pressed', String(+b.dataset.s===c)));
+  document.querySelectorAll('.card').forEach(b=>b.setAttribute('aria-pressed', String(+b.dataset.s===c)));
+  $('desc').textContent=DESCS[c];
+  $('clock').textContent='Turno completo: '+hm(duracao(res[c]));
+  desenhar(null);
+}
+function pararAnim(){ if(anim){cancelAnimationFrame(anim.id);anim=null;$('play').textContent='▶ Animar o turno'} }
+$('play').onclick=()=>{
+  if(anim){pararAnim();desenhar(null);$('clock').textContent='Turno completo: '+hm(duracao(res[estado.cen]));return}
+  const R=res[estado.cen], fim=duracao(R), reduz=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const segs = reduz?4:14; const t0=performance.now();
+  $('play').textContent='■ Parar';
+  const passo=now=>{ const t=Math.min(fim,(now-t0)/1000/segs*fim); desenhar(t); $('clock').textContent='Turno: '+hm(t)+' de '+hm(fim);
+    if(t<fim) anim.id=requestAnimationFrame(passo); else {anim=null;$('play').textContent='▶ Animar de novo'} };
+  anim={id:requestAnimationFrame(passo)};
+};
+document.querySelectorAll('.tab[data-s]').forEach(b=>b.onclick=()=>escolher(+b.dataset.s));
+let pend=0; const agendar=()=>{ if(!pend) pend=requestAnimationFrame(()=>{pend=0;recalcular()}) };
+['n','lado','pesadas','morro','dist'].forEach(id=>$(id).addEventListener('input',agendar));
+document.querySelectorAll('#params input').forEach(i=>i.addEventListener('change',recalcular));
+$('sortear').onclick=()=>{seed=(seed*1103515245+12345)>>>0;recalcular()};
+const PRESETS={0:{n:150,lado:2,pesadas:10,morro:20,dist:12,txt:'Valores iniciais: bairro de 2 km com morro e 10% de encomendas pesadas.'},
+  1:{n:400,lado:1.5,pesadas:5,morro:0,dist:12,txt:'Centro denso e plano: 400 entregas em 1,5 km, quase todas leves. A logística ativa domina.'},
+  2:{n:20,lado:4,pesadas:50,morro:0,dist:20,txt:'Periferia espalhada: 20 entregas em 4 km, metade pesada, centro de distribuição a 20 km. O ganho quase some e a equipe dobra.'}};
+document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{const p=PRESETS[b.dataset.p];
+  ['n','lado','pesadas','morro','dist'].forEach(k=>$(k).value=p[k]); seed=20261112;
+  document.querySelectorAll('[data-p]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  $('pre_desc').textContent=p.txt; estado.cen=3; recalcular();});
+window.addEventListener('resize',()=>{if(!anim)desenhar(null)});
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',()=>{if(!anim)desenhar(null)});
+new MutationObserver(()=>{if(!anim)desenhar(null)}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{if(!anim)desenhar(null)});
+recalcular();
+})();
+</script>
+</html>
