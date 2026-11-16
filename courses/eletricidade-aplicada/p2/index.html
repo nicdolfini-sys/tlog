@@ -639,7 +639,7 @@ const parseRgb = (css) => {
 const bgRgb = () => parseRgb(getComputedStyle(document.body).backgroundColor);
 
 if (gl) {
-  const palette = generatePalettes(256, { lightness: 74 })[Math.floor(Math.random() * 256)];
+  const palette = generatePalettes(256, { lightness: 86 })[Math.floor(Math.random() * 256)];
   const perm = new Uint8Array(256);
   for (let i = 0; i < 256; i++) perm[i] = i;
   let s = 2026;
