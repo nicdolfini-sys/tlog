@@ -227,6 +227,8 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
 .ckt-fig figcaption{font-size:14px;margin-top:6px;max-width:48ch;line-height:1.4}
 .ckt-fig figcaption b{display:block;color:var(--accent);font-size:14.5px}
 .ckt-fig figcaption span{color:var(--muted)}
+.given.enun{color:var(--ink);font-size:16px}.given.enun b{color:var(--accent)}
+.tip.hip{margin:-6px 0 16px}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
@@ -293,7 +295,7 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q1a -->
   <div class="ex" id="q1a">
     <header class="ex-h"><span class="tag">Q1a</span><h3>Indutância equivalente</h3></header>
-    <div class="given">a — 6 mH — nó P; b — 10 mH — nó Q. Entre P e Q, 8 mH. De P saem o 8 mH de cima (até o canto direito) e o 5 mH na diagonal até o nó S, à direita. De Q saem o 8 mH de baixo e o 6 mH na diagonal até S. No lado direito ficam 12 mH (canto de cima até S) e 4 mH (S até o canto de baixo).</div>
+    <div class="given enun"><b>Questão 1 · circuito da esquerda.</b> Determine a capacitância e a indutância equivalentes nos terminais a-b de cada circuito.</div>
     <figure class="orig"><img src="img/q1a.jpg" alt="Circuito original da questão 1a da Lista 2" loading="lazy"><figcaption>Circuito original da lista (com anotações do caderno)</figcaption></figure>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>“Equivalente nos terminais a-b” com indutores → associação, tratando cada L como um resistor.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
@@ -312,8 +314,9 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q1b -->
   <div class="ex" id="q1b">
     <header class="ex-h"><span class="tag">Q1b</span><h3>Capacitância equivalente</h3></header>
-    <div class="given">Valores em µF (o desenho não mostra a unidade). a — 12 — nó A, com 12 de A até a linha de b. O resto da rede (80, 40, 50, 30, 60, 20, 10 e 60) fica à direita de A.</div>
+    <div class="given enun"><b>Questão 1 · circuito da direita.</b> Determine a capacitância e a indutância equivalentes nos terminais a-b de cada circuito.</div>
     <figure class="orig"><img src="img/q1b.jpg" alt="Circuito original da questão 1b da Lista 2" loading="lazy"><figcaption>Circuito original da lista (com anotações do caderno)</figcaption></figure>
+    <p class="tip hip">Hipótese: Os valores estão em µF (o desenho não mostra a unidade).</p>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>Mesma ideia da 1a, mas com capacitores: <b>paralelo soma</b> e <b>série usa produto pela soma</b>.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
@@ -332,7 +335,7 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q2a -->
   <div class="ex" id="q2a">
     <header class="ex-h"><span class="tag">Q2a</span><h3>V<sub>C</sub>, I<sub>L</sub> e energia (3 A, 4 Ω, 2 Ω, 2 F, 5 Ω, 0,5 H)</h3></header>
-    <div class="given">Fonte de 3 A em paralelo com 4 Ω. Um resistor de 2 Ω em cima leva ao nó N. De N para baixo: 2 F em série com 5 Ω. Também de N para baixo, à direita: 0,5 H (i<sub>L</sub> para baixo).</div>
+    <div class="given enun"><b>Questão 2 · circuito da esquerda.</b> Determine V<sub>C</sub>, I<sub>L</sub> e a energia armazenada no capacitor e no indutor de cada circuito.</div>
     <figure class="orig"><img src="img/q2a.jpg" alt="Circuito original da questão 2a da Lista 2" loading="lazy"><figcaption>Circuito original da lista</figcaption></figure>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>Fonte constante, sem chave: o circuito está em <b>regime permanente CC</b>. Troque C por <b>aberto</b> e L por <b>curto</b>, e resolva como um circuito de resistores.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
@@ -350,7 +353,7 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q2b -->
   <div class="ex" id="q2b">
     <header class="ex-h"><span class="tag">Q2b</span><h3>V<sub>C</sub>, I<sub>L</sub> e energia (5 mA, 30 kΩ, 2 mH, 6 µF, 20 kΩ)</h3></header>
-    <div class="given">5 mA em paralelo com 30 kΩ → 2 mH em série (corrente i) → 6 µF em paralelo com 20 kΩ (tensão v).</div>
+    <div class="given enun"><b>Questão 2 · circuito da direita.</b> Determine V<sub>C</sub>, I<sub>L</sub> e a energia armazenada no capacitor e no indutor de cada circuito.</div>
     <figure class="orig"><img src="img/q2b.jpg" alt="Circuito original da questão 2b da Lista 2" loading="lazy"><figcaption>Circuito original da lista (com anotações do caderno)</figcaption></figure>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>De novo, regime permanente CC: C = aberto e L = curto.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
@@ -379,8 +382,9 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q3a -->
   <div class="ex" id="q3a">
     <header class="ex-h"><span class="tag">Q3a</span><h3>i<sub>o</sub>(0⁺) — 24 V, 4 Ω, 4 Ω, 4 H, 8 Ω</h3></header>
-    <div class="given">24 V → 4 Ω → chave (abre em t = 0) → nó X. De X para baixo: 4 Ω. De X para a direita: 4 H em série com 8 Ω (corrente i<sub>o</sub> para baixo).</div>
+    <div class="given enun"><b>Questão 3 · circuito da esquerda.</b> Determine v<sub>o</sub> e i<sub>o</sub> para t = 0⁺ para cada circuito.</div>
     <figure class="orig"><img src="img/q3a.jpg" alt="Circuito original da questão 3a da Lista 2" loading="lazy"><figcaption>Circuito original da lista</figcaption></figure>
+    <p class="tip hip">Hipótese: A chave abre em t = 0.</p>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>Pede o valor em <b>t = 0⁺</b>, e i<sub>o</sub> é a <b>corrente do indutor</b>. Então basta achar i<sub>L</sub>(0⁻) em CC, porque ela não pula.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
@@ -398,8 +402,9 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q3b -->
   <div class="ex" id="q3b">
     <header class="ex-h"><span class="tag">Q3b</span><h3>v<sub>o</sub>(0⁺) — 6 V, 2 kΩ, 4 kΩ, 3 mF</h3></header>
-    <div class="given">6 V → 2 kΩ → chave (abre em t = 0) → 4 kΩ em paralelo com 3 mF, com tensão v<sub>o</sub>.</div>
+    <div class="given enun"><b>Questão 3 · circuito da direita.</b> Determine v<sub>o</sub> e i<sub>o</sub> para t = 0⁺ para cada circuito.</div>
     <figure class="orig"><img src="img/q3b.jpg" alt="Circuito original da questão 3b da Lista 2" loading="lazy"><figcaption>Circuito original da lista</figcaption></figure>
+    <p class="tip hip">Hipótese: A chave abre em t = 0.</p>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>v<sub>o</sub> é a <b>tensão do capacitor</b>, porque está em paralelo com ele. Ela não pula: acha em 0⁻ e repete em 0⁺.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
@@ -415,8 +420,9 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q4a -->
   <div class="ex" id="q4a">
     <header class="ex-h"><span class="tag">Q4a</span><h3>v<sub>o</sub>(t) — 12 V, 2 Ω, 4 Ω, 3 F</h3></header>
-    <div class="given">12 V → 2 Ω → chave (a seta aponta para o contato: <b>fecha</b> em t = 0) → 4 Ω em paralelo com 3 F, com tensão v<sub>o</sub>.</div>
+    <div class="given enun"><b>Questão 4 · circuito da esquerda.</b> Determine a tensão v<sub>o</sub>(t) e a corrente i(t) para t &lt; 0 e t &gt; 0 para cada um dos circuitos.</div>
     <figure class="orig"><img src="img/q4a.jpg" alt="Circuito original da questão 4a da Lista 2" loading="lazy"><figcaption>Circuito original da lista</figcaption></figure>
+    <p class="tip hip">Hipótese: A chave fecha em t = 0 (a seta aponta para o contato).</p>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>Chave e <b>só um capacitor</b> → 1ª ordem (RC). Use x(t) = x(∞) + [x(0) − x(∞)]e<sup>−t/τ</sup> com x = v<sub>o</sub>.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
@@ -434,8 +440,9 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q4b -->
   <div class="ex" id="q4b">
     <header class="ex-h"><span class="tag">Q4b</span><h3>i(t) — 6 A, 4 Ω, 2 Ω, 3 H</h3></header>
-    <div class="given">6 A em paralelo com 4 Ω → chave (<b>fecha</b> em t = 0) → 2 Ω em paralelo com 3 H (corrente i para baixo).</div>
+    <div class="given enun"><b>Questão 4 · circuito da direita.</b> Determine a tensão v<sub>o</sub>(t) e a corrente i(t) para t &lt; 0 e t &gt; 0 para cada um dos circuitos.</div>
     <figure class="orig"><img src="img/q4b.jpg" alt="Circuito original da questão 4b da Lista 2" loading="lazy"><figcaption>Circuito original da lista</figcaption></figure>
+    <p class="tip hip">Hipótese: A chave fecha em t = 0 (a seta aponta para o contato).</p>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>Chave e <b>só um indutor</b> → 1ª ordem (RL). Use a mesma fórmula com x = i<sub>L</sub> e τ = L/R<sub>th</sub>.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
@@ -467,8 +474,9 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q5a -->
   <div class="ex" id="q5a">
     <header class="ex-h"><span class="tag">Q5a</span><h3>12 V, 6 Ω + 2 H, 4 Ω + 0,4 F</h3></header>
-    <div class="given">12 V → chave (abre em t = 0) → nó de cima. Ramo 1: 6 Ω em série com 2 H (corrente i para baixo). Ramo 2: 4 Ω em série com 0,4 F (tensão v, + em cima).</div>
+    <div class="given enun"><b>Questão 5 · circuito da esquerda.</b> Determine i(0⁺), v(0⁺), di(0⁺)/dt e dv(0⁺)/dt, i(∞) e v(∞), para cada um dos circuitos.</div>
     <figure class="orig"><img src="img/q5a.jpg" alt="Circuito original da questão 5a da Lista 2" loading="lazy"><figcaption>Circuito original da lista</figcaption></figure>
+    <p class="tip hip">Hipótese: A chave abre em t = 0.</p>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>A lista de pedidos (i(0⁺), v(0⁺), di/dt, dv/dt, ∞) é a receita das 4 fotos. i é a corrente do indutor e v é a tensão do capacitor: as duas são contínuas.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
@@ -486,10 +494,9 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q5b -->
   <div class="ex" id="q5b">
     <header class="ex-h"><span class="tag">Q5b</span><h3>10 Ω, 2u(t) A, ¼ F + 10 V, 40 Ω + ⅛ H</h3></header>
-    <div class="given">Todos os ramos ligam o nó de cima (T) ao de baixo (terra):
-      <ul class="ramos"><li>10 Ω, com tensão v<sub>R</sub> (+ em cima)</li><li>fonte de corrente 2u(t) A, injetando corrente em T</li><li>capacitor ¼ F (v<sub>C</sub>, + em cima) em série com uma fonte de 10 V (+ em cima)</li><li>40 Ω em série com ⅛ H (corrente I<sub>L</sub> para baixo)</li></ul>
-      Não há chave: o que muda em t = 0 é o degrau u(t). Tomamos i = I<sub>L</sub> e v = v<sub>C</sub> (e também v<sub>R</sub>).</div>
+    <div class="given enun"><b>Questão 5 · circuito da direita.</b> Determine i(0⁺), v(0⁺), di(0⁺)/dt e dv(0⁺)/dt, i(∞) e v(∞), para cada um dos circuitos.</div>
     <figure class="orig"><img src="img/q5b.jpg" alt="Circuito original da questão 5b da Lista 2" loading="lazy"><figcaption>Circuito original da lista</figcaption></figure>
+    <p class="tip hip">Hipótese: Não há chave: o evento é a fonte 2u(t) ligando em t = 0. Tomamos i = I<sub>L</sub> e v = v<sub>C</sub> (e também v<sub>R</sub>).</p>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>Mesmos pedidos da 5a → receita das 4 fotos. O “evento” é a fonte 2u(t) ligando em t = 0. Antes disso ela vale 0, ou seja, é um <b>aberto</b>.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
@@ -530,8 +537,9 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q6a -->
   <div class="ex" id="q6a">
     <header class="ex-h"><span class="tag">Q6a</span><h3>12 V + 4 Ω, 5 H, 1/20 F, 5 Ω, 3 A</h3></header>
-    <div class="given">12 V → 4 Ω → chave (abre em t = 0) → nó de cima. Entre o nó de cima e o terra: 5 H (i(t) para baixo), 1/20 F (v, + em cima), 5 Ω e a fonte de 3 A, que injeta corrente no nó de cima.</div>
+    <div class="given enun"><b>Questão 6 · circuito da esquerda.</b> Determine v(t) e i(t) para cada um dos circuitos.</div>
     <figure class="orig"><img src="img/q6a.jpg" alt="Circuito original da questão 6a da Lista 2" loading="lazy"><figcaption>Circuito original da lista</figcaption></figure>
+    <p class="tip hip">Hipótese: A chave abre em t = 0.</p>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>Chave e <b>L e C juntos</b> → 2ª ordem. Depois que a chave abre, R, L e C ligam os mesmos dois nós → <b>RLC paralelo</b>, α = 1/(2RC). Com a fonte de 3 A ainda ligada, i(∞) ≠ 0.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
@@ -549,8 +557,9 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q6b -->
   <div class="ex" id="q6b">
     <header class="ex-h"><span class="tag">Q6b</span><h3>3 A + 10 Ω, 4 F, 1 H, 5 Ω, 4u(t) A</h3></header>
-    <div class="given">3 A em paralelo com 10 Ω → chave (abre em t = 0) → nó A. Do nó A: 4 F até o terra (tensão v) e 1 H em cima até o nó B. Do nó B: 5 Ω até o terra e a fonte 4u(t) A injetando corrente em B. Chamamos de i a corrente do indutor, de A para B.</div>
+    <div class="given enun"><b>Questão 6 · circuito da direita.</b> Determine v(t) e i(t) para cada um dos circuitos.</div>
     <figure class="orig"><img src="img/q6b.jpg" alt="Circuito original da questão 6b da Lista 2" loading="lazy"><figcaption>Circuito original da lista</figcaption></figure>
+    <p class="tip hip">Hipótese: A chave abre em t = 0. Tomamos i = corrente do indutor, de A (nó do capacitor) para B (nó do 5 Ω).</p>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>L e C juntos → 2ª ordem. Depois da chave, com a fonte de corrente desligada (aberta), sobra <b>um único laço</b>: C → L → 5 Ω → C. É um <b>RLC série</b>, α = R/(2L). E duas coisas acontecem ao mesmo tempo em t = 0: a chave abre e a fonte 4u(t) liga.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
@@ -580,8 +589,9 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q7a -->
   <div class="ex" id="q7a">
     <header class="ex-h"><span class="tag">Q7a</span><h3>6cos 200t V, 5 Ω, 4 Ω, 10 mH, 5 mF + 3 Ω</h3></header>
-    <div class="given">Fonte 6cos(200t) V → 5 Ω em série (corrente i) → nó de cima. Entre o nó de cima e o terra, três ramos: 4 Ω; 10 mH; 5 mF em série com 3 Ω. Como o enunciado não marca v, tomamos v = tensão do nó de cima, comum aos três ramos.</div>
+    <div class="given enun"><b>Questão 7 · circuito da esquerda.</b> Calcule v(t) e i(t) para cada um dos circuitos.</div>
     <figure class="orig"><img src="img/q7a.jpg" alt="Circuito original da questão 7a da Lista 2" loading="lazy"><figcaption>Circuito original da lista</figcaption></figure>
+    <p class="tip hip">Hipótese: O desenho não marca v: tomamos v = tensão do nó comum aos três ramos.</p>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>A fonte é cos(ωt) e pede v(t) e i(t) → <b>fasores</b>. ω = 200 rad/s.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
@@ -599,8 +609,9 @@ section.aula,#gabarito,#formulario,.foot{background:color-mix(in srgb,var(--bg) 
   <!-- Q7b -->
   <div class="ex" id="q7b">
     <header class="ex-h"><span class="tag">Q7b</span><h3>10cos t V, 1 Ω, 1 Ω + 1 H, 1 F</h3></header>
-    <div class="given">Fonte 10cos(t) V → 1 Ω em série → nó de cima. Entre o nó de cima e o terra: ramo 1 Ω + 1 H em série e ramo 1 F (tensão v). Tomamos i = corrente da fonte.</div>
+    <div class="given enun"><b>Questão 7 · circuito da direita.</b> Calcule v(t) e i(t) para cada um dos circuitos.</div>
     <figure class="orig"><img src="img/q7b.jpg" alt="Circuito original da questão 7b da Lista 2" loading="lazy"><figcaption>Circuito original da lista</figcaption></figure>
+    <p class="tip hip">Hipótese: O desenho não marca i: tomamos i = corrente da fonte.</p>
     <div class="pista"><b class="t">🔎 Como reconhecer</b><p>A fonte é cos(t) → fasores com <b>ω = 1 rad/s</b>. O “t” sozinho significa ω = 1.</p></div>
     <details class="sol"><summary>Já tentei, ver resolução ✨</summary>
     <ol class="steps">
